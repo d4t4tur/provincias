@@ -1,0 +1,35 @@
+---
+title: "Áreas Naturales"
+description: |
+  Registro de visitaciones a áreas naturales protegidas de carácter nacional a partir de información de la Administración de Parques Nacionales (APN)
+site: distill::distill_website
+---
+
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(xaringanExtra)
+library(dnmye)
+library(highcharter)
+library(gt)
+library(plotly)
+```
+
+```{r, include=FALSE}
+parques_nest_data <- read_rds("outputs/parques_nest_data.RDS")
+
+```
+
+
+```{r, include=FALSE, echo= FALSE, message=FALSE}
+xaringanExtra::use_panelset()
+```
+
+
+## Datos Principales
+`r rmdautotabs(input_data = parques_nest_data, panel_name = "nombre_prov", .tablas_prov)`
+
+## Series de Tiempo
+`r rmdautotabs(input_data = parques_nest_data, panel_name = "nombre_prov", .plot_timeseries)`
+

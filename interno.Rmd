@@ -1,0 +1,42 @@
+---
+title: "Turismo Interno"
+description: |
+  Caraceterización del Turismo Interno a partir de la Encuesta de Viajes y Turismo de los Hogares (EVyTH)
+site: distill::distill_website
+---
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(xaringanExtra)
+library(dnmye)
+library(highcharter)
+library(gt)
+```
+
+```{r, include=FALSE}
+evyth_nest_data <- read_rds("outputs/evyth_nest_data.RDS")
+
+```
+
+
+```{r, include=FALSE, echo= FALSE, message=FALSE}
+xaringanExtra::use_panelset()
+```
+
+
+## Datos principales
+`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .tablas_prov)`
+
+## Series de Tiempo
+`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .plot_timeseries)`
+
+## Perfil del turista
+`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .motivo, .alojamiento, .transporte, .edad)`
+
+## Principales actividades
+`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .actividades)`
+
+## Principales localidades
+`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .localidades)`
+

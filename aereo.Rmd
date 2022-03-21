@@ -1,0 +1,32 @@
+---
+title: "Conectividad Aérea"
+description: |
+  Datos provenientes de los registros adminsitrativos de la Autoridad Nacional de Aviación Civil (ANAC)
+site: distill::distill_website
+---
+
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(xaringanExtra)
+library(dnmye)
+library(highcharter)
+library(gt)
+```
+
+```{r, include=FALSE}
+aero_cabotaje_nest_data <- read_rds("outputs/aero_cabotaje_nest_data.RDS")
+aero_internacional_nest_data <- read_rds("outputs/aero_internacional_nest_data.RDS")
+```
+
+
+```{r, include=FALSE, echo= FALSE, message=FALSE}
+xaringanExtra::use_panelset()
+```
+
+## Estadísticas Provinciales de Vuelos de Cabotaje
+`r rmdautotabs(input_data = aero_cabotaje_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_timeseries_pasajeros, .plot_timeseries_asientos, .plot_timeseries_vuelos)`
+
+## Estadísticas Provinciales de Vuelos Internacionales
+`r rmdautotabs(input_data = aero_internacional_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_timeseries_pasajeros, .plot_timeseries_asientos, .plot_timeseries_vuelos)`

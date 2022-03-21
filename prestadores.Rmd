@@ -1,0 +1,34 @@
+---
+title: "Prestadores Registrados"
+description: |
+  Estadísticas de prestadores de las Ramas Características del Turismo (RCT) a partir de datos de la Adminsitración Federal de Ingresos Públicos (AFIP).
+site: distill::distill_website
+---
+
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(xaringanExtra)
+library(dnmye)
+library(highcharter)
+library(gt)
+library(plotly)
+```
+
+```{r, include=FALSE}
+prestadores_nest_data <- read_rds("outputs/prestadores_nest_data.RDS")
+prestadores_map_nest_data <- read_rds("outputs/empresas_map_nest_data.RDS")
+```
+
+
+```{r, include=FALSE, echo= FALSE, message=FALSE}
+xaringanExtra::use_panelset()
+```
+
+## Resumen de Empresas Registradas por Provincia
+`r rmdautotabs(input_data = prestadores_nest_data, panel_name = "provincia", .tablas_prov)`
+
+
+## Mapas de Empresas Registradas por Provincia
+`r rmdautotabs(input_data = prestadores_map_nest_data, panel_name = "name_iso", .subplots)`

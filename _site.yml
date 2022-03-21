@@ -1,0 +1,40 @@
+name: "Monitor de Turismo en las Provincias"
+title: "MONITOR"
+favicon: favicon.ico
+description: |
+  Estadísticas Provinciales de Turismo
+output_dir: "docs"
+navbar:
+  logo:
+    image: logo.png
+    href: https://www.yvera.tur.ar/estadistica/
+  right:
+    - text: "Calendario"
+      href: https://calendario.yvera.tur.ar/
+    - text: "Datos Abiertos"
+      href: http://datos.yvera.gob.ar/
+    - text: "Bitácora"
+      href: https://bitacora.yvera.tur.ar/
+    - text: "Informes"
+      href: https://www.yvera.tur.ar/estadistica/informe
+    - text: "Tableros"
+      href: https://tableros.yvera.tur.ar
+  left: 
+    - text: "Indicadores por provincia"
+      menu:
+      - text: "Turismo Interno"
+        href: interno.html
+      - text: "Turismo Receptivo"
+        href: receptivo.html
+      - text: "Padrón de Alojamientos"
+        href: padron.html
+      - text: "Áreas Naturales"
+        href: parques.html
+      - text: "Conectividad Aérea"
+        href: aereo.html
+      - text: "Prestadores Turísticos"
+        href: prestadores.html
+output:
+  distill::distill_article:
+    css: styles.css
+
