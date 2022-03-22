@@ -9,16 +9,20 @@ navbar:
     image: logo.png
     href: https://www.yvera.tur.ar/estadistica/
   right:
-    - text: "Calendario"
-      href: https://calendario.yvera.tur.ar/
-    - text: "Datos Abiertos"
-      href: http://datos.yvera.gob.ar/
-    - text: "Bitácora"
-      href: https://bitacora.yvera.tur.ar/
-    - text: "Informes"
-      href: https://www.yvera.tur.ar/estadistica/informe
-    - text: "Tableros"
-      href: https://tableros.yvera.tur.ar
+    - text: "SINTA"
+      menu:
+      - text: "Armonización"
+        href: https://armonizacion.yvera.tur.ar/
+      - text: "Bitácora"
+        href: https://bitacora.yvera.tur.ar
+      - text: "Calendario"
+        href: https://calendario.yvera.tur.ar/
+      - text: "Datos Abiertos"
+        href: https://datos.yvera.gob.ar/
+      - text: "Informes"
+        href: https://www.yvera.tur.ar/estadistica/informe
+      - text: "Tableros"
+        href: https://tableros.yvera.tur.ar
   left: 
     - text: "Indicadores por provincia"
       menu:
