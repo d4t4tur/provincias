@@ -6,7 +6,7 @@ description: |
 output_dir: "docs"
 navbar:
   logo:
-    image: logo.png
+    image: sinta.png
     href: https://www.yvera.tur.ar/estadistica/
   right:
     - text: "SINTA"
