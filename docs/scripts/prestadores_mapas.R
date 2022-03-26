@@ -173,7 +173,8 @@ empresas_map_nest_data <- empresas_map_nest_data %>%
       dragmode = F)})) %>% 
   ungroup()
 
-
+empresas_map_nest_data <- empresas_map_nest_data %>% 
+  select(-c(nested_column_provs, mapas_av))
 
 
 write_rds(empresas_map_nest_data, "outputs/empresas_map_nest_data.RDS", compress = "gz")

@@ -123,6 +123,7 @@ receptivo_nest_data <- receptivo_nest_data %>%
 
 
 receptivo_nest_data <- receptivo_nest_data %>% 
-  ungroup()
+  ungroup() %>% 
+  select(-nested_column_provs)
 
 write_rds(receptivo_nest_data , file = "outputs/receptivo_nest_data.RDS")

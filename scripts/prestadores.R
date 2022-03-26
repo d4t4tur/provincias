@@ -119,6 +119,7 @@ tabla_prestadores <-  function(data) {
 
 
 prestadores_nest_data <- prestadores_nest_data %>% 
-  mutate(.tablas_prov = map(nested_column_provs,  tabla_prestadores))
+  mutate(.tablas_prov = map(nested_column_provs,  tabla_prestadores)) %>% 
+  select(-nested_column_provs)
 
-write_rds(prestadores_nest_data, "outputs/prestadores_nest_data.RDS")
+write_rds(prestadores_nest_data, "outputs/empresas_nest_data.RDS")

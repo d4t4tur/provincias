@@ -89,6 +89,7 @@ parques_nest_data <- parques_nest_data %>%
          .plot_timeseries = map(nested_column_indicadores, grafico_serietiempo))
 
 parques_nest_data <- parques_nest_data %>% 
-  arrange(nombre_prov)
+  arrange(nombre_prov) %>% 
+  select(-nested_column_indicadores)
 
 write_rds(parques_nest_data, "outputs/parques_nest_data.RDS")

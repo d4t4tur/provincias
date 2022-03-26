@@ -295,6 +295,7 @@ serie_puna_nest_data <- serie_puna_nest_data %>%
          .plot_timeseries = map(nested_column_prov, graf_time_ppales_cat))
 
 serie_puna_nest_data <- serie_puna_nest_data %>% 
-  arrange(nombre_prov)
+  arrange(nombre_prov) %>% 
+  select(-nested_column_prov)
 
 write_rds(serie_puna_nest_data, "outputs/serie_puna_nest_data.RDS")

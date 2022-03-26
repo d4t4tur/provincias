@@ -200,11 +200,13 @@ tabla_aero_internacional <-  function(x) {
 
 aero_internacional_nest_data <- aero_internacional_nest_data %>% 
   mutate(.tablas_prov = map(nested_column_provs,  tabla_aero_internacional)) %>% 
-  arrange(nombre_prov)
+  arrange(nombre_prov) %>% 
+  select(-nested_column_provs)
 
 aero_cabotaje_nest_data <- aero_cabotaje_nest_data %>% 
   mutate(.tablas_prov = map(nested_column_provs,  tabla_aero_cabotaje)) %>% 
-  arrange(nombre_prov)
+  arrange(nombre_prov) %>% 
+  select(-nested_column_provs)
 
 write_rds(aero_internacional_nest_data, file= "outputs/aero_internacional_nest_data.RDS")
 write_rds(aero_cabotaje_nest_data, file= "outputs/aero_cabotaje_nest_data.RDS")
