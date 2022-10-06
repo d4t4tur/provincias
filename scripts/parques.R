@@ -1,5 +1,5 @@
 #parques
-library(dnmye)
+library(d4t4tur)
 library(readxl)
 library(tidyverse)
 library(glue)
@@ -8,10 +8,10 @@ library(highcharter)
 
 source("scripts/aux_function.R")
 
-base_pn <- read_excel("/srv/DataDNMYE/parques_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
+base_pn <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
   mutate(parque_nacional = limpiar_texto(parque_nacional))
 
-provincias <- read_excel("/srv/DataDNMYE/parques_nacionales/provincias.xlsx") %>% 
+provincias <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/provincias.xlsx") %>% 
   add_row(parque_nacional = "Pizarro", provincia = "Salta") %>% 
   mutate(parque_nacional = ifelse(parque_nacional == "Nogalar de los Toldos", "El Nogalar de Los Toldos", parque_nacional),
          etiq_parque = parque_nacional,
@@ -20,9 +20,33 @@ provincias <- read_excel("/srv/DataDNMYE/parques_nacionales/provincias.xlsx") %>
 base_pn <- left_join(base_pn, provincias) %>% 
   filter(anio >= 2012)
 
+# parques_nest_data <- base_pn %>% 
+#   mutate(nombre_prov = as_factor(provincia)) %>% 
+#   nest(nested_column_indicadores = -nombre_prov)
+
+options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
+
 parques_nest_data <- base_pn %>% 
-  mutate(nombre_prov = as_factor(provincia)) %>% 
-  nest(nested_column_indicadores = -nombre_prov)
+  filter(anio >= 2017 & anio < 2022) %>% 
+  group_by(anio, provincia, etiq_parque, residencia) %>% 
+  summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
+  pivot_wider(id_cols = c(anio, provincia, etiq_parque), names_from = residencia, values_from = visitantes) %>% 
+  janitor::clean_names() %>% 
+  mutate( total = no_residentes + residentes) %>% 
+  arrange(desc(anio), provincia) %>% 
+  rename(Provincia = provincia, "Parque Nacional" = etiq_parque, 
+         "No residentes" = no_residentes, "Reesidentes" = residentes,
+         Total = total, Año = anio) %>% 
+  #janitor::adorn_totals() %>% 
+  datatable(., extensions = 'RowGroup', options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
+                           dom = 'lrtipB'),
+            rownames= FALSE,filter = 'top'
+  )
+
+write_rds(parques_nest_data, "outputs/parques_nest_data.RDS")
+
+
+
 
 tabla_provincial <- function(x) {
   x %>% 
