@@ -27,8 +27,8 @@ base_pn <- left_join(base_pn, provincias) %>%
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
 
 parques_nest_data <- base_pn %>% 
-  filter(anio >= 2021) %>% 
-  group_by(anio, provincia, etiq_parque,residencia) %>% 
+  filter(anio >= 2017 & anio < 2022) %>% 
+  group_by(anio, provincia, etiq_parque, residencia) %>% 
   summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
   pivot_wider(id_cols = c(anio, provincia, etiq_parque), names_from = residencia, values_from = visitantes) %>% 
   janitor::clean_names() %>% 

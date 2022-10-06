@@ -8,25 +8,23 @@ site: distill::distill_website
 
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
-library(tidyverse)
-library(xaringanExtra)
-library(dnmye)
-library(highcharter)
-library(gt)
 ```
 
 ```{r, include=FALSE}
-aero_cabotaje_nest_data <- read_rds("outputs/aero_cabotaje_nest_data.RDS")
-aero_internacional_nest_data <- read_rds("outputs/aero_internacional_nest_data.RDS")
+plot_cabotaje <- readRDS("outputs/graph_cabotaje.rds")
+plot_internacional <- readRDS("outputs/graph_internacional.rds")
+
 ```
 
+# Cabotaje
 
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
+```{r}
+plot_cabotaje
 ```
 
-## Estadísticas Provinciales de Vuelos de Cabotaje
-`r rmdautotabs(input_data = aero_cabotaje_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_timeseries_pasajeros, .plot_timeseries_asientos, .plot_timeseries_vuelos)`
+# Internacional
 
-## Estadísticas Provinciales de Vuelos Internacionales
-`r rmdautotabs(input_data = aero_internacional_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_timeseries_pasajeros, .plot_timeseries_asientos, .plot_timeseries_vuelos)`
+```{r}
+plot_internacional
+```
+
