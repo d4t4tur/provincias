@@ -26,22 +26,62 @@ base_pn <- left_join(base_pn, provincias) %>%
 
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
 
-parques_nest_data <- base_pn %>% 
+parques_data <- base_pn %>% 
   filter(anio >= 2017 & anio < 2022) %>% 
   group_by(anio, provincia, etiq_parque, residencia) %>% 
   summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
   pivot_wider(id_cols = c(anio, provincia, etiq_parque), names_from = residencia, values_from = visitantes) %>% 
   janitor::clean_names() %>% 
-  mutate( total = no_residentes + residentes) %>% 
+  mutate(total = no_residentes + residentes) %>% 
   arrange(desc(anio), provincia) %>% 
   rename(Provincia = provincia, "Parque Nacional" = etiq_parque, 
-         "No residentes" = no_residentes, "Reesidentes" = residentes,
-         Total = total, Año = anio) %>% 
-  #janitor::adorn_totals() %>% 
-  datatable(., extensions = 'RowGroup', options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
-                           dom = 'lrtipB'),
-            rownames= FALSE,filter = 'top'
-  )
+         "No residentes" = no_residentes, "Residentes" = residentes,
+         Total = total, Año = anio) 
+
+
+
+plot_parques <- highlight_key(parques_data, ~ Provincia)
+
+dt_parques <- datatable(plot_parques, extensions = 'RowGroup', 
+                        options = list(lengthMenu = c(10, 25, 50), 
+                                       pageLength = 10, 
+                                       dom = 'lrtipB'),
+                        rownames= FALSE,filter = 'top'
+)
+
+parques_data <- base_pn %>% 
+  filter(anio >= 2017 & anio < 2022) %>% 
+  mutate(fecha = as.Date(paste0(anio,"-",mes, "-01"))) %>% 
+  group_by(fecha, provincia, etiq_parque, residencia) %>% 
+  summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
+  rename(Provincia = provincia)
+
+plot_parques <- highlight_key(parques_data, ~ Provincia)
+
+
+gg <- ggplot(plot_parques) + 
+  geom_line(aes(fecha, visitantes, group = residencia, color = residencia)) +
+  geom_point(aes(fecha, visitantes, group = residencia, color = residencia, text = paste0(etiq_parque, "<br>", format(visitantes, big.mark = "."), " visitantes"))) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+graph_cabotaje <- bscols(
+  filter_select("id", "Elegir una provincia", plot_cabotaje, ~ Provincia,
+                multiple = FALSE),
+  ggplotly(gg, dynamicTicks = TRUE, tooltip = "text"),
+  widths = c(12, 12)
+)
+
+
+cabotaje <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12), 
+         graph_cabotaje,
+         dt_cabotaje)
+)
+
+write_rds(cabotaje, "outputs/graph_cabotaje.rds")
+
 
 write_rds(parques_nest_data, "outputs/parques_nest_data.RDS")
 
