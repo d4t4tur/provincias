@@ -10,7 +10,7 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE, message = F)
 library(tidyverse)
 library(xaringanExtra)
-library(dnmye)
+library(d4t4tur)
 library(highcharter)
 library(gt)
 library(plotly)
@@ -24,11 +24,13 @@ prestadores_map_nest_data <- read_rds("outputs/empresas_map_nest_data.RDS")
 
 ```{r, include=FALSE, echo= FALSE, message=FALSE}
 xaringanExtra::use_panelset()
+
+
+# ## Resumen de Empresas Registradas por Provincia
+# `r rmdautotabs(input_data = prestadores_nest_data, panel_name = "provincia", .tablas_prov)`
+# 
+# 
+# ## Mapas de Empresas Registradas por Provincia
+# `r rmdautotabs(input_data = prestadores_map_nest_data, panel_name = "name_iso", .subplots)`
+
 ```
-
-## Resumen de Empresas Registradas por Provincia
-`r rmdautotabs(input_data = prestadores_nest_data, panel_name = "provincia", .tablas_prov)`
-
-
-## Mapas de Empresas Registradas por Provincia
-`r rmdautotabs(input_data = prestadores_map_nest_data, panel_name = "name_iso", .subplots)`

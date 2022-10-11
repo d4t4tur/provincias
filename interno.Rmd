@@ -9,7 +9,7 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE, message = F)
 library(tidyverse)
 library(xaringanExtra)
-library(dnmye)
+library(d4t4tur)
 library(highcharter)
 library(gt)
 ```
@@ -22,21 +22,23 @@ evyth_nest_data <- read_rds("outputs/evyth_nest_data.RDS")
 
 ```{r, include=FALSE, echo= FALSE, message=FALSE}
 xaringanExtra::use_panelset()
+
+# ## Datos principales
+# `r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .tablas_prov)`
+# 
+# ## Series de Tiempo
+# `r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .plot_timeseries)`
+# 
+# ## Perfil del turista
+# `r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .motivo, .alojamiento, .transporte, .edad)`
+# 
+# ## Principales actividades
+# `r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .actividades)`
+# 
+# ## Principales localidades
+# `r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .localidades)`
 ```
 
 
-## Datos principales
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .tablas_prov)`
 
-## Series de Tiempo
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .plot_timeseries)`
-
-## Perfil del turista
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .motivo, .alojamiento, .transporte, .edad)`
-
-## Principales actividades
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .actividades)`
-
-## Principales localidades
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .localidades)`
 
