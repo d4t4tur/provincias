@@ -7,27 +7,10 @@ site: distill::distill_website
 
 ```{r libraries-source, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
-library(tidyverse)
-library(xaringanExtra)
-library(d4t4tur)
-library(highcharter)
-library(gt)
+
+receptivo_data <- readRDS("outputs/graph_receptivo.rds")
 ```
 
-```{r, include=FALSE}
-
-receptivo_nest_data <- read_rds("outputs/receptivo_nest_data.RDS")
-```
-
-
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
-
-
-# ## Principales Pasos Internacionales
-# `r rmdautotabs(input_data = receptivo_nest_data, panel_name = "prov", .tablas_prov)`
-# 
-# ## Evolución del Volumen de Visitantes por Paso Internacional
-# `r rmdautotabs(input_data = receptivo_nest_data, panel_name = "prov", .plot_timeseries)`
-
+```{r}
+receptivo_data
 ```
