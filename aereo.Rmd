@@ -18,12 +18,17 @@ plot_internacional <- readRDS("outputs/graph_internacional.rds")
 
 # Cabotaje
 
+<br>
 ```{r}
 plot_cabotaje
 ```
 
+<br>
+<br>
+
 # Internacional
 
+<br>
 ```{r}
 plot_internacional
 ```
