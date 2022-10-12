@@ -1,555 +1,726 @@
-library(highcharter)
 library(tidyverse)
-library(haven)
+library(arrow)
+library(crosstalk)
+library(survey)
+library(plotly)
+library(DT)
 library(lubridate)
-library(gt)
-library(glue)
-source(file = "scripts/aux_function.R")
-#### EVYTH ####
-# revisar si esto sirve o habría que generar algo nuevo más limpio
-# agregar N turistas!!
-#BASES EVYTH
-evyth <- read_sav("/srv/DataDNMYE/evyth/mensual/EVyTH_Ondas22012a202111_USU4_VIAJES-PERSONAS_(VISITANTES-COMPLETA).zip") %>%
-  mutate(mes3  = as.numeric(substr(Mes,5,6))) %>%
-  filter(anio >= 2012)
+source(here::here("scripts/","auxiliar_evyth.R"))
 
-#sjPlot::view_df(evyth_2019)
-#TIPO DE CAMBIO PARA TENER GASTO EN USD
-tipos_de_cambio <- read.csv("/srv/DataDNMYE/mulc/base_tipos_de_cambio.csv",fileEncoding="latin1") %>%
-  mutate(Fecha = mdy(Fecha)) %>%
-  select(anio = Año, mes = Mes, fecha = Fecha,tc_oficial = EE.UU..Oficial) %>%
-  mutate(tc_oficial = as.numeric(tc_oficial))
+#### cargo y preparo la base ####
+# b_evyth <- read_csv("http://datos.yvera.gob.ar/dataset/b5819e9b-5edf-4aad-bd39-a81158a2b3f3/resource/645e5505-68ee-4cfa-90f9-fcc9a4a34a85/download/evyth_microdatos.csv")
+b_evyth <- arrow::read_parquet("/srv/DataDNMYE/evyth/base_trabajo/evyth_base_de_trabajo.parquet",
+                               as_data_frame = TRUE) #%>%
+# rename_with(.cols = starts_with("gasto_pc_constantes"),
+#             .fn = ~ str_remove(.x, "[^gasto_pc_constantes$].*"))
+provincias_region <- b_evyth %>% distinct(provincia_destino, region_destino)
 
-#CALCULO tc mensual:
-tc_mensual <- tipos_de_cambio %>%
-  group_by(anio,mes) %>%
-  summarise(tc_oficial = mean(tc_oficial,na.rm=T))
+b_evyth <- b_evyth %>% crear_etiqueta(variables = c("px09_t",
+                                                    "p006_agrup",
+                                                    "px08_agrup",
+                                                    "px10_1_t"))
 
-evyth <- left_join(evyth, tc_mensual,by=c("anio"="anio","mes3"="mes"))
-evyth$Provincia <- as_factor(evyth$provincia_destino)
 
-# para unir Prov Bs As en una sola categoria
-evyth <- evyth %>%
-  mutate(Provincia = fct_collapse(Provincia,
-                                  "Buenos Aires" = c("Partidos del GBA (Pcia. Bs. As.)",
-                                                     "Buenos Aires (Resto)")
+
+b_evyth <- b_evyth %>%
+  mutate ( transporte  = as_factor(px09_t),  #transporte
+           edad = as_factor(p006_agrup), #Edad en tramos
+           alojamiento = as_factor(px08_agrup),#Tipo de alojamiento (agrupado)
+           motivo = as_factor(px10_1_t)) #Motivo ppal del viaje agrupado
+
+b_evyth <- b_evyth %>% 
+  mutate(turismo_cultura = case_when(px17_2_7 == 1|
+                                       px17_2_8 == 1|
+                                       px17_2_9 == 1|
+                                       px17_2_10 == 1 ~ 1,
+                                     T ~ 0),
+         turismo_naturaleza = case_when(
+           px17_2_1 == 1 |
+             px17_2_5 == 1 |
+             px17_2_11 == 1 |
+             px17_2_4 == 1 |
+             px17_2_6 == 1 ~ 1,
+           T ~ 0
+         )
   )
-  ) %>%
-  filter(anio < 2020)
 
-levels(evyth$Provincia)[levels(evyth$Provincia) == "Tierra Del Fuego'"] <- "Tierra del Fuego, Antártida e Islas del Atlántico Sur"
 
-evyth_tabla_pais <- evyth %>%
-  filter(arg_o_ext == 1) %>%
-  group_by(anio) %>%
-  summarise(visitantes_gau = sum(pondera),
-            turistas = sum(pondera[tipo_visitante == 1]),
-            gasto_visitantes_pesos_real = sum(pondera*gasto_pc),
-            gasto_visitantes_usd = sum(pondera*gasto_pc / tc_oficial),
-            estadia_media_turistas = sum(pondera[tipo_visitante == 1] *px07[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1]),
-            gasto_promedio_usd_turistas = sum(pondera[tipo_visitante == 1]*gasto_pc[tipo_visitante == 1] / tc_oficial[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1]))
 
-evyth_tabla_pais_2019 <- evyth_tabla_pais %>%
-  filter(anio == 2019) %>%
-  pivot_longer(everything(),names_to="indicador",values_to = "total_pais")
+if (!is.numeric(b_evyth$gasto_pc)) {
+  b_evyth$gasto_pc <- parse_number(b_evyth$gasto_pc, locale = locale(decimal_mark = ","))
+}
 
-evyth_tabla_provincias <- evyth %>%
-  filter(arg_o_ext == 1) %>%
-  group_by(Provincia, anio, trimestre) %>%
-  summarise(visitantes_gau = sum(pondera),
-            turistas = sum(pondera[tipo_visitante == 1]),
-            gasto_visitantes_pesos_real = sum(pondera*gasto_pc),
-            gasto_visitantes_usd = sum(pondera*gasto_pc / tc_oficial),
-            estadia_media_turistas = sum(pondera[tipo_visitante == 1] *px07[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1]),
-            gasto_promedio_usd_turistas = sum(pondera[tipo_visitante == 1]*gasto_pc[tipo_visitante == 1] / tc_oficial[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1]))
 
-evyth_tabla_provincias_2019 <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019) %>% 
-  group_by(Provincia) %>%
-  summarise(visitantes_gau = sum(pondera),
-            turistas = sum(pondera[tipo_visitante == 1]),
-            gasto_visitantes_pesos_real = sum(pondera*gasto_pc),
-            gasto_visitantes_usd = sum(pondera*gasto_pc / tc_oficial),
-            estadia_media_turistas = sum(pondera[tipo_visitante == 1] *px07[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1]),
-            gasto_promedio_usd_turistas = sum(pondera[tipo_visitante == 1]*gasto_pc[tipo_visitante == 1] / tc_oficial[tipo_visitante == 1])/sum(pondera[tipo_visitante == 1])) %>%
-  pivot_longer(-c(Provincia),names_to="indicador",values_to = "valor_provincia")
+b_evyth$fecha <- lubridate::ym(b_evyth$Mes)
 
-evyth_indicadores_2019 <- left_join(evyth_tabla_provincias_2019 , evyth_tabla_pais_2019) %>%
-  filter(indicador != "gasto_visitantes_pesos_real" & !is.na(Provincia)) %>%
-  mutate(unidad = case_when(indicador == "visitantes_gau" ~ "personas",
-                            indicador == "turistas" ~ "personas",
-                            indicador == "gasto_visitantes_pesos_real" ~ "pesos",
-                            indicador == "gasto_visitantes_usd" ~ "dólares",
-                            indicador == "estadia_media_turistas" ~ "noches",
-                            indicador == "gasto_promedio_usd_turistas" ~ "dólares")) %>%
-  mutate(indicador = case_when(indicador == "visitantes_gau" ~ "Visitantes",
-                               indicador == "turistas" ~ "Turistas",
-                               indicador == "gasto_visitantes_usd" ~ "Gasto Total USD (visitantes)",
-                               indicador == "estadia_media_turistas" ~ "Estadía media (turistas)",
-                               indicador == "gasto_promedio_usd_turistas" ~ "Gasto promedio USD (turistas)")) %>%
-  mutate(fuente = "Encuesta de Viajes y Turismo de los Hogares") %>%
-  mutate(unidad = str_to_sentence(unidad),
-         indicador = str_to_sentence(indicador),
-         part_pais = valor_provincia / total_pais) %>%
-  mutate(part_pais = case_when(
-    indicador %in% c("Estadía media (turistas)",
-                     "Gasto promedio usd (turistas)") ~ as.character(round(part_pais,2)),
-    indicador == "Part. de los residentes (%)" ~ "-",
-    TRUE ~ paste0(round(part_pais * 100, 1), "%"))
-  ) %>%
-  select(Provincia, indicador, valor_provincia, total_pais, part_pais, unidad, fuente)
+b_evyth <- b_evyth %>% bind_ipc(var_join_x = "fecha")
 
-perfil_transporte <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019 & tipo_visitante == 1) %>%
-  mutate(categorias = as_factor(px09_t)%>%
-           fct_recode("Otros" = "Resto",
-                      "Automóvil" = "Automovil",
-                      "Ómnibus" = "Omnibus") %>%
-           fct_relevel("Otros", after = Inf)) %>%
-  group_by(Provincia, categorias) %>% #tipo de transporte
-  summarise(n = sum(pondera)) %>%
-  mutate(valor =  n/sum(n),
-         indicador = "Tipo de transporte") %>%
-  select(-n) %>% 
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_perfil_transporte = -Provincia)
-
-perfil_motivo <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019 & tipo_visitante == 1) %>%
-  mutate(categorias = as_factor(px10_1_t) %>%
-           fct_recode("Otros" = "Resto") %>%
-           fct_relevel("Otros", after = Inf)) %>%
-  group_by(Provincia, categorias) %>% #tipo de transporte
-  summarise(n = sum(pondera)) %>%
-  mutate(valor =  n/sum(n),
-         indicador = "Motivo de viaje") %>%
-  select(-n) %>% 
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_perfil_motivo = -Provincia)
-
-perfil_edad <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019 & tipo_visitante == 1) %>%
-  mutate(categorias = as_factor(p006_agrup)) %>%
-  group_by(Provincia, categorias) %>% #tipo de transporte
-  summarise(n = sum(pondera),
-            indicador = "Edad") %>%
-  mutate(valor =  n/sum(n)) %>%
-  select(-n) %>% 
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_perfil_edad = -Provincia)
-
-perfil_alojamiento <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019 & tipo_visitante == 1) %>%
-  mutate(categorias = as_factor(px08_agrup)) %>%
-  mutate(categorias = fct_recode(categorias,
-                                 "Hotel" = "Hotel o similar hasta 4 estrellas",
-                                 "Hotel" = "Hotel similar 4 o 5 estrellas",
-                                 "Otros" = "Camping",
-                                 "Otros" = "Resto") %>%
-           fct_relevel("Otros", after = Inf)
-  ) %>%
-  group_by(Provincia, categorias) %>% #tipo de transporte
-  summarise(n = sum(pondera),
-            indicador = "Tipo de alojamiento") %>%
-  mutate(valor =  n/sum(n)) %>%
-  select(-n) %>% 
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_perfil_alojamiento = -Provincia)
-
-perfil_evyth <- perfil_motivo %>% 
-  left_join(perfil_transporte, by = "Provincia") %>% 
-  left_join(perfil_alojamiento, by = "Provincia") %>% 
-  left_join(perfil_edad, by = "Provincia")
-
-# actividades
-actividades <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019 & tipo_visitante == 1) %>%
-  select(68:80, pondera, Provincia) %>%
-  pivot_longer(-c(pondera, Provincia), names_to = "actividad") %>%
-  mutate(value = ifelse(value %in% c(2,9) | is.na(value), 0, value)) %>%
+b_evyth <-  b_evyth %>% 
   mutate(
-    actividad = case_when(
-      actividad == "px17_2_1" ~ "Actividades rurales (Estancias, granjas, etc.)",
-      actividad =="px17_2_2"~ "Spa, termas, etc.",
-      actividad =="px17_2_3"~ "Playas (mar, río, lago)",
-      actividad =="px17_2_4"~ "Esqui, snowboard, u otro deporte de nieve",
-      actividad =="px17_2_5"~"Deportes de aventura (montanismo, rafting, etc.)",
-      actividad =="px17_2_6"~"Caza o  pesca",
-      actividad =="px17_2_7"~"Espectáculos deportivos",
-      actividad =="px17_2_8"~"Actos o festividades religiosas",
-      actividad =="px17_2_9"~"Teatro, cine, o conciertos",
-      actividad =="px17_2_10"~"Museos, monumentos, parques temáticos, etc.",
-      actividad =="px17_2_11"~ "Parques nacionales o provinciales, reservas, etc.",
-      actividad =="px17_2_12"~"Casinos o bingos",
-      actividad =="px17_2_13" ~ "Salidas nocturnas (discotecas, bares, etc.)"
-    ) %>% as_factor()
-  ) %>%
-  group_by(Provincia, actividad) %>%
-  summarise(part = sum(pondera[value == 1])/sum(pondera)) %>%
-  group_by(Provincia) %>%
-  mutate(actividad = fct_lump(f = actividad, n =9, other_level = "Otras", w = part)) %>%
-  group_by(Provincia, actividad) %>%
-  summarise(valor = sum(part)) %>%
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_column_actividades = -Provincia)
+    #var  = ipc_ng_nacional/b_evyth$ipc_ng_nacional[which.max(b_evyth$fecha)] -1,
+    gasto_pc_constantes = b_evyth$ipc_ng_nacional[which.max(b_evyth$fecha)]/b_evyth$ipc_ng_nacional*gasto_pc,
+    gasto_pc_real_indice = gasto_pc/ipc_ng_nacional
+  ) 
 
-#localidades
+# filtro para excluir trims incompletos
+ultimo_trim <- b_evyth %>% filter(is.na(pondera)) %>% distinct(anio, trimestre)
 
-evyth_tabla_localidades_2019 <- evyth %>%
-  filter(arg_o_ext == 1 & anio == 2019) %>% 
-  group_by(Provincia, localidad_destino) %>%
-  summarise(visitantes_gau = sum(pondera)) %>%
-  mutate(localidad_destino = as_factor(localidad_destino)) %>% 
-  mutate(localidad_destino = fct_lump(localidad_destino, n = 14, w = visitantes_gau, other_level = "Otras"))%>% 
-  mutate(localidad_destino = fct_recode(localidad_destino, "Ns.Nc." = "999", "Otras" = "998"))%>% 
-  group_by(Provincia, localidad_destino) %>%
-  summarise(visitantes = sum(visitantes_gau)) %>%
-  group_by(Provincia) %>% 
-  mutate(visitantes = visitantes/sum(visitantes)) %>% 
-  pivot_longer(-c(Provincia, localidad_destino),names_to="indicador",values_to = "valor") %>% 
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_column_localidades = -Provincia)
+b_evyth <- b_evyth %>%
+  filter(anio >= 2017 & anio <year(today())) %>% 
+  filter(
+    arg_o_ext == 1
+  )
 
-#### salidas ####
-gt_evyth_tabla_pais_2019 <- evyth_tabla_pais_2019 %>%
-  filter(!indicador %in% c("gasto_visitantes_pesos_real", "anio")) %>%
-  mutate(unidad = case_when(indicador == "visitantes_gau" ~ "personas",
-                            indicador == "turistas" ~ "personas",
-                            indicador == "gasto_visitantes_pesos_real" ~ "pesos",
-                            indicador == "gasto_visitantes_usd" ~ "dólares",
-                            indicador == "estadia_media_turistas" ~ "noches",
-                            indicador == "gasto_promedio_usd_turistas" ~ "dólares")) %>%
-  mutate(indicador = case_when(indicador == "visitantes_gau" ~ "Visitantes",
-                               indicador == "turistas" ~ "Turistas",
-                               indicador == "gasto_visitantes_usd" ~ "Gasto Total USD (visitantes)",
-                               indicador == "estadia_media_turistas" ~ "Estadía media (turistas)",
-                               indicador == "gasto_promedio_usd_turistas" ~ "Gasto promedio USD (turistas)")) %>%
-  mutate(unidad = str_to_sentence(unidad),
-         indicador = str_to_sentence(indicador)) %>%
-  select(indicador, total_pais, unidad) %>%
-  gt() %>%
-  cols_label(
-    indicador  = md("**Indicador**"),
-    total_pais = md("**Total País**"),
-    unidad     = md("**Unidad de medida**"),
-  )  %>%
-  fmt_number(
-    columns = c("total_pais"),
-    rows = c(1:3),
-    decimals = 0,
-    sep_mark = ".",
-    dec_mark = ","
-  ) %>%
-  fmt_number(
-    columns = c("total_pais"),
-    rows = c(4,5),
-    decimals = 2,
-    sep_mark = ".",
-    dec_mark = ","
-  ) %>%
-  cols_align(align = "center",
-             columns = c(total_pais, unidad))  %>%
-  opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-  tab_options(table.align = "center",
-              row_group.font.weight = "bold",
-  ) %>%
-  tab_header(title = md(glue("**Turismo Interno**")),
-             subtitle = "Total Nacional Año 2019") %>%
-  tab_source_note(source_note = md(
-    glue(
-      "**Fuente:** Encuesta de Viajes y Turismo de los Hogares"
-      #"**Fuente**: DNMyE ({unique(indicadores_oferta$fuente)[1]}, {unique(indicadores_oferta$fuente)[2]}, {unique(indicadores_oferta$fuente)[3]})"
+# check que no haya na en pondera
+print(any(is.na(b_evyth$pondera)))
+
+b_evyth$vis <- ifelse(b_evyth$arg_o_ext == 1,1,0)
+
+
+evyth_nest_anio <- b_evyth %>% 
+  group_by(anio) %>% 
+  nest()
+
+#### disenios ####
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(disenios  = map(.x = data, .f = disenio_evyth))
+
+#### ppales numeros nacionales ####
+
+#b_evyth_cv <- b_evyth %>% filter(anio == 2019)
+
+
+
+f_totales <- formula("~ vis+I(tipo_visitante==1)+gasto_pc+gasto_pc_constantes+px07")
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_totales = map(.x = disenios,
+                                    .f = ~estimar_totales(disenio = .x, formulas = f_totales)))
+
+f_promedios <- formula("~gasto_pc+gasto_pc_constantes+px07")
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_promedios = map(.x = disenios,
+                                      .f = ~estimar_promedios(disenio = .x,
+                                                              formulas = f_promedios)))
+
+#### ppales numeros provinciales ####
+
+f_totales_prov <- formula("~ vis+I(tipo_visitante==1)+gasto_pc+gasto_pc_constantes+px07")
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_totales_prov = map(.x = disenios,
+                                         .f = ~estimar_totales_prov(disenio = .x,
+                                                                    formulas = f_totales_prov)))
+
+f_promedios_prov <- formula("~ gasto_pc+gasto_pc_constantes+px07")
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_promedios_prov = map(.x = disenios,
+                                           .f = ~estimar_promedios_prov(disenio = .x,
+                                                                        formulas = f_promedios_prov)))
+
+#### ppales numeros por region ####
+
+f_totales_region <- formula("~ vis+I(tipo_visitante==1)+gasto_pc+gasto_pc_constantes+px07")
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_totales_region = map(.x = disenios,
+                                           .f = ~estimar_totales_region(disenio = .x,
+                                                                        formulas = f_totales_region)))
+
+f_promedios_region <- formula("~ gasto_pc+gasto_pc_constantes+px07")
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_promedios_region = map(.x = disenios,
+                                             .f = ~estimar_promedios_region(disenio = .x,
+                                                                            formulas = f_promedios_region)))
+
+
+#### tablas de valores ####
+# preparar tablas en formato apto gt
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_totales_prov  = map(.x = estimaciones_totales_prov,
+                                          .f = ~armar_tabla(.x)))
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_promedios_prov  = map(.x = estimaciones_promedios_prov,
+                                            .f = ~armar_tabla(.x)))
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_totales_region  = map(.x = estimaciones_totales_region,
+                                            .f = ~armar_tabla(.x, var_group = "region_destino")))
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(estimaciones_promedios_region  = map(.x = estimaciones_promedios_region,
+                                              .f = ~armar_tabla(.x, var_group = "region_destino")))
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    across(
+      c(estimaciones_totales, estimaciones_totales_region, estimaciones_totales_prov),
+      .fns = ~ map(.x = .x, .f = ~  mutate(.data = .x, indicadores = case_when(
+        indicadores == "vis" ~ "visitantes",
+        indicadores == "I(tipo_visitante == 1)FALSE" ~ "excursionistas",
+        indicadores == "I(tipo_visitante == 1)TRUE" ~ "turistas",
+        indicadores == "px07" ~ "pernoctaciones",
+        T ~ indicadores
+      )
+      ))
+    )
+  )
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    across(
+      c(estimaciones_promedios, estimaciones_promedios_region, estimaciones_promedios_prov),
+      .fns = ~ map(.x = .x, .f = ~  mutate(.data = .x, indicadores = case_when(
+        indicadores == "gasto_pc" ~ "gasto_pc_promedio",
+        indicadores == "gasto_pc_constantes" ~ "gasto_pc_cte_promedio",
+        indicadores == "px07" ~ "estadia_promedio"
+      )
+      ))
+    )
+  )
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(tabla_nac  = map2(.x = estimaciones_totales,
+                           .y = estimaciones_promedios,
+                           .f = bind_rows),
+         tabla_prov = map2(.x = estimaciones_totales_prov,
+                           estimaciones_promedios_prov,
+                           .f = bind_rows),
+         tabla_region = map2(.x = estimaciones_totales_region,
+                             estimaciones_promedios_region,
+                             .f = bind_rows)
+  )
+
+
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    tabla_conjunta = pmap(.l =  list(tabla_prov, tabla_region, tabla_nac),
+                          .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)
+    )
+  )
+
+#### armado de perfiles ####
+
+# la conversion a factor hacerla antes del armado de los disenios de encuesta
+# respecto a las actividades recategorizar entre turismo de naturaleza y  otro turismo/turismo de cultura
+# esa categoría hay que convertirla en factor
+
+# b_evyth <- b_evyth %>%
+#   mutate ( transporte  = as_factor(px09_t),  #transporte
+#            edad = as_factor(p006_agrup), #Edad en tramos
+#            alojamiento = as_factor(px08_agrup),#Tipo de alojamiento (agrupado)
+#            motivo = as_factor(px10_1_t)) #Motivo ppal del viaje agrupado
+# 
+# 
+# 
+# b_evyth <- b_evyth %>% 
+#   mutate(tipo_turismo 
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(perfil_transporte  = map(.x = disenios,
+                                  .f = ~calcular_prop(disenio = .x,
+                                                      variable = "transporte")),
+         perfil_edad  = map(.x = disenios,
+                            .f = ~calcular_prop(disenio = .x,
+                                                variable = "edad")),
+         perfil_alojamiento  = map(.x = disenios,
+                                   .f = ~calcular_prop(disenio = .x,
+                                                       variable = "alojamiento")),
+         perfil_motivo  = map(.x = disenios,
+                              .f = ~calcular_prop(disenio = .x,
+                                                  variable = "motivo")),
+         perfil_turismo_naturaleza  = map(.x = disenios,
+                                          .f = ~calcular_prop(disenio = .x, variable = "turismo_naturaleza",
+                                                              f = "I(turismo_naturaleza == 1)")),
+         perfil_turismo_cultura  = map(.x = disenios,
+                                       .f = ~calcular_prop(disenio = .x, variable = "turismo_cultura",
+                                                           f = "I(turismo_cultura == 1)"))
+  )
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(perfil_transporte_reg  = map(.x = disenios,
+                                      .f = ~calcular_prop_by(disenio = .x,  agrupamiento = "region_destino",
+                                                             variable = "transporte")),
+         perfil_edad_reg = map(.x = disenios,
+                               .f = ~calcular_prop_by(disenio = .x, agrupamiento = "region_destino",
+                                                      variable = "edad")),
+         perfil_alojamiento_reg = map(.x = disenios,
+                                      .f = ~calcular_prop_by(disenio = .x, agrupamiento = "region_destino",
+                                                             variable = "alojamiento")),
+         perfil_motivo_reg = map(.x = disenios,
+                                 .f = ~calcular_prop_by(disenio = .x, agrupamiento = "region_destino",
+                                                        variable = "motivo")),
+         perfil_turismo_naturaleza_reg = map(.x = disenios,
+                                             .f = ~calcular_prop_by(disenio = .x, agrupamiento = "region_destino",   variable = "turismo_naturaleza",
+                                                                    f = "I(turismo_naturaleza == 1)")),
+         perfil_turismo_cultura_reg = map(.x = disenios,
+                                          .f = ~calcular_prop_by(disenio = .x, agrupamiento = "region_destino", variable = "turismo_cultura",
+                                                                 f = "I(turismo_cultura == 1)")
+         )
+  )
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(perfil_transporte_prov  = map(.x = disenios,
+                                       .f = ~calcular_prop_by(disenio = .x,  agrupamiento = "provincia_destino",
+                                                              variable = "transporte")),
+         perfil_edad_prov = map(.x = disenios,
+                                .f = ~calcular_prop_by(disenio = .x, agrupamiento = "provincia_destino",
+                                                       variable = "edad")),
+         perfil_alojamiento_prov = map(.x = disenios,
+                                       .f = ~calcular_prop_by(disenio = .x, agrupamiento = "provincia_destino",
+                                                              variable = "alojamiento")),
+         perfil_motivo_prov = map(.x = disenios,
+                                  .f = ~calcular_prop_by(disenio = .x, agrupamiento = "provincia_destino",
+                                                         variable = "motivo")),
+         perfil_turismo_naturaleza_prov = map(.x = disenios,
+                                              .f = ~calcular_prop_by(disenio = .x, agrupamiento = "provincia_destino",   variable = "turismo_naturaleza",
+                                                                     f = "I(turismo_naturaleza == 1)")),
+         perfil_turismo_cultura_prov = map(.x = disenios,
+                                           .f = ~calcular_prop_by(disenio = .x, agrupamiento = "provincia_destino", variable = "turismo_cultura",
+                                                                  f = "I(turismo_cultura == 1)"))
+  )
+
+
+# para variable de perfil hay que hacer el join de tablas igual que hicimos
+# antes con los promedios
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    perfil_transporte_prov  = map(.x = perfil_transporte_prov,
+                                  .f = ~armar_tabla(.x)),
+    perfil_edad_prov = map(.x = perfil_edad_prov,
+                           .f = ~armar_tabla(.x)),
+    perfil_alojamiento_prov = map(.x = perfil_alojamiento_prov,
+                                  .f = ~armar_tabla(.x)),
+    perfil_motivo_prov = map(.x = perfil_motivo_prov,
+                             .f = ~armar_tabla(.x)),
+    perfil_turismo_cultura_prov = map(.x = perfil_turismo_cultura_prov,
+                                      .f = ~armar_tabla(.x)),
+    perfil_turismo_naturaleza_prov = map(.x = perfil_turismo_naturaleza_prov,
+                                         .f = ~armar_tabla(.x))
+  )
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    perfil_transporte_reg  = map(.x = perfil_transporte_reg,
+                                 .f = ~armar_tabla(.x, var_group = "region_destino")),
+    perfil_edad_reg = map(.x = perfil_edad_reg,
+                          .f = ~armar_tabla(.x, var_group = "region_destino")),
+    perfil_alojamiento_reg = map(.x = perfil_alojamiento_reg,
+                                 .f = ~armar_tabla(.x, var_group = "region_destino")),
+    perfil_motivo_reg = map(.x = perfil_motivo_reg,
+                            .f = ~armar_tabla(.x, var_group = "region_destino")),
+    perfil_turismo_cultura_reg = map(.x = perfil_turismo_cultura_reg,
+                                     .f = ~armar_tabla(.x, var_group = "region_destino")),
+    perfil_turismo_naturaleza_reg = map(.x = perfil_turismo_naturaleza_reg,
+                                        .f = ~armar_tabla(.x, var_group = "region_destino")))
+
+
+evyth_nest_anio <- evyth_nest_anio %>% 
+  mutate(
+    tabla_conjunta_transporte = pmap(.l =  list(perfil_transporte_prov, perfil_transporte_reg, perfil_transporte),
+                                     .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)),
+    tabla_conjunta_edad = pmap(.l =  list(perfil_edad_prov, perfil_edad_reg, perfil_edad),
+                               .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)),
+    tabla_conjunta_alojamiento = pmap(.l =  list(perfil_alojamiento_prov, perfil_alojamiento_reg, perfil_alojamiento),
+                                      .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)),
+    tabla_conjunta_motivo = pmap(.l =  list(perfil_motivo_prov, perfil_motivo_reg, perfil_motivo),
+                                 .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)),
+    tabla_conjunta_tur_naturaleza = pmap(.l =  list(perfil_turismo_naturaleza_prov, perfil_turismo_naturaleza_reg, perfil_turismo_naturaleza),
+                                         .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3)),
+    tabla_conjunta_tur_cultura = pmap(.l =  list(perfil_turismo_cultura_prov, perfil_turismo_cultura_reg, perfil_turismo_cultura),
+                                      .f = ~ tabla_conjunta(prov = ..1, reg = ..2, nac = ..3))
+  )
+
+# tabla de localidades como absolutos y como proporciones sobre el total pais
+
+
+# salidas ----
+
+
+salidas <- evyth_nest_anio %>% 
+  select(anio, starts_with("tabla_conjunta"))
+
+salidas <- salidas %>% 
+  mutate(tabla_conjunta = map(.x = tabla_conjunta,
+                              .f = ~ mutate(.data = .x, 
+                                            indicadores = case_when(
+                                              indicadores == "gasto_pc" ~ "gasto total",
+                                              indicadores == "gasto_pc_constantes" ~ "gasto total (pesos constantes)",
+                                              indicadores == "gasto_pc_promedio" ~ "gasto por turista",
+                                              indicadores == "gasto_pc_cte_promedio" ~ "gasto por turista (pesos constantes)",
+                                              indicadores == "estadia_promedio" ~ "estadía promedio",
+                                              T ~ indicadores
+                                            )
+                              )
+  ),
+  tabla_conjunta_tur_cultura = map(.x = tabla_conjunta_tur_cultura, 
+                                   .f = ~ .x %>% mutate(
+                                     indicadores = case_when(
+                                       indicadores == "I( == 1)FALSE" ~ "no realizó turismo de cultura",
+                                       indicadores == "I( == 1)TRUE" ~ "realizó turismo de cultura", 
+                                     )
+                                   )),
+  tabla_conjunta_tur_naturaleza = map(.x = tabla_conjunta_tur_naturaleza, 
+                                      .f = ~ .x %>% mutate(
+                                        indicadores = case_when(
+                                          indicadores == "I( == 1)FALSE" ~ "no realizó turismo de naturaleza",
+                                          indicadores == "I( == 1)TRUE" ~ "realizó turismo de naturaleza" 
+                                        )
+                                      ))
+  )
+
+
+
+salidas <- salidas %>%
+  mutate(tabla_conjunta =  map(
+    .x = tabla_conjunta,
+    .f = ~ filter(
+      .data = .x,
+      !indicadores %in% c(
+        "visitantes",
+        "gasto total",
+        "gasto por turista",
+        "gasto por turista (pesos constantes)",
+        "estadía promedio"
+      )
     )
   ))
 
-#treemap visitantes por provincia
-evyth_treemap_vis_nac <- evyth_indicadores_2019 %>%
-  filter(indicador == "Visitantes") %>%
-  hchart(type = "treemap", hcaes(x = paste0(Provincia,"<br>",
-                                            format(round(valor_provincia, 0),
-                                                   big.mark = ".", decimal.mark = ",")),
-                                 value = valor_provincia)) %>%
-  hc_title(
-    text = "Visitantes por Provincia. 2019",
-    margin = 20,
-    align = "left",
-    style = list(color = "#22A884", useHTML = TRUE)
+salidas <- salidas %>%
+  mutate(tabla_conjunta_alojamiento =  map(
+    .x = tabla_conjunta_alojamiento,
+    .f = ~ filter(
+      .data = .x,
+      !indicadores %in% c("Sin uso de alojamiento (Visitas de un dia)",
+                          "Sin uso de  (visitas de un día)"))
+  )
   )
 
-#treemap de gasto por provincias
-evyth_treemap_gasto_nac <- evyth_indicadores_2019 %>%
-  filter(indicador == "Gasto total usd (visitantes)") %>%
-  hchart(type = "treemap", hcaes(x = paste0(Provincia,"<br>",
-                                            format(round(valor_provincia/1000, 0), big.mark = ".", decimal.mark = ",")),
-                                 value = valor_provincia)) %>%
-  hc_title(
-    text = "Gasto total de visitantes por Provincia (Miles de usd.). 2019",
-    margin = 20,
-    align = "left",
-    style = list(color = "#22A884", useHTML = TRUE)
-  )
 
-#### provinciales ####
-#tabla por provincias
-evyth_nest_data <- evyth_indicadores_2019 %>%
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_column_indicadores = -Provincia)
+salidas <- salidas %>%
+  mutate(tabla_conjunta =  map(
+    .x = tabla_conjunta,
+    .f = ~ .x %>% mutate(indicadores = as_factor(indicadores))
+  ))
 
-evyth_nest_data <- left_join(evyth_nest_data, perfil_evyth, by = "Provincia")
-evyth_nest_data <- left_join(evyth_nest_data, actividades, by = "Provincia")
-evyth_nest_data <- left_join(evyth_nest_data, evyth_tabla_localidades_2019, by = "Provincia")
+salidas <- salidas %>%
+  mutate(tabla_conjunta_tipo_turismo =  map2(
+    .x = tabla_conjunta_tur_naturaleza,.y = tabla_conjunta_tur_cultura,
+    .f = ~ bind_rows(.x, .y)
+  ))
+
+salidas <- salidas %>%
+  mutate(tabla_conjunta_tipo_turismo =  map(
+    .x = tabla_conjunta_tipo_turismo, 
+    .f = ~ .x %>% mutate(indicadores = as_factor(indicadores))
+  ))
 
 
-evyth_gt_tables_prov <- function(x) {
-  x %>%
-    mutate(
-           valor_provincia = ifelse(indicador== "Gasto total usd (visitantes)", valor_provincia/10^6, valor_provincia),
-           total_pais = ifelse(indicador== "Gasto total usd (visitantes)",total_pais/10^6, total_pais),
-           indicador = ifelse(indicador== "Gasto total usd (visitantes)", "Gasto total millones usd (visitantes)", indicador))%>% 
-    select(-c(fuente, nombre_prov)) %>%
-    #relocate(indicador, valor_ruta, total_pais, unidad, fuente) %>%
-    gt() %>%
-    cols_label(
-      indicador  = md("**Indicador**"),
-      valor_provincia = md("**Provincia**"),
-      total_pais = md("**Total País**"),
-      part_pais  = md("**Provincia / País**"),
-      unidad     = md("**Unidad de medida**"),
-    )  %>%
-    fmt_number(
-      columns = c("valor_provincia", "total_pais"),
-      rows = c(1:3),
-      decimals = 0,
-      sep_mark = ".",
-      dec_mark = ",",
-    ) %>%
-    fmt_number(
-      columns = c("valor_provincia", "total_pais"),
-      rows = c(4,5),
-      decimals = 2,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>%
-    cols_align(align = "center",
-               columns = c(valor_provincia, total_pais, unidad))  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center",
-                row_group.font.weight = "bold",
-    ) %>%
-    tab_header(title = md(glue("**Turismo Interno {unique(x$nombre_prov)}**")),
-               subtitle = "Estadísticas de Turismo Año 2019") %>%
-    tab_source_note(source_note = md(
-      glue(
-        "**Fuente:** Encuesta de Viajes y Turismo de los Hogares"
-        #"**Fuente**: DNMyE ({unique(indicadores_oferta$fuente)[1]}, {unique(indicadores_oferta$fuente)[2]}, {unique(indicadores_oferta$fuente)[3]})"
-      )
-    ))
-}
+## PLOTS + DT interactivos
 
-perfiles_evyth_tables <- function(x) {
-  titulo <- unique(x$indicador)
-  if (!"Edad" %in% x$indicador) {
-    x <- x %>%
-      select(-c(nombre_prov, indicador)) %>%
-      # group_by(indicador) %>%
-      #relocate(indicador, valor_ruta, total_pais, unidad, fuente) %>%
-      filter(valor != 0) %>%
-      arrange(desc(valor)) %>%
-      mutate(orden = ifelse(categorias == "Otros", Inf,row_number())) %>%
-      arrange(orden) %>%
-      select(-orden)
-  } else {
-    x <-  x %>%
-      select(-c(nombre_prov, indicador))
-      # group_by(indicador) %>%
-      #relocate(indicador, valor_ruta, total_pais, unidad, fuente) %>%
-  }
+env_indicadores_ppales <- SharedData$new(data =   salidas %>% select(anio, tabla_conjunta) %>% unnest(),
+                                         key = ~ provincia_destino,
+                                         group = "provincia_destino")
+
+
+dt_indicadores_ppales <- datatable(env_indicadores_ppales, extensions = 'Buttons',
+                                   options = list(lengthMenu = c(10, 25), 
+                                                  pageLength = 10, 
+                                                  dom = 'lrtipB',buttons = list(list(
+                                                    extend = "copy",
+                                                    text = "Copiar"
+                                                  ),
+                                                  list(extend = 'collection',
+                                                       buttons = list(list(extend = 'csv', filename = "indicadores_evyth"),
+                                                                      list(extend = 'excel', filename = "indicadores_evyth")),
+                                                       text = 'Descargar'
+                                                  ))),
+                                   rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                                   colnames = c('Año', 'Provincia', 'Indicador', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = c(5,7,9), dec.mark = ",", digits = 1) %>% 
+  formatRound(columns = c(4,6,8), digits = 0, dec.mark = ",", mark = ".")
+
+
+gg_indicadores_ppales <- ggplot(env_indicadores_ppales) + 
+  geom_line(aes(anio, valor_prov, group = indicadores, color = indicadores)) +
+  geom_point(aes(anio, valor_prov, group = indicadores, color = indicadores, text = paste0(indicadores, "<br>", format(valor_prov, big.mark = "."))),
+             size = 3) +
+  theme_minimal() +
+  facet_wrap(~ indicadores, ncol = 1, scales = "fixed") +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("")
+
+indicadores_ppales <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         filter_select("interno-ppales", "Elegir una provincia", env_indicadores_ppales, ~ provincia_destino,
+                       multiple = F),
+         dt_indicadores_ppales,
+         ggplotly(gg_indicadores_ppales, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))#, height = 800, width = 1000
   
-  x %>% 
-    gt() %>%
-    cols_label(
-      categorias = md(""),
-      valor = md("**% del total de turistas**")
-    )  %>%
-    fmt_percent(
-      columns = "valor",
-      # rows = c(1:3),
-      decimals = 1,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>%
-    cols_align(align = "center",
-               columns = "valor")  %>%
-    cols_align(align = "left",
-               columns = "categorias")  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center",
-                row_group.font.weight = "bold",
-    ) %>%
-    tab_header(title = md(glue("**{titulo}**")),
-               subtitle = "Estadísticas de Turismo Año 2019") %>%
-    tab_source_note(source_note = md(
-      glue(
-        "**Fuente:** Encuesta de Viajes y Turismo de los Hogares"
-      )
-    )) %>%
-    tab_style(
-      style = cell_text(weight =  "bold"),
-      locations = cells_row_groups()
-    )
-}
+)
 
-actividades_evyth_tables <- function(x) {
-  x %>%
-    select(-nombre_prov) %>%
-    filter(valor != 0) %>%
-    arrange(desc(valor)) %>%
-    mutate(orden = ifelse(actividad == "Otras", Inf,row_number())) %>%
-    arrange(orden) %>%
-    select(-orden) %>%
-    #relocate(indicador, valor_ruta, total_pais, unidad, fuente) %>%
-    gt() %>%
-    cols_label(
-      actividad = md(""),
-      valor = md("**% del total de turistas**")
-    )  %>%
-    fmt_percent(
-      columns = "valor",
-      # rows = c(1:3),
-      decimals = 1,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>%
-    cols_align(align = "center",
-               columns = "valor")  %>%
-    cols_align(align = "left",
-               columns = "actividad")  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center",
-                row_group.font.weight = "bold",
-    ) %>%
-    tab_header(title = md(glue("**Actividades realizadas en {unique(x$nombre_prov)}**")),
-               subtitle = "Participación sobre el total de turistas. Año 2019") %>%
-    tab_source_note(source_note = md(
-      glue(
-        "**Fuente:** Encuesta de Viajes y Turismo de los Hogares"
-      )
-    ))
-}
+write_rds(indicadores_ppales, "outputs/interno_ppales.rds")
+
+## alojamientos
+env_alojamiento <- SharedData$new(data = salidas %>% 
+                                    select(anio, tabla_conjunta_alojamiento) %>% unnest(),
+                                  key = ~ provincia_destino,
+                                  group = "provincia_destino")
+
+dt_alojamiento <- datatable(env_alojamiento, extensions = 'Buttons',
+                            options = list(lengthMenu = c(10, 25), 
+                                           pageLength = 10, 
+                                           dom = 'lrtipB',buttons = list(list(
+                                             extend = "copy",
+                                             text = "Copiar"
+                                           ),
+                                           list(extend = 'collection',
+                                                buttons = list(list(extend = 'csv', filename = "alojamientos"),
+                                                               list(extend = 'excel', filename = "alojamientos")),
+                                                text = 'Descargar'
+                                           ))),
+                            rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                            colnames = c('Año', 'Provincia', 'Tipo de Alojamiento', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = 4:9, dec.mark = ",", digits = 2)
 
 
-localidad_evyth_tables <- function(x) {
-  x %>%
-    select(-nombre_prov) %>%
-    filter(valor != 0) %>%
-    arrange(desc(valor)) %>%
-    mutate(orden = ifelse(localidad_destino == "Otras", Inf,row_number())) %>%
-    arrange(orden) %>%
-    select(-c(orden, indicador)) %>%
-    #relocate(indicador, valor_ruta, total_pais, unidad, fuente) %>%
-    gt() %>%
-    cols_label(
-      localidad_destino = md(""),
-      valor = md("**% del total de visitantes**")
-    )  %>%
-    fmt_percent(
-      columns = "valor",
-      # rows = c(1:3),
-      decimals = 1,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>%
-    cols_align(align = "center",
-               columns = "valor")  %>%
-    cols_align(align = "left",
-               columns = "localidad_destino")  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center",
-                row_group.font.weight = "bold",
-    ) %>%
-    tab_header(title = md(glue("**Principales localidades de destino en {unique(x$nombre_prov)}**")),
-               subtitle = "Participación sobre el total de visitantes. Año 2019") %>%
-    tab_source_note(source_note = md(
-      glue(
-        "**Fuente:** Encuesta de Viajes y Turismo de los Hogares"
-      )
-    ))
-}
-
-evyth_nest_data <- evyth_nest_data %>%
-  mutate(.tablas_prov = map(nested_column_indicadores,  evyth_gt_tables_prov),
-         .actividades = map(nested_column_actividades, actividades_evyth_tables),
-         .localidades = map(nested_column_localidades, localidad_evyth_tables))
-
-perfil_evyth <- perfil_evyth %>% 
-    mutate(.motivo = map(nested_perfil_motivo, perfiles_evyth_tables),
-           .alojamiento = map(nested_perfil_alojamiento, perfiles_evyth_tables),
-           .transporte = map(nested_perfil_transporte, perfiles_evyth_tables),
-           .edad = map(nested_perfil_edad, perfiles_evyth_tables))
-
-#series temporales por provincias
-evyth_nest_data$nested_column_timeseries <- evyth_tabla_provincias %>%
-  select(-gasto_visitantes_pesos_real) %>%
-  pivot_longer(-c(Provincia, anio, trimestre),names_to="indicador",values_to = "valor_provincia") %>%
-  mutate(unidad = case_when(indicador == "visitantes_gau" ~ "personas",
-                            indicador == "turistas" ~ "personas",
-                            indicador == "gasto_visitantes_pesos_real" ~ "pesos",
-                            indicador == "gasto_visitantes_usd" ~ "dólares",
-                            indicador == "estadia_media_turistas" ~ "noches",
-                            indicador == "gasto_promedio_usd_turistas" ~ "dólares")) %>%
-  mutate(indicador = case_when(indicador == "visitantes_gau" ~ "Visitantes",
-                               indicador == "turistas" ~ "Turistas",
-                               indicador == "gasto_visitantes_usd" ~ "Gasto Total USD (visitantes)",
-                               indicador == "estadia_media_turistas" ~ "Estadía media (turistas)",
-                               indicador == "gasto_promedio_usd_turistas" ~ "Gasto promedio USD (turistas)")) %>%
-  mutate(fuente = "Encuesta de Viajes y Turismo de los Hogares") %>%
-  mutate(unidad = str_to_sentence(unidad),
-         indicador = str_to_sentence(indicador),
-         periodo = paste0(trimestre, "° ", anio)) %>%
-  mutate(nombre_prov = Provincia) %>%
-  nest(nested_column = -Provincia) %>%
-  .$nested_column
-
-# evyth_nest_data$nested_column_timeseries <- evyth_nest_data_timeseries$nested_column
-# rm(evyth_nest_data_timeseries)
-
-plot_timeseries_evyth <- function(x) {
-
-  highchart() %>%
-    hc_xAxis(categories = unique(x$periodo)) %>%
-    hc_yAxis_multiples(
-      list(offset = 0, min = 0, title = list(text = "Visitantes"), opposite = FALSE, top = "0%", height = "25%"),
-      list(offset = 0, min = 0, showLastLabel = FALSE, opposite = F, title = list(text = "Dólares (visitantes)"),  height = "25%", top = "25%"),
-      list(offset = 0, min = 0, showLastLabel = FALSE, opposite = F, title = list(text = "Cantidad de Días"), height = "25%", top = "50%"),
-      list(offset = 0, min = 0, showLastLabel = FALSE, opposite = F, title = list(text = "Dólares (turistas)"), height = "25%", top = "75%")) %>%
-    # hc_yAxis_multiples(create_yaxis(naxis = 4, title = list(text = c("Visitantes", "Visitantes", "Visitantes", "Visitantes")))) %>%
-    hc_add_series(data = round(x$valor_provincia[x$indicador == "Visitantes"], 0),
-                  yAxis = 0, name = "Visitantes") %>%
-    hc_add_series(data= round(x$valor_provincia[x$indicador == "Gasto total usd (visitantes)"], 0),
-                  yAxis = 1, name = "Gasto total usd (visitantes)") %>%
-    hc_add_series(data = round(x$valor_provincia[x$indicador == "Estadía media (turistas)"], 1),
-                  yAxis = 2, name = "Estadía media (turistas)") %>%
-    hc_add_series(data= round(x$valor_provincia[x$indicador == "Gasto promedio usd (turistas)"],0),
-                  name = "Gasto promedio usd (turistas)",
-                  yAxis = 3) %>%
-    hc_title(
-      text = glue("{unique(x$nombre_prov)}")
-    )
-}
-
-evyth_nest_data <- evyth_nest_data %>%
-  mutate(.plot_timeseries = map(nested_column_timeseries,
-                                plot_timeseries_evyth)
-  )
-
-evyth_nest_data <- evyth_nest_data %>% 
-  left_join(perfil_evyth, by = "Provincia")
-
-evyth_nest_data <- evyth_nest_data[,c(1,grep("^\\.", colnames(evyth_nest_data)))]
-
-evyth_nest_data <- evyth_nest_data %>%
-  ungroup()
+gg_alojamientos <- ggplot(env_alojamiento) + 
+  geom_bar(aes(anio, 100*valor_prov, group = indicadores, fill = indicadores, text = paste0(indicadores, "<br>", scales::label_percent(decimal.mark = ",", accuracy = 0.1)(valor_prov))),
+           stat = "identity", position = "dodge", color = "white") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("") 
 
 
-evyth_nest_data %>% 
-  write_rds(file = "outputs/evyth_nest_data.RDS")
+alojamientos <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         # filter_select("alojamiento", "Elegir una provincia", env_alojamiento, ~ provincia_destino,
+         #               multiple = F),
+         dt_alojamiento,
+         ggplotly(gg_alojamientos, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))
+  
+)
+
+write_rds(alojamientos, "outputs/alojamiento.rds")
+
+## edad
+
+env_edad <- SharedData$new(data = salidas %>% 
+                             select(anio, tabla_conjunta_edad) %>% unnest(),
+                           key = ~ provincia_destino,
+                           group = "provincia_destino")
+
+dt_edad <- datatable(env_edad, extensions = 'Buttons',
+                     options = list(lengthMenu = c(10, 25), 
+                                    pageLength = 10, 
+                                    dom = 'lrtipB',buttons = list(list(
+                                      extend = "copy",
+                                      text = "Copiar"
+                                    ),
+                                    list(extend = 'collection',
+                                         buttons = list(list(extend = 'csv', filename = "edad"),
+                                                        list(extend = 'excel', filename = "edad")),
+                                         text = 'Descargar'
+                                    ))),
+                     rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                     colnames = c('Año', 'Provincia', 'Grupo Etario', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = 4:9, dec.mark = ",", digits = 2)
+
+
+gg_edad <- ggplot(env_edad) + 
+  geom_bar(aes(anio, 100*valor_prov, group = indicadores, fill = indicadores,  text = paste0(indicadores, "<br>", scales::label_percent(decimal.mark = ",", accuracy = 0.1)(valor_prov))),
+           stat = "identity", position = "dodge", color = "white") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("") 
+
+
+edad <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         # filter_select("edad", "Elegir una provincia", env_edad, ~ provincia_destino,
+         #               multiple = F),
+         dt_edad,
+         ggplotly(gg_edad, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))
+  
+)
+
+write_rds(edad, "outputs/edad.rds")
+
+## transporte
+
+env_transporte <- SharedData$new(data  = salidas %>% 
+                                   select(anio, tabla_conjunta_transporte) %>% unnest(),
+                                 key = ~ provincia_destino,
+                                 group = "provincia_destino")
+
+dt_transporte <- datatable(env_transporte, extensions = 'Buttons',
+                           options = list(lengthMenu = c(10, 25), 
+                                          pageLength = 10, 
+                                          dom = 'lrtipB',buttons = list(list(
+                                            extend = "copy",
+                                            text = "Copiar"
+                                          ),
+                                          list(extend = 'collection',
+                                               buttons = list(list(extend = 'csv', filename = "transporte"),
+                                                              list(extend = 'excel', filename = "transporte")),
+                                               text = 'Descargar'
+                                          ))),
+                           rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                           colnames = c('Año', 'Provincia', 'Tipo de Transporte', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = 4:9, dec.mark = ",", digits = 2)
+
+
+gg_transporte <- ggplot(env_transporte) + 
+  geom_bar(aes(anio, 100*valor_prov, group = indicadores, fill = indicadores, text = paste0(indicadores, "<br>", scales::label_percent(decimal.mark = ",", accuracy = 0.1)(valor_prov))),
+           stat = "identity", position = "dodge", color = "white") +
+  theme_minimal() +
+  scale_fill_dnmye() +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("") 
+
+
+
+
+transporte <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         dt_transporte,
+         ggplotly(gg_transporte, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))
+  
+)
+
+write_rds(transporte, "outputs/transporte.rds")
+
+## motivo
+
+env_motivo <- SharedData$new(data  = salidas %>% 
+                               select(anio, tabla_conjunta_transporte) %>% unnest(),
+                             key = ~ provincia_destino,
+                             group = "provincia_destino")
+
+dt_motivo <- datatable(env_motivo, extensions = 'Buttons',
+                       options = list(lengthMenu = c(10, 25), 
+                                      pageLength = 10, 
+                                      dom = 'lrtipB',buttons = list(list(
+                                        extend = "copy",
+                                        text = "Copiar"
+                                      ),
+                                      list(extend = 'collection',
+                                           buttons = list(list(extend = 'csv', filename = "motivo"),
+                                                          list(extend = 'excel', filename = "motivo")),
+                                           text = 'Descargar'
+                                      ))),
+                       rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                       colnames = c('Año', 'Provincia', 'Motivo del Viaje', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = 4:9, dec.mark = ",", digits = 2)
+
+
+gg_motivo <- ggplot(env_motivo) + 
+  geom_bar(aes(anio, 100*valor_prov, group = indicadores, fill = indicadores, text = paste0(indicadores, "<br>", scales::label_percent(decimal.mark = ",", accuracy = 0.1)(valor_prov))),
+           stat = "identity", position = "dodge", color = "white") +
+  theme_minimal() +
+  scale_fill_dnmye() +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("") 
+
+
+motivo <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         dt_motivo,
+         ggplotly(gg_motivo, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))
+  
+)
+
+write_rds(motivo, "outputs/motivo.rds")
+
+
+## tipo turismo
+
+env_tipo_turismo <- SharedData$new(salidas %>% 
+                                     select(anio, tabla_conjunta_tipo_turismo) %>% unnest(),
+                                   key = ~ provincia_destino,
+                                   group = "provincia_destino")
+
+env_tipo_turismo_plot <- SharedData$new(salidas %>% 
+                                          select(anio, tabla_conjunta_tipo_turismo) %>% unnest() %>% filter(!str_detect(indicadores, "no")),
+                                        key = ~ provincia_destino,
+                                        group = "provincia_destino")
+
+dt_tipo_turismo <- datatable(env_tipo_turismo, extensions = 'Buttons',
+                             options = list(lengthMenu = c(10, 25), 
+                                            pageLength = 10, 
+                                            dom = 'lrtipB',buttons = list(list(
+                                              extend = "copy",
+                                              text = "Copiar"
+                                            ),
+                                            list(extend = 'collection',
+                                                 buttons = list(list(extend = 'csv', filename = "tipo_turismo"),
+                                                                list(extend = 'excel', filename = "tipo_turismo")),
+                                                 text = 'Descargar'
+                                            ))),
+                             rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                             colnames = c('Año', 'Provincia', 'Tipo de Turismo', 'Valor', 'CV %', 'Valor Región', 'CV % Región', 'Valor Nacional', 'CV % Nacional')
+) %>% 
+  formatPercentage(columns = 4:9, dec.mark = ",", digits = 2)
+
+
+gg_tipo_turismo <- ggplot(env_tipo_turismo_plot) + 
+  geom_bar(aes(anio, 100*valor_prov, group = indicadores, fill = str_detect(indicadores, "cultura"),
+               text = paste0(indicadores, "<br>",
+                             scales::label_percent(decimal.mark = ",", accuracy = 0.1)(valor_prov))),
+           stat = "identity", color = "white", position  = "dodge") +
+  scale_fill_manual(values = c("#F7941E", "#50B8B1"))+
+  theme_minimal() +
+  theme(legend.position = "none") +
+  xlab("Año") +
+  ylab("") 
+
+
+tipo_turismo <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12), 
+         # filter_select("tipo_turismo", "Elegir una provincia", env_tipo_turismo, ~ provincia_destino,
+         #               multiple = F),
+         dt_tipo_turismo,
+         ggplotly(gg_tipo_turismo, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(autosize = F))
+  
+)
+
+write_rds(tipo_turismo, "outputs/tipo_turismo.rds")
+

@@ -80,6 +80,8 @@ puna <- withr::with_options(
          filter_select("Provincia", "Elegir una provincia:", tabla_tipo, ~ Provincia,
                        multiple = FALSE),
          dt_puna,
+         htmltools::br(),
+         htmltools::br(),
          ggplotly(gg_loc, dynamicTicks = TRUE) %>% 
            layout(xaxis = list(categoryorder = "trace")) %>% 
            layout(title = 'Top 15 localidades de la provincia según cantidad de plazas'))
