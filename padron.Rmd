@@ -7,29 +7,10 @@ site: distill::distill_website
 
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
-library(tidyverse)
-library(xaringanExtra)
-library(d4t4tur)
-library(highcharter)
-library(gt)
-library(plotly)
+
+puna_data <- readRDS("outputs/graph_puna.rds")
 ```
 
-```{r, include=FALSE}
-serie_puna_nest_data <- read_rds("outputs/serie_puna_nest_data.RDS")
-
+```{r}
+puna_data
 ```
-
-
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
-
-
-
-# ## Estadísticas de Establecimientos de Alojamientos Turísticos
-# `r rmdautotabs(input_data = serie_puna_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_ppales_loc, .plot_ppales_cat)`
-
-```
-
-
-

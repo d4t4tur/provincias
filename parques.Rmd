@@ -9,16 +9,13 @@ site: distill::distill_website
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
 
-library(tidyverse)
-library(DT)
-
-parques_nest_data <- read_rds("outputs/parques_nest_data.RDS")
+parques_data <- readRDS("outputs/graph_parques.rds")
 ```
 
 
 ## Datos Principales
 
 ```{r}
-parques_nest_data
+parques_data
 ```
 

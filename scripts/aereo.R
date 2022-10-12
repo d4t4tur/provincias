@@ -4,7 +4,6 @@ library(lubridate)
 library(janitor)
 library(readxl)
 library(plotly)
-library(glue)
 library(d4t4tur)
 library(DT)
 library(crosstalk)
@@ -75,31 +74,36 @@ tabla_internacional <- internacional %>%
 
 plot_cabotaje <- highlight_key(tabla_cabotaje %>% mutate(Año = as.character(Año)), ~ Provincia)
 
-dt_cabotaje <- datatable(plot_cabotaje,
-                              options = list(lengthMenu = c(10, 25), 
-                                             pageLength = 10, 
-                                             dom = 'lrtipB'),
+dt_cabotaje <- datatable(plot_cabotaje, extensions = 'Buttons',
+                         options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
+                                        dom = 'lfrtipB',
+                                        buttons = list('copy', 
+                                                       list(
+                                                         extend = 'collection',
+                                                         buttons = list(list(extend = 'csv', filename = "puna"),
+                                                                        list(extend = 'excel', filename = "puna")),
+                                                         text = 'Download'
+                                                       ))),
                               rownames= FALSE)
 
 gg <- ggplot(plot_cabotaje) + 
   geom_line(aes(Año, Pasajeros, group = Localidad, color = Localidad)) +
-  geom_point(aes(Año, Pasajeros, group = Localidad, color = Localidad, text = paste0(Localidad, "<br>", format(Pasajeros, big.mark = "."), " Pasajeros"))) +
+  geom_point(aes(Año, Pasajeros, group = Localidad, color = Localidad, 
+                 text = paste0(Localidad, ": ", format(Pasajeros, big.mark = "."), 
+                               " Pasajeros"))) +
+  scale_color_dnmye() +
   theme_minimal() +
   theme(legend.position = "none")
-
-graph_cabotaje <- bscols(
-  filter_select("id", "Elegir una provincia", plot_cabotaje, ~ Provincia,
-                multiple = FALSE),
-  ggplotly(gg, dynamicTicks = TRUE, tooltip = "text"),
-  widths = c(12, 12)
-)
 
 
 cabotaje <- withr::with_options(
   list(persistent = TRUE), 
   bscols(widths = c(12, 12), 
-                    graph_cabotaje,
-                    dt_cabotaje)
+         filter_select("id", "Elegir una provincia", plot_cabotaje, ~ Provincia,
+                       multiple = FALSE),
+                    dt_cabotaje,
+         ggplotly(gg, dynamicTicks = TRUE, tooltip = "text") %>% 
+           layout(title = 'Evolución de pasajeros en vuelos de cabotaje por localidad'))
 )
 
 write_rds(cabotaje, "outputs/graph_cabotaje.rds")
@@ -107,31 +111,36 @@ write_rds(cabotaje, "outputs/graph_cabotaje.rds")
 
 plot_internacional <- highlight_key(tabla_internacional %>% mutate(Año = as.character(Año)), ~ Provincia)
 
-dt_internacional <- datatable(plot_internacional,
-                              options = list(lengthMenu = c(10, 25, 50), 
-                                             pageLength = 10, 
-                                             dom = 'lrtipB'),
+dt_internacional <- datatable(plot_internacional, extensions = 'Buttons',
+                              options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
+                                             dom = 'lfrtipB',
+                                             buttons = list('copy', 
+                                                            list(
+                                                              extend = 'collection',
+                                                              buttons = list(list(extend = 'csv', filename = "puna"),
+                                                                             list(extend = 'excel', filename = "puna")),
+                                                              text = 'Download'
+                                                            ))),
                               rownames= FALSE)
 
 gg <- ggplot(plot_internacional) + 
   geom_line(aes(Año, Pasajeros, group = Localidad, color = Localidad)) +
-  geom_point(aes(Año, Pasajeros, group = Localidad, color = Localidad, text = paste0(Localidad, "<br>", format(Pasajeros, big.mark = "."), " Pasajeros"))) +
+  geom_point(aes(Año, Pasajeros, group = Localidad, color = Localidad, 
+                 text = paste0(Localidad, "<br>", format(Pasajeros, big.mark = "."), 
+                               " Pasajeros"))) +
+  scale_color_dnmye() +
   theme_minimal() +
   theme(legend.position = "none")
-
-graph_internacional <- bscols(
-  filter_select("id", "Elegir una provincia", plot_internacional, ~ Provincia,
-                multiple = FALSE),
-  ggplotly(gg, dynamicTicks = TRUE, tooltip = "text"),
-  widths = c(12, 12)
-)
 
 
 internacional <- withr::with_options(
   list(persistent = TRUE), 
   bscols(widths = c(12, 12), 
-                    graph_internacional,
-                    dt_internacional)
+         filter_select("id", "Elegir una provincia", plot_internacional, ~ Provincia,
+                       multiple = FALSE),
+                    dt_internacional,
+         ggplotly(gg, dynamicTicks = TRUE, tooltip = "text") %>% 
+           layout(title = 'Evolución de pasajeros en vuelos internacionales por localidad'))
 )
 
 write_rds(internacional, "outputs/graph_internacional.rds")
