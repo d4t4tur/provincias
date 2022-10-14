@@ -5,7 +5,8 @@ library(survey)
 library(plotly)
 library(DT)
 library(lubridate)
-source(here::here("scripts/","auxiliar_evyth.R"))
+library(comunicacion)
+source(here::here("scripts","auxiliar_evyth.R"))
 
 #### cargo y preparo la base ####
 # b_evyth <- read_csv("http://datos.yvera.gob.ar/dataset/b5819e9b-5edf-4aad-bd39-a81158a2b3f3/resource/645e5505-68ee-4cfa-90f9-fcc9a4a34a85/download/evyth_microdatos.csv")

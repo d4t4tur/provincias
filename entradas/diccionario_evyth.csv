@@ -1,0 +1,962 @@
+pos,variable,label,col_type,levels,value_labels,etiquetas,valores
+1,id_hogar,id,dbl,,,NA,NA
+2,id_viajes,Identificacion unica del viaje o la visita de un dia para el hogar,dbl,,,NA,NA
+3,miembro,NumMie.Numero de miembro del hogar,dbl,,,NA,NA
+4,id2,id2,dbl,,,NA,NA
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 1. Dic2011-Ene2012,1
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 2. Ene2012-Feb2012,2
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 3. Feb2012-Mzo2012,3
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 4. Mzo2012-Feb2012,4
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 5. Abr2012-May2012,5
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 6. May2012-Jun2012,6
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 7. Jun2012-Jul2012,7
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 8. Jul2012-Ago2012,8
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 9. Ago2012-Sep2012,9
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 10. Sep2012-Oct2012,10
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 11. Oct2012-Nov2012,11
+5,i11_pr_onda,Número de Onda,dbl+lbl,,,Onda 12. Nov2012-Dic2012,12
+6,w_adelanto,Ponderador de adelanto,dbl,,,NA,NA
+7,pondera,Ponderador final,dbl,,,NA,NA
+8,Mes,Mes de realización del viaje o la visita de un día,dbl,,,NA,NA
+9,tipo_visitante,Viaje o Visita,dbl+lbl,,,Viaje,1
+9,tipo_visitante,Viaje o Visita,dbl+lbl,,,Visita de un dia,2
+10,arg_o_ext,Destino en Argentina o el Exterior,dbl+lbl,,,Argentina,1
+10,arg_o_ext,Destino en Argentina o el Exterior,dbl+lbl,,,Exterior,2
+11,esparcimiento_si_no,Esparcimiento Si o No,dbl+lbl,,,Si,1
+11,esparcimiento_si_no,Esparcimiento Si o No,dbl+lbl,,,No,2
+12,sv_si_no,Utilizacion de Segunda Vivienda en el viaje o visita,dbl+lbl,,,Si,1
+12,sv_si_no,Utilizacion de Segunda Vivienda en el viaje o visita,dbl+lbl,,,No,2
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Argentina,0
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Bolivia,1
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Brasil,2
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Chile,3
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Paraguay,4
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Uruguay,5
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Perú,6
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Ecuador,7
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Colombia (excepto Costa Caribe),8
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Venezuela (excepto Costa Caribe),9
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,México (excepto Costa Caribe),10
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Caribe,11
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,"Panamá, Costa Rica, Nicaragua, Honduras, Guatemala, Belice (excepto Costa del Caribe) y Guyanas.",12
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,EE. UU.,13
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Canadá,14
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Alemania,15
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,España,16
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Francia,17
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Gran Bretaña,18
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Italia,19
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Resto de Europa,20
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Medio Oriente y Egipto (incluye Israel),21
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Resto de Asia,22
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Sudáfrica,23
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Resto de África,24
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Australia y Nueva Zelanda,25
+13,px03_1_1,PX03.1.1.Destino: PAIS,dbl+lbl,,,Resto de Oceanía,26
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,CABA,2
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Partidos del GBA (Pcia. Bs. As.),4
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Buenos Aires (Resto),6
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Catamarca,10
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Córdoba,14
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Corrientes,18
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Chaco,22
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Chubut,26
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Entre Ríos,30
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Formosa,34
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Jujuy,38
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,La Pampa,42
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,La Rioja,46
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Mendoza,50
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Misiones,54
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Neuquén,58
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Río Negro,62
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Salta,66
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,San Juan,70
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,San Luis,74
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Santa Cruz,78
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Santa Fe,82
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Santiago Del Estero,86
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Tucumán,90
+14,px03_1_2,PX03.1.2.Destino: PROVINCIA,dbl+lbl,,,Tierra Del Fuego',94
+15,px03_1_3,PX03.1.3.Destino: CIUDAD/LOCALIDAD,chr,,,NA,NA
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Ciudad de Buenos Aires,1
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Provincia de Buenos Aires - Partidos del GBA,2
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Provincia de Buenos Aires - Resto,3
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Centro,4
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Litoral,5
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Norte,6
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Cuyo,7
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Patagonia,8
+16,region_destino,Region MINTUR de destino del viaje,dbl+lbl,,,Exterior,10
+17,origen_destino_generico,Cruce de origen y destino genérico,dbl+lbl,,,Exterior,1
+17,origen_destino_generico,Cruce de origen y destino genérico,dbl+lbl,,,Otra region,2
+17,origen_destino_generico,Cruce de origen y destino genérico,dbl+lbl,,,CABA/Partidos GBA a Resto PBA,3
+17,origen_destino_generico,Cruce de origen y destino genérico,dbl+lbl,,,Otra provincia de la misma region,4
+17,origen_destino_generico,Cruce de origen y destino genérico,dbl+lbl,,,Misma provincia,5
+18,grupo_paises,Grupo de países,dbl+lbl,,,Argentina,0
+18,grupo_paises,Grupo de países,dbl+lbl,,,Países limítrofes,1
+18,grupo_paises,Grupo de países,dbl+lbl,,,Resto de América Latina y el Caribe,2
+18,grupo_paises,Grupo de países,dbl+lbl,,,Resto del mundo,3
+19,cantidad_destinos,Cantidad de visitaciones,dbl,,,NA,NA
+20,multidestino,Cantidad de destinos del viaje,dbl+lbl,,,Una etapa,1
+20,multidestino,Cantidad de destinos del viaje,dbl+lbl,,,Dos etapas o más,2
+21,px06,PX06.Cantidad de miembros del hogar participantes (visitantes),dbl,,,NA,NA
+22,px07,PX07.Cantidad de noches de estadía,dbl+lbl,,,Sin noches (Visita de un día),0
+23,px06_agrup,Tamaño del grupo viajero (visitantes en tramos),dbl+lbl,,,1 o 2 personas,1
+23,px06_agrup,Tamaño del grupo viajero (visitantes en tramos),dbl+lbl,,,3 o 4 personas,2
+23,px06_agrup,Tamaño del grupo viajero (visitantes en tramos),dbl+lbl,,,5 o más personas,3
+24,px07_agrup,Estadía (en tramos),dbl+lbl,,,1 a 3 noches,1
+24,px07_agrup,Estadía (en tramos),dbl+lbl,,,4 a 7 noches,2
+24,px07_agrup,Estadía (en tramos),dbl+lbl,,,8 a 14 noches,3
+24,px07_agrup,Estadía (en tramos),dbl+lbl,,,15 a 30 noches,4
+24,px07_agrup,Estadía (en tramos),dbl+lbl,,,Más de 30 noches,5
+25,pernoctaciones,Total de pernoctaciones (turistas por cantidad de noches),dbl,,,NA,NA
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Sin uso de alojamiento (Visita de un dia),0
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Segunda vivienda del hogar (propia),1
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Segunda vivienda del hogar (alquilada),2
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Vivienda de familiares o amigos que  residen en ella,3
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Vivienda de familiares o amigos que no residen en ella,4
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Vivienda alquilada por temporada,5
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,"Camping (carpa, casa rodante)",6
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,"Hotel u hostería hasta 3 estrellas (o categoria desconocida), hospedaje residencial, cabania o bungalow, albergue, etc.",7
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,"Hotel 4 y 5 estrellas, apart hotel o similares",8
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,Estancia o casa rural,9
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,"Otro (tiempo compartido, lugares públicos, etc.)",10
+26,px08,PX08.Tipo de alojamiento,dbl+lbl,,,NS/NR,99
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Sin uso de alojamiento (visitas de un día),0
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Segunda vivienda del hogar,1
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Vivienda de familiares y amigos,2
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Vivienda alquilada por temporada,3
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Camping,4
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Hotel o similar hasta 4 estrellas,5
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Hotel similar 4 o 5 estrellas,6
+27,px08_agrup,Tipo de alojamiento (agrupado),dbl+lbl,,,Resto,7
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Automóvil o similar (propio),1
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Ómnibus,2
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Tren,3
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Avión,4
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Embarcación,5
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Taxi o remís,6
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,"Otro (auto alquilado, motocicleta, bicicleta, a pie, a ""dedo"", etc.)",8
+28,px09,PX09.Tipo de transporte,dbl+lbl,,,Ns/Nr,99
+29,px09_t,Tipo de transporte (agrupado),dbl+lbl,,,Automovil,1
+29,px09_t,Tipo de transporte (agrupado),dbl+lbl,,,Omnibus,2
+29,px09_t,Tipo de transporte (agrupado),dbl+lbl,,,Avión,3
+29,px09_t,Tipo de transporte (agrupado),dbl+lbl,,,Resto,4
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,"Esparcimiento, ocio, recreacion",1
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Visitas a familiares o amigos,2
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,"Trabajo, negocios, motivos profesionales",3
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Estudios y formación,4
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Razones de salud,5
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,"Motivos religiosos (peregrinaciones, etc.)",6
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Compras,7
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Otros,8
+30,px10_1,PX10.1.Motivo principal,dbl+lbl,,,Ns/Nr,99
+31,px10_1_t,Motivo principal (agrupado),dbl+lbl,,,"Ocio, esparcimiento, recreación",1
+31,px10_1_t,Motivo principal (agrupado),dbl+lbl,,,Visita a familiares o amigos,2
+31,px10_1_t,Motivo principal (agrupado),dbl+lbl,,,"Trabajo, motivos profesionales",3
+31,px10_1_t,Motivo principal (agrupado),dbl+lbl,,,Resto,4
+32,px11,PX11.Contratación de Paquete turistico,dbl+lbl,,,Si,1
+32,px11,PX11.Contratación de Paquete turistico,dbl+lbl,,,No,2
+32,px11,PX11.Contratación de Paquete turistico,dbl+lbl,,,NS/NR,9
+33,tipo_pt,Composición del Paquete Turístico,dbl+lbl,,,"Transporte, alojamiento y otros servicios",1
+33,tipo_pt,Composición del Paquete Turístico,dbl+lbl,,,Transporte y alojamiento únicamente,2
+33,tipo_pt,Composición del Paquete Turístico,dbl+lbl,,,"Transporte y otros servicios, no alojamiento",3
+33,tipo_pt,Composición del Paquete Turístico,dbl+lbl,,,"Alojamiento y otros servicios, no transporte",4
+33,tipo_pt,Composición del Paquete Turístico,dbl+lbl,,,NS/NR,9
+34,px12_1,PX12.1.PT.Transporte hacia lugar de destino,dbl+lbl,,,Si,1
+34,px12_1,PX12.1.PT.Transporte hacia lugar de destino,dbl+lbl,,,No,2
+34,px12_1,PX12.1.PT.Transporte hacia lugar de destino,dbl+lbl,,,NS/NR,9
+34,px12_1,PX12.1.PT.Transporte hacia lugar de destino,dbl+lbl,,,No utilizaron PT,10
+35,px12_2,PX12.2.PT.Alojamiento,dbl+lbl,,,Si,1
+35,px12_2,PX12.2.PT.Alojamiento,dbl+lbl,,,No,2
+35,px12_2,PX12.2.PT.Alojamiento,dbl+lbl,,,NS/NR,9
+35,px12_2,PX12.2.PT.Alojamiento,dbl+lbl,,,No utilizaron PT,10
+36,px12_3,PX12.3.PT.Algunas comidas (aparte del desayuno),dbl+lbl,,,Si,1
+36,px12_3,PX12.3.PT.Algunas comidas (aparte del desayuno),dbl+lbl,,,No,2
+36,px12_3,PX12.3.PT.Algunas comidas (aparte del desayuno),dbl+lbl,,,NS/NR,9
+36,px12_3,PX12.3.PT.Algunas comidas (aparte del desayuno),dbl+lbl,,,No utilizaron PT,10
+37,px12_4,PX12.4.PT.Todas las comidas,dbl+lbl,,,Si,1
+37,px12_4,PX12.4.PT.Todas las comidas,dbl+lbl,,,No,2
+37,px12_4,PX12.4.PT.Todas las comidas,dbl+lbl,,,NS/NR,9
+37,px12_4,PX12.4.PT.Todas las comidas,dbl+lbl,,,No utilizaron PT,10
+38,px12_5,PX12.5.PT.Traslados en destino / alquiler de auto,dbl+lbl,,,Si,1
+38,px12_5,PX12.5.PT.Traslados en destino / alquiler de auto,dbl+lbl,,,No,2
+38,px12_5,PX12.5.PT.Traslados en destino / alquiler de auto,dbl+lbl,,,NS/NR,9
+38,px12_5,PX12.5.PT.Traslados en destino / alquiler de auto,dbl+lbl,,,No utilizaron PT,10
+39,px12_6,"PX12.6.PT.Excursiones, espectáculos",dbl+lbl,,,Si,1
+39,px12_6,"PX12.6.PT.Excursiones, espectáculos",dbl+lbl,,,No,2
+39,px12_6,"PX12.6.PT.Excursiones, espectáculos",dbl+lbl,,,NS/NR,9
+39,px12_6,"PX12.6.PT.Excursiones, espectáculos",dbl+lbl,,,No utilizaron PT,10
+40,px12_7,PX12.7.PT.Seguro de salud o asistencia al viajero,dbl+lbl,,,Si,1
+40,px12_7,PX12.7.PT.Seguro de salud o asistencia al viajero,dbl+lbl,,,No,2
+40,px12_7,PX12.7.PT.Seguro de salud o asistencia al viajero,dbl+lbl,,,NS/NR,9
+40,px12_7,PX12.7.PT.Seguro de salud o asistencia al viajero,dbl+lbl,,,No utilizaron PT,10
+41,px12_8,PX12.8.PT.Otros servicios,dbl+lbl,,,Si,1
+41,px12_8,PX12.8.PT.Otros servicios,dbl+lbl,,,No,2
+41,px12_8,PX12.8.PT.Otros servicios,dbl+lbl,,,NS/NR,9
+41,px12_8,PX12.8.PT.Otros servicios,dbl+lbl,,,No utilizaron PT,10
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,El mismo día,1
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,Entre un día y menos de una semana,2
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,Entre una semana y un mes,3
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,Más de un mes y hasta seis meses,4
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,Más de seis meses,5
+42,px13,PX13.Tiempo de anticipación de la desicion de hacer el viaje,dbl+lbl,,,NS/NR,9
+43,px14,PX14.Utilizacion de Internet para contratar servicios o buscar informacion para el viaje,dbl+lbl,,,Si,1
+43,px14,PX14.Utilizacion de Internet para contratar servicios o buscar informacion para el viaje,dbl+lbl,,,No,2
+43,px14,PX14.Utilizacion de Internet para contratar servicios o buscar informacion para el viaje,dbl+lbl,,,NS/NR,9
+44,px15_1,PX15.1.Internet.Contrataron o reservaron Paquete turistico,dbl+lbl,,,Si,1
+44,px15_1,PX15.1.Internet.Contrataron o reservaron Paquete turistico,dbl+lbl,,,No,2
+44,px15_1,PX15.1.Internet.Contrataron o reservaron Paquete turistico,dbl+lbl,,,NS/NR,9
+44,px15_1,PX15.1.Internet.Contrataron o reservaron Paquete turistico,dbl+lbl,,,No utilizaron Internet,10
+45,px15_2,PX15.2.Internet.Contrataron o reservaron Alojamiento,dbl+lbl,,,Si,1
+45,px15_2,PX15.2.Internet.Contrataron o reservaron Alojamiento,dbl+lbl,,,No,2
+45,px15_2,PX15.2.Internet.Contrataron o reservaron Alojamiento,dbl+lbl,,,NS/NR,9
+45,px15_2,PX15.2.Internet.Contrataron o reservaron Alojamiento,dbl+lbl,,,No utilizaron Internet,10
+46,px15_3,PX15.3.Internet.Contrataron o reservaron Transporte,dbl+lbl,,,Si,1
+46,px15_3,PX15.3.Internet.Contrataron o reservaron Transporte,dbl+lbl,,,No,2
+46,px15_3,PX15.3.Internet.Contrataron o reservaron Transporte,dbl+lbl,,,NS/NR,9
+46,px15_3,PX15.3.Internet.Contrataron o reservaron Transporte,dbl+lbl,,,No utilizaron Internet,10
+47,px15_4,"PX15.4.Internet.Contrataron o reservaron Excursiones, entradas a espectáculos culturales, deportivos, etc.",dbl+lbl,,,Si,1
+47,px15_4,"PX15.4.Internet.Contrataron o reservaron Excursiones, entradas a espectáculos culturales, deportivos, etc.",dbl+lbl,,,No,2
+47,px15_4,"PX15.4.Internet.Contrataron o reservaron Excursiones, entradas a espectáculos culturales, deportivos, etc.",dbl+lbl,,,NS/NR,9
+47,px15_4,"PX15.4.Internet.Contrataron o reservaron Excursiones, entradas a espectáculos culturales, deportivos, etc.",dbl+lbl,,,No utilizaron Internet,10
+48,w_px16,Ponderador para PX16 (versión anterior-hasta junio),dbl,,,NA,NA
+49,px16_1_1,PX16.1.1.ElecDest.Les gusta/costumbre del hogar,dbl+lbl,,,No mencionado,0
+49,px16_1_1,PX16.1.1.ElecDest.Les gusta/costumbre del hogar,dbl+lbl,,,Si,1
+50,px16_1_2,PX16.1.2.ElecDest.Cercanía,dbl+lbl,,,No mencionado,0
+50,px16_1_2,PX16.1.2.ElecDest.Cercanía,dbl+lbl,,,Si,1
+51,px16_1_3,PX16.1.3.ElecDest.Precios,dbl+lbl,,,No mencionado,0
+51,px16_1_3,PX16.1.3.ElecDest.Precios,dbl+lbl,,,Si,1
+52,px16_1_4,PX16.1.4.ElecDest.Sugerencia de agencia de viajes,dbl+lbl,,,No mencionado,0
+52,px16_1_4,PX16.1.4.ElecDest.Sugerencia de agencia de viajes,dbl+lbl,,,Si,1
+53,px16_1_5,PX16.1.5.ElecDest.Interes por conocer,dbl+lbl,,,No mencionado,0
+53,px16_1_5,PX16.1.5.ElecDest.Interes por conocer,dbl+lbl,,,Si,1
+54,px16_1_6,PX16.1.6.ElecDest.Sugerencia de familiares o amigos que lo visitaron antes,dbl+lbl,,,No mencionado,0
+54,px16_1_6,PX16.1.6.ElecDest.Sugerencia de familiares o amigos que lo visitaron antes,dbl+lbl,,,Si,1
+55,px16_1_7,PX16.1.7.ElecDest.Porque allí o cerca de allí residen familiares o amigos,dbl+lbl,,,No mencionado,0
+55,px16_1_7,PX16.1.7.ElecDest.Porque allí o cerca de allí residen familiares o amigos,dbl+lbl,,,Si,1
+56,px16_1_9,PX16.1.9.ElecDest.NS/NR,dbl+lbl,,,No,0
+56,px16_1_9,PX16.1.9.ElecDest.NS/NR,dbl+lbl,,,Si,1
+57,px16_2,"PX16.2.¿En la decision de viajar al destino, influyó alguna propaganda o promoción de la television, la radio o algun otro medio?",dbl+lbl,,,Si,1
+57,px16_2,"PX16.2.¿En la decision de viajar al destino, influyó alguna propaganda o promoción de la television, la radio o algun otro medio?",dbl+lbl,,,No,2
+57,px16_2,"PX16.2.¿En la decision de viajar al destino, influyó alguna propaganda o promoción de la television, la radio o algun otro medio?",dbl+lbl,,,NS/NR,9
+58,w_p_xb16,Ponderador para PXb16 (versión nueva-desde junio),dbl,,,NA,NA
+59,pxb16_1_1,"PXb16.1.1. Conocer o visitar los atractivos naturales del destino (paisajes, etc.)",dbl+lbl,,,No,0
+59,pxb16_1_1,"PXb16.1.1. Conocer o visitar los atractivos naturales del destino (paisajes, etc.)",dbl+lbl,,,Si,1
+60,pxb16_1_2,PXb16.1.2. Conocer o visitar los atractivos históricos o disfrutar de la oferta cultural del lugar,dbl+lbl,,,No,0
+60,pxb16_1_2,PXb16.1.2. Conocer o visitar los atractivos históricos o disfrutar de la oferta cultural del lugar,dbl+lbl,,,Si,1
+61,pxb16_1_3,PXb16.1.3. La cercanía o el fácil acceso al destino,dbl+lbl,,,No,0
+61,pxb16_1_3,PXb16.1.3. La cercanía o el fácil acceso al destino,dbl+lbl,,,Si,1
+62,pxb16_1_4,PXb16.1.4. Los precios,dbl+lbl,,,No,0
+62,pxb16_1_4,PXb16.1.4. Los precios,dbl+lbl,,,Si,1
+63,pxb16_1_5,PXb16.1.5. Comentarios de familiares o amigos que fueron antes al destino,dbl+lbl,,,No,0
+63,pxb16_1_5,PXb16.1.5. Comentarios de familiares o amigos que fueron antes al destino,dbl+lbl,,,Si,1
+64,pxb16_1_6,PXb16.1.6. Porque allí o cerca de allí residen familiares o amigos,dbl+lbl,,,No,0
+64,pxb16_1_6,PXb16.1.6. Porque allí o cerca de allí residen familiares o amigos,dbl+lbl,,,Si,1
+65,pxb16_1_7,"PXb16.1.7. Alguna publicidad o promoción en la TV, radio, internet o algún otro medio",dbl+lbl,,,No,0
+65,pxb16_1_7,"PXb16.1.7. Alguna publicidad o promoción en la TV, radio, internet o algún otro medio",dbl+lbl,,,Si,1
+66,pxb16_1_9,PXb16.1.9. Cuando pensaron en hacer este viaje ¿evaluaron viajar a otra ciudad en vez de al destino visitado,dbl+lbl,,,No,0
+66,pxb16_1_9,PXb16.1.9. Cuando pensaron en hacer este viaje ¿evaluaron viajar a otra ciudad en vez de al destino visitado,dbl+lbl,,,Si,1
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,"Si, este año",1
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,"Si, el año pasado",2
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,"Si, entre dos y cuatro años atrás",3
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,"Si, hace cinco años o más",4
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,No,5
+67,pxb16_2,PXb16.2.¿Algún integrante del hogar que participó de este viaje ¿había viajado allí antes? ¿Cuándo fue la última vez que viajó/viajaron allí?,dbl+lbl,,,NS/NR,9
+68,px17_1,"PX17.1.Realizaron alguna actividad turistica o recreativa como visitar atractivos naturales o históricos, practicar deportes no convencionales, ir a la playa, al cine, al casino, etc.",dbl+lbl,,,Si,1
+68,px17_1,"PX17.1.Realizaron alguna actividad turistica o recreativa como visitar atractivos naturales o históricos, practicar deportes no convencionales, ir a la playa, al cine, al casino, etc.",dbl+lbl,,,No,2
+68,px17_1,"PX17.1.Realizaron alguna actividad turistica o recreativa como visitar atractivos naturales o históricos, practicar deportes no convencionales, ir a la playa, al cine, al casino, etc.",dbl+lbl,,,NS/NR,9
+69,px17_2_1,"PX17.2.1.ActTur.Visitaron espacios rurales como estancias, granjas, etc.",dbl+lbl,,,Si,1
+69,px17_2_1,"PX17.2.1.ActTur.Visitaron espacios rurales como estancias, granjas, etc.",dbl+lbl,,,No,2
+69,px17_2_1,"PX17.2.1.ActTur.Visitaron espacios rurales como estancias, granjas, etc.",dbl+lbl,,,NS/NR,9
+70,px17_2_2,"PX17.2.2.ActTur.Fueron a un spa, a termas, etc.",dbl+lbl,,,Si,1
+70,px17_2_2,"PX17.2.2.ActTur.Fueron a un spa, a termas, etc.",dbl+lbl,,,No,2
+70,px17_2_2,"PX17.2.2.ActTur.Fueron a un spa, a termas, etc.",dbl+lbl,,,NS/NR,9
+71,px17_2_3,"PX17.2.3.ActTur.Fueron a la playa (mar, río, lago)",dbl+lbl,,,Si,1
+71,px17_2_3,"PX17.2.3.ActTur.Fueron a la playa (mar, río, lago)",dbl+lbl,,,No,2
+71,px17_2_3,"PX17.2.3.ActTur.Fueron a la playa (mar, río, lago)",dbl+lbl,,,NS/NR,9
+72,px17_2_4,"PX17.2.4.ActTur.Hicieron esqui, snowboard, u otro deporte de nieve",dbl+lbl,,,Si,1
+72,px17_2_4,"PX17.2.4.ActTur.Hicieron esqui, snowboard, u otro deporte de nieve",dbl+lbl,,,No,2
+72,px17_2_4,"PX17.2.4.ActTur.Hicieron esqui, snowboard, u otro deporte de nieve",dbl+lbl,,,NS/NR,9
+73,px17_2_5,"PX17.2.5.ActTur.Realizaron deportes de aventura como mountain bike, montanismo, rafting, travesías, ala delta, etc.",dbl+lbl,,,Si,1
+73,px17_2_5,"PX17.2.5.ActTur.Realizaron deportes de aventura como mountain bike, montanismo, rafting, travesías, ala delta, etc.",dbl+lbl,,,No,2
+73,px17_2_5,"PX17.2.5.ActTur.Realizaron deportes de aventura como mountain bike, montanismo, rafting, travesías, ala delta, etc.",dbl+lbl,,,NS/NR,9
+74,px17_2_6,PX17.2.6.ActTur.Fueron a cazar y/o a pescar,dbl+lbl,,,Si,1
+74,px17_2_6,PX17.2.6.ActTur.Fueron a cazar y/o a pescar,dbl+lbl,,,No,2
+74,px17_2_6,PX17.2.6.ActTur.Fueron a cazar y/o a pescar,dbl+lbl,,,NS/NR,9
+75,px17_2_7,PX17.2.7.ActTur.Fueron a ver algún espectáculo deportivo,dbl+lbl,,,Si,1
+75,px17_2_7,PX17.2.7.ActTur.Fueron a ver algún espectáculo deportivo,dbl+lbl,,,No,2
+75,px17_2_7,PX17.2.7.ActTur.Fueron a ver algún espectáculo deportivo,dbl+lbl,,,NS/NR,9
+76,px17_2_8,PX17.2.8.ActTur.Asistieron a algun acto o festividad religiosa,dbl+lbl,,,Si,1
+76,px17_2_8,PX17.2.8.ActTur.Asistieron a algun acto o festividad religiosa,dbl+lbl,,,No,2
+76,px17_2_8,PX17.2.8.ActTur.Asistieron a algun acto o festividad religiosa,dbl+lbl,,,NS/NR,9
+77,px17_2_9,"PX17.2.9.ActTur.Fueron al teatro, al cine, a ver conciertos o a recitales",dbl+lbl,,,Si,1
+77,px17_2_9,"PX17.2.9.ActTur.Fueron al teatro, al cine, a ver conciertos o a recitales",dbl+lbl,,,No,2
+77,px17_2_9,"PX17.2.9.ActTur.Fueron al teatro, al cine, a ver conciertos o a recitales",dbl+lbl,,,NS/NR,9
+78,px17_2_10,"PX17.2.10.ActTur.Visitaron museos, monumentos, parques tematicos, zoologicos, etc.",dbl+lbl,,,Si,1
+78,px17_2_10,"PX17.2.10.ActTur.Visitaron museos, monumentos, parques tematicos, zoologicos, etc.",dbl+lbl,,,No,2
+78,px17_2_10,"PX17.2.10.ActTur.Visitaron museos, monumentos, parques tematicos, zoologicos, etc.",dbl+lbl,,,NS/NR,9
+79,px17_2_11,"PX17.2.11.ActTur.Visitaron parques nacionales o provinciales, reservas, etc.",dbl+lbl,,,Si,1
+79,px17_2_11,"PX17.2.11.ActTur.Visitaron parques nacionales o provinciales, reservas, etc.",dbl+lbl,,,No,2
+79,px17_2_11,"PX17.2.11.ActTur.Visitaron parques nacionales o provinciales, reservas, etc.",dbl+lbl,,,NS/NR,9
+80,px17_2_12,PX17.2.12.ActTur.Fueron a casinos o bingos,dbl+lbl,,,Si,1
+80,px17_2_12,PX17.2.12.ActTur.Fueron a casinos o bingos,dbl+lbl,,,No,2
+80,px17_2_12,PX17.2.12.ActTur.Fueron a casinos o bingos,dbl+lbl,,,NS/NR,9
+81,px17_2_13,"PX17.2.13.ActTur.Salieron a la noche a discotecas, pubs, etc.",dbl+lbl,,,Si,1
+81,px17_2_13,"PX17.2.13.ActTur.Salieron a la noche a discotecas, pubs, etc.",dbl+lbl,,,No,2
+81,px17_2_13,"PX17.2.13.ActTur.Salieron a la noche a discotecas, pubs, etc.",dbl+lbl,,,NS/NR,9
+82,px18_1,PX18.1.Eval.Transporte / acceso hacia el destino,dbl+lbl,,,Pésimo,1
+82,px18_1,PX18.1.Eval.Transporte / acceso hacia el destino,dbl+lbl,,,Excelente,10
+82,px18_1,PX18.1.Eval.Transporte / acceso hacia el destino,dbl+lbl,,,NS/NR,99
+82,px18_1,PX18.1.Eval.Transporte / acceso hacia el destino,dbl+lbl,,,No usó,100
+83,px18_2,PX18.2.Eval.Alojamiento,dbl+lbl,,,Pésimo,1
+83,px18_2,PX18.2.Eval.Alojamiento,dbl+lbl,,,Excelente,10
+83,px18_2,PX18.2.Eval.Alojamiento,dbl+lbl,,,NS/NR,99
+83,px18_2,PX18.2.Eval.Alojamiento,dbl+lbl,,,No usó,100
+84,px18_3,PX18.3.Eval.Servicio de gastronomía,dbl+lbl,,,Pésimo,1
+84,px18_3,PX18.3.Eval.Servicio de gastronomía,dbl+lbl,,,Excelente,10
+84,px18_3,PX18.3.Eval.Servicio de gastronomía,dbl+lbl,,,NS/NR,99
+84,px18_3,PX18.3.Eval.Servicio de gastronomía,dbl+lbl,,,No usó,100
+85,px18_4,PX18.4.Eval.Información turistica en destino,dbl+lbl,,,Pésimo,1
+85,px18_4,PX18.4.Eval.Información turistica en destino,dbl+lbl,,,Excelente,10
+85,px18_4,PX18.4.Eval.Información turistica en destino,dbl+lbl,,,NS/NR,99
+85,px18_4,PX18.4.Eval.Información turistica en destino,dbl+lbl,,,No usó,100
+86,px18_5,PX18.5.Eval.Higiene,dbl+lbl,,,Pésimo,1
+86,px18_5,PX18.5.Eval.Higiene,dbl+lbl,,,Excelente,10
+86,px18_5,PX18.5.Eval.Higiene,dbl+lbl,,,NS/NR,99
+86,px18_5,PX18.5.Eval.Higiene,dbl+lbl,,,No usó,100
+87,px18_6,PX18.6.Eval.Seguridad,dbl+lbl,,,Pésimo,1
+87,px18_6,PX18.6.Eval.Seguridad,dbl+lbl,,,Excelente,10
+87,px18_6,PX18.6.Eval.Seguridad,dbl+lbl,,,NS/NR,99
+87,px18_6,PX18.6.Eval.Seguridad,dbl+lbl,,,No usó,100
+88,px18_7,PX18.7.Eval.Viaje en general,dbl+lbl,,,Pésimo,1
+88,px18_7,PX18.7.Eval.Viaje en general,dbl+lbl,,,Excelente,10
+88,px18_7,PX18.7.Eval.Viaje en general,dbl+lbl,,,NS/NR,99
+88,px18_7,PX18.7.Eval.Viaje en general,dbl+lbl,,,No usó,100
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,Pago todo el hogar,0
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,La mayor parte (mas del 60%),1
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,Aproximadamente la mitad (entre el 40% y el 60%),2
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,La menor parte (menos del 40%),3
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,No pago nada,4
+89,px20,PX20.Parte de los gastos del viaje afrontados por el hogar,dbl+lbl,,,NS/NR,9
+90,px21_res,PX21.Res.Gasto en Paquete Turistico: RESUMEN,dbl+lbl,,,El hogar utilizo Paquete turístico pero no tuvo gastos en el viaje,0
+90,px21_res,PX21.Res.Gasto en Paquete Turistico: RESUMEN,dbl+lbl,,,El hogar utilizo Paquete turístico y respondio el gasto en PT,1
+90,px21_res,PX21.Res.Gasto en Paquete Turistico: RESUMEN,dbl+lbl,,,El hogar utilizo Paquete turístico y NO respondio el gasto en PT,9
+91,px21,PX21.Gasto en Paquete Turistico en Pesos (MONTO),dbl,,,NA,NA
+92,px22_res,PX22.Res.Gasto Total del viaje: RESUMEN,dbl+lbl,,,El hogar no tuvo gastos en el viaje,0
+92,px22_res,PX22.Res.Gasto Total del viaje: RESUMEN,dbl+lbl,,,El hogar respondió el MONTO del gasto en el viaje,1
+92,px22_res,PX22.Res.Gasto Total del viaje: RESUMEN,dbl+lbl,,,El hogar respondió el TRAMO del gasto en el viaje,2
+92,px22_res,PX22.Res.Gasto Total del viaje: RESUMEN,dbl+lbl,,,El hogar tuvo gastos en el viaje pero no respondio monto ni tramo,9
+92,px22_res,PX22.Res.Gasto Total del viaje: RESUMEN,dbl+lbl,,,El hogar tuvo gastos en el viaje pero MISSING en Monto y Tramo,99
+93,gasto_viaje_hogar,Gasto del Viaje efectívamente pagado por el hogar,dbl+lbl,,,El hogar no pagó nada,0
+94,gasto_viaje_total,Gasto del Viaje Total,dbl,,,NA,NA
+95,gasto_pc,Gasto total del viaje per cápita,dbl,,,NA,NA
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Hasta 200 (viaje),11
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 201 y 500 (viaje),12
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 501 y 1000 (viaje),13
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 1000 y 2000 (viaje),14
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 2001 y 5000 (viaje),15
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Más de 5000 (viaje),16
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Hasta 20 (visita),21
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 21 y 50 (visita),22
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 51 y 100 (visita),23
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Entre 101 y 200 (visita),24
+96,gasto_viaje_total_per_capita_tramo,Gasto del viaje total per cápita en tramos,dbl+lbl,,,Más de 200 (visita),25
+97,gasto_viaje_total_por_pernocte,Gasto total del viaje por pernocte,dbl,,,NA,NA
+98,quintil_pcf_visitante,Quintil de ingreso per Cápita Familiar del Visitante,dbl+lbl,,,Q1 (más pobres),1
+98,quintil_pcf_visitante,Quintil de ingreso per Cápita Familiar del Visitante,dbl+lbl,,,Q2,2
+98,quintil_pcf_visitante,Quintil de ingreso per Cápita Familiar del Visitante,dbl+lbl,,,Q3,3
+98,quintil_pcf_visitante,Quintil de ingreso per Cápita Familiar del Visitante,dbl+lbl,,,Q4,4
+98,quintil_pcf_visitante,Quintil de ingreso per Cápita Familiar del Visitante,dbl+lbl,,,Q5 (más ricos),5
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Ciudad de Buenos Aires,1
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Provincia de Buenos Aires - Partidos del GBA,2
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Provincia de Buenos Aires - Resto,3
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Centro,4
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Litoral,5
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Norte,6
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Cuyo,7
+99,i16_region,Región de residencia del hogar,dbl+lbl,,,Patagonia,8
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Ciudad de Buenos Aires,1
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Provincia de Buenos Aires - Partidos del GBA,2
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Provincia de Buenos Aires - Resto,3
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Centro,4
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Litoral,5
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Norte (con La Rioja),6
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Cuyo (sin La Rioja),7
+100,region_origen,Región de residencia del hogar (La Rioja en Norte),dbl+lbl,,,Patagonia,8
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran La Plata,2
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Bahía Blanca - Cerri,3
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Rosario,4
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Santa Fe,5
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Parana,6
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Posadas,7
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Resistencia,8
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Comodoro Rivadavia - Rada Tilly,9
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Mendoza,10
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Corrientes,12
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Córdoba,13
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Concordia,14
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Formosa,15
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Neuquén - Plottier,17
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Santiago del Estero - La Banda,18
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Jujuy - Palpalá,19
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Río Gallegos,20
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Catamarca,22
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Salta,23
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,La Rioja,25
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,San Luis - El Chorrillo,26
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran San Juan,27
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Gran Tucumán - TafiViejo,29
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Santa Rosa - Toay,30
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Ushuaia - Rio Grande,31
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Ciudad de Buenos Aires,32
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Partidos del GBA,33
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Mar del Plata - Batán,34
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Río Cuarto,36
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,San Nicolás - Villa Constitución,38
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Rawson - Trelew,91
+101,aglomerado_origen,I17_Aglo.Aglomerado,dbl+lbl,,,Viedma - Carmen de Patagones,93
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,CABA,2
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Partidos del GBA (Pcia. Bs. As.),4
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Buenos Aires (Resto),6
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Catamarca,10
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Córdoba,14
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Corrientes,18
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Chaco,22
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Chubut,26
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Entre Ríos,30
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Formosa,34
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Jujuy,38
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,La Pampa,42
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,La Rioja,46
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Mendoza,50
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Misiones,54
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Neuquén,58
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Río Negro,62
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Salta,66
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,San Juan,70
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,San Luis,74
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Santa Cruz,78
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Santa Fe,82
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Santiago Del Estero,86
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Tucumán,90
+102,i19_pcia,I19_Pcia. Provincia,dbl+lbl,,,Tierra Del Fuego',94
+103,p002,P002. Cantidad de miembros del hogar,dbl,,,NA,NA
+104,ajuste_pcial_w_final_total_pais,NA,dbl,,,NA,NA
+105,w_final_total_pais,NA,dbl,,,NA,NA
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Jefe/a,1
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Conyuge/pareja,2
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Hijo/a o hijastro/a,3
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Yerno/nuera,4
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Hermano/a,5
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Nieto/a,6
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Cuniado/a,7
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Padre/Madre o Suegro/a,8
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Otro Familiar,9
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,Otros,10
+106,p004,P004.Relación de parentesco con el Jefe,dbl+lbl,,,NS/NR,99
+107,p005,P005.Sexo,dbl+lbl,,,Mujer,1
+107,p005,P005.Sexo,dbl+lbl,,,Varon,2
+107,p005,P005.Sexo,dbl+lbl,,,NS/NR,9
+108,p006,P006.Edad,dbl+lbl,,,Menos de un año,0
+108,p006,P006.Edad,dbl+lbl,,,98 años o mas,98
+108,p006,P006.Edad,dbl+lbl,,,NS/NR,99
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,Menos de 14 años,0
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,14 a 29 años,1
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,30 a 44 años,2
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,45 a 59 años,3
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,60 años o más,4
+109,p006_agrup,P006T-Edad en tramos,dbl+lbl,,,NS/NR,99
+110,p007,P007.Asistencia actual a un establecimiento educativo,dbl+lbl,,,Menor de 14 años,0
+110,p007,P007.Asistencia actual a un establecimiento educativo,dbl+lbl,,,Si,1
+110,p007,P007.Asistencia actual a un establecimiento educativo,dbl+lbl,,,No,2
+110,p007,P007.Asistencia actual a un establecimiento educativo,dbl+lbl,,,NS/NR,9
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Menor de 14 años,0
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Sin instrucción / Nunca asistió,1
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Hasta primario incompleto,2
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Primario completo,3
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Secundario incompleto,4
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Secundario completo,5
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Terciario incompleto,6
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Terciario completo,7
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Universitario incompleto,8
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Universitario completo,9
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,Posgrado/maestría/doctorado completo o incompleto,10
+111,nivel_ed,P008.Maximo nivel educativo alcanzado,dbl+lbl,,,NS/NR,99
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,Menor de 14 años,0
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,Hasta Primaria Incompleta,1
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,Primaria Completa - Secundaria Incompleta,2
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,Secundaria Completa - Superior Incompleta,3
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,Superior Completa o más,4
+112,p008t,P008T-Máximo nivel educativo agrupado,dbl+lbl,,,NS/NR,99
+113,p009,P009.Trabaja,dbl+lbl,,,Menor de 14 años,0
+113,p009,P009.Trabaja,dbl+lbl,,,Si,1
+113,p009,P009.Trabaja,dbl+lbl,,,No,2
+113,p009,P009.Trabaja,dbl+lbl,,,NS/NR,9
+114,p010,P010.Busca trabajo,dbl+lbl,,,Menor de 14 años,0
+114,p010,P010.Busca trabajo,dbl+lbl,,,Si,1
+114,p010,P010.Busca trabajo,dbl+lbl,,,No,2
+114,p010,P010.Busca trabajo,dbl+lbl,,,NS/NR,9
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Menor de 14 años,0
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Jubilado/a,1
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Estudiante,2
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Ama de casa,3
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Discapacitado,4
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,Otro,5
+115,p011,P011.Categoría de inactividad,dbl+lbl,,,NS/NR,9
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,Menor de 14 años,0
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,Patrón,1
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,Cuenta Propia,2
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,Empleado con aportes jubilatorios,3
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,Empleado sin aportes jubilatorios,4
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,"Trabajador Familiar, Ad Honorem, Otro",5
+116,p012,P012.Categoría ocupacional,dbl+lbl,,,NS/NR,9
+117,cond_act,Condición de actividad,dbl+lbl,,,Menor de 14 años,0
+117,cond_act,Condición de actividad,dbl+lbl,,,Ocupado,1
+117,cond_act,Condición de actividad,dbl+lbl,,,Desocupado,2
+117,cond_act,Condición de actividad,dbl+lbl,,,Inactivo,3
+117,cond_act,Condición de actividad,dbl+lbl,,,NS/NR,9
+118,p013,P013.Tipo de cobertura de salud,dbl+lbl,,,"PrePaga, mutual o servicio de emergencias medicas",1
+118,p013,P013.Tipo de cobertura de salud,dbl+lbl,,,Obra Social (incluye PAMI y obras sociales provinciales y municipales),2
+118,p013,P013.Tipo de cobertura de salud,dbl+lbl,,,Sistema público / Ninguno,3
+118,p013,P013.Tipo de cobertura de salud,dbl+lbl,,,Otro,4
+118,p013,P013.Tipo de cobertura de salud,dbl+lbl,,,NS/NR,9
+119,j_sexo,Sexo del Jefe,dbl+lbl,,,Mujer,1
+119,j_sexo,Sexo del Jefe,dbl+lbl,,,Varón,2
+120,j_edad,Edad del Jefe,dbl+lbl,,,Hasta 29 años,1
+120,j_edad,Edad del Jefe,dbl+lbl,,,30 a 44 años,2
+120,j_edad,Edad del Jefe,dbl+lbl,,,45 a 59 años,3
+120,j_edad,Edad del Jefe,dbl+lbl,,,60 años o más,4
+121,j_nivel_ed,Máximo Nivel Educativo del Jefe,dbl+lbl,,,Hasta Primaria Incompleta,1
+121,j_nivel_ed,Máximo Nivel Educativo del Jefe,dbl+lbl,,,Primaria Completa - Secundaria Incompleta,2
+121,j_nivel_ed,Máximo Nivel Educativo del Jefe,dbl+lbl,,,Secundaria Completa - Superior Incompleta,3
+121,j_nivel_ed,Máximo Nivel Educativo del Jefe,dbl+lbl,,,Superior Completa o más,4
+121,j_nivel_ed,Máximo Nivel Educativo del Jefe,dbl+lbl,,,NS/NR,99
+122,j_cond_act,Condición de actividad del Jefe,dbl+lbl,,,Ocupado,1
+122,j_cond_act,Condición de actividad del Jefe,dbl+lbl,,,Desocupado,2
+122,j_cond_act,Condición de actividad del Jefe,dbl+lbl,,,Inactivo,3
+122,j_cond_act,Condición de actividad del Jefe,dbl+lbl,,,NS/NR,9
+122,j_cond_act,Condición de actividad del Jefe,dbl+lbl,,,NS/NR,99
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,CABA,2
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Partidos del GBA (Pcia. Bs. As.),4
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Buenos Aires (Resto),6
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Catamarca,10
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Córdoba,14
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Corrientes,18
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Chaco,22
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Chubut,26
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Entre Ríos,30
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Formosa,34
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Jujuy,38
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,La Pampa,42
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,La Rioja,46
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Mendoza,50
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Misiones,54
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Neuquén,58
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Río Negro,62
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Salta,66
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,San Juan,70
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,San Luis,74
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Santa Cruz,78
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Santa Fe,82
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Santiago Del Estero,86
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Tucumán,90
+123,provincia_destino,Codigo de Provincia,dbl+lbl,,,Tierra Del Fuego',94
+124,codigode_localidad,Codigo de Localidad,dbl,,,NA,NA
+125,cod_loc_prov,Cod Loc Prov,dbl,,,NA,NA
+126,localidad_destino,Nombre de localidad,chr,,,NA,NA
+127,localidad_c_cod_prov,Nombre de localidad (con prefijo codPcia),chr,,,NA,NA
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Ciudad de Buenos Aires,1
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,PBA - Partidos del GBA,2
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,PBA-Interior,3
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Córdoba,4
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Litoral,5
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Norte,6
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Cuyo (con LR),7
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Patagonia,8
+128,region_destino2012,Region MINTUR de destino Hasta 2012,dbl+lbl,,,Exterior,10
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Ciudad de Buenos Aires,1
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,PBA - Partidos del GBA,2
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,PBA-Interior,3
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Córdoba,4
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Litoral,5
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Norte (cLR),6
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Cuyo,7
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Patagonia,8
+129,region_destino_actual,Region MINTUR de destino Desde 2013,dbl+lbl,,,Exterior,10
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Área Metropolitana Gran Buenos Aires (CABA+PdosGBA),1
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Grandes aglomerados del Interior del país,2
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Ciudades grandes (más de 50 mil hab.),31
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Ciudades medianas (entre 25 y 50 mil hab.),32
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Ciuades chicas (entre 5 y 25 mil hab.),33
+130,tam_demog2013,EJE Tamaño demográfico del destino,dbl+lbl,,,Pueblos (menos de 5 mil hab),34
+131,posicionado2013paiscod,EJE Posicicionamiento nacional según oferta hotelera (Total País),dbl+lbl,,,Muy posicionados,11
+131,posicionado2013paiscod,EJE Posicicionamiento nacional según oferta hotelera (Total País),dbl+lbl,,,Medianamente posicionados,12
+131,posicionado2013paiscod,EJE Posicicionamiento nacional según oferta hotelera (Total País),dbl+lbl,,,Otros destinos,20
+132,posicionado2013reg1,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Cuyo),dbl+lbl,,,AMBA,0
+132,posicionado2013reg1,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Cuyo),dbl+lbl,,,Muy posicionados,11
+132,posicionado2013reg1,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Cuyo),dbl+lbl,,,Medianamente posicionados,12
+132,posicionado2013reg1,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Cuyo),dbl+lbl,,,Otros destinos,20
+133,posicionado2013reg2,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Norte),dbl+lbl,,,AMBA,0
+133,posicionado2013reg2,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Norte),dbl+lbl,,,Muy posicionados,11
+133,posicionado2013reg2,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Norte),dbl+lbl,,,Medianamente posicionados,12
+133,posicionado2013reg2,EJE Posicicionamiento regional según oferta hotelera (La Rioja en Norte),dbl+lbl,,,Otros destinos,20
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Ciudad de Buenos Aires,1
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,PBA-Partidos del GBA,2
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Cercanías del AMBA (Interior PBA),3010
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Zona Mar del Plata (Interior PBA),3020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Partido de la Costa (Interior PBA),3030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Pinamar y Gesell (Interior PBA),3040
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Costa Atlántica Bonaerense Sur  (Interior PBA),3050
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Sierras (Interior PBA),3060
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Resto de la Región (Interior PBA),3070
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Valle de Punilla (Córdoba),4010
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Otros valles cordobeses (Córdoba),4020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Ciudad de Córdoba (Córdoba),4030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Resto de Córdoba (Córdoba),4040
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Corredor Río Uruguay entrerriano (Litoral),5010
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Corredor Paraná / Paraguay (Litoral),5020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Área Iguazú (Litoral),5030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Resto de la Mesopotamia (Rg:Litoral; AT:Resto del Litoral),5040
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Quebrada de Humahuaca y Puna (Norte),6020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Valle de Lerma (Norte),6030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Valles y sierras centrales (Norte),6040
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Norte oriental (Norte),6050
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Sierras del Noroeste de San Luis (Cuyo),7010
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Oeste cuyano/Ruta 40 (Cuyo),7020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Resto de Cuyo (Cuyo),7030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Cordillera Patagonia Norte (Patagonia),8010
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Cordillera Patagonia Sur (Patagonia),8020
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Costa Atlántica Patagonia Norte (Patagonia),8030
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Costa Atlántica Patagonia Sur (Patagonia),8040
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Centro Patagónico (Patagonia),8050
+134,pfets_trim,Eje PFETS - Apertura TRIMESTRAL,dbl+lbl,,,Prov. de La Rioja (Cuyo/Norte),9010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Ciudad de Buenos Aires,1
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,PBA-Partidos del GBA,2
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Escapadas Norte (Rg:Interior PBA; AT:Cercanías del AMBA),301010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Espadas Oeste  (Rg:Interior PBA; AT:Cercanías del AMBA),301020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Escapadas Sur (Rg:Interior PBA; AT:Cercanías del AMBA),301030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Mar del Plata (Rg:Interior PBA; AT:Zona Mar del Plata),302010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Alrededores de MDP (Rg:Interior PBA; AT:Zona Mar del Plata),302020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,San Bernando (Rg:Interior PBA; AT:Partido de la Costa),303010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Santa Teresita (Rg:Interior PBA; AT:Partido de la Costa),303020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Mar de Ajó (Rg:Interior PBA; AT:Partido de la Costa),303030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,San Clemente del Tuyu (Rg:Interior PBA; AT:Partido de la Costa),303040
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Las Toninas (Rg:Interior PBA; AT:Partido de la Costa),303050
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Otras localidades  (Rg:Interior PBA; AT:Partido de la Costa),303060
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Pinamar (Rg:Interior PBA; AT:Pinamar y Gesell),304010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Villa Gesell (Rg:Interior PBA; AT:Pinamar y Gesell),304020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Costa Atlántica Bonaerense Sur (Rg:Interior PBA; AT:Costa Atlántica Bonaerense Sur ),305010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Sierras (Rg:Interior PBA; AT:Sierras),306020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de la Región (Rg:Interior PBA; AT:Resto de la Región),307010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Villa Carlos Paz y alrededores (Rg:Córdoba; AT:Valle de Punilla),401010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto del Valle de Punilla (Rg:Córdoba; AT:Valle de Punilla),401020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Valle de Traslasierra (Rg:Córdoba; AT:Otros valles cordobeses),402010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Valle de Calamuchita (Rg:Córdoba; AT:Otros valles cordobeses),402020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Otras zonas serranas de Córdoba (Rg:Córdoba; AT:Otros valles cordobeses),402030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Ciudad de Córdoba (Rg:Córdoba; AT:Ciudad de Córdoba),403010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de Córdoba (Rg:Córdoba; AT:Resto de Córdoba),404010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Uruguay Norte (Rg:Litoral; AT:Corredor Río Uruguay entrerriano),501010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Uruguay Sur (Rg:Litoral; AT:Corredor Río Uruguay entrerriano),501020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Gran Rosario (Rg:Litoral; AT:Corredor Paraná / Paraguay),502010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Capitales del Paraná (Rg:Litoral; AT:Corredor Paraná / Paraguay),502020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Parana  Medio y Delta (Rg:Litoral; AT:Corredor Paraná / Paraguay),502030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Alto Paraná y Paraguay (Rg:Litoral; AT:Corredor Paraná / Paraguay),502040
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Área Iguazú (Rg:Litoral; AT:Área Iguazú),503010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de la Mesopotamia (Rg:Litoral; AT:Resto del Litoral),504010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto del Litoral Occidental  (Rg:Litoral; AT:Resto del Litoral),504020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Quebrada de Humahuaca (Rg:Norte; AT:Quebrada de Humahuaca),602010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,S. Salvador de Jujuy y alrededores (Rg:Norte; AT:Quebrada de Humahuaca),602020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Puna (Rg:Norte; AT:Q. Hum y Puna),602030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Valle de lerma (Rg:Norte; AT:Valle de lerma),603010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Valles calchaquíes (Rg:Norte; AT:Valles y sierras centrales),604010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Yungas tucumanas (Rg:Norte; AT:Valles y sierras centrales),604020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto (Rg:Norte; AT:Valles y sierras centrales),604030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Termas de Río Hondo (Rg:Norte; AT:Norte oriental),605010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto del norte oriental (Rg:Norte; AT:Norte oriental),605020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Valle de Conlara (Rg:Cuyo; AT:Sierras del Noroeste de San Luis),701010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,San Luis Ciudad y alrededores (Rg:Cuyo; AT:Sierras del Noroeste de San Luis),701020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Andes cuyanos (Rg:Cuyo; AT:Oeste cuyano/Ruta 40),702010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Gran San Juan y alrededores (Rg:Cuyo; AT:Oeste cuyano/Ruta 40),702020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Gran Mendoza y alrededores (Rg:Cuyo; AT:Oeste cuyano/Ruta 40),702030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Area San Rafael-Gral. Alvear (Rg:Cuyo; AT:Oeste cuyano/Ruta 40),702040
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de Cuyo (Rg:Cuyo; AT:Resto de Cuyo),703010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Cordillera neuquina norte (Rg:Patagonia; AT:Cordillera Patagonia Norte),801010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Lagos Neuquinos (Rg:Patagonia; AT:Cordillera Patagonia Norte),801020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Bariloche y alrededores (Rg:Patagonia; AT:Cordillera Patagonia Norte),801030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Lagos del norte chubutense (Rg:Patagonia; AT:Cordillera Patagonia Norte),801040
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Área Glaciares (Rg:Patagonia; AT:Cordillera Patagonia Sur),802010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Isla Grande Tierra del Fuego (Rg:Patagonia; AT:Cordillera Patagonia Sur),802020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de Cordillera Patagonia Sur (Rg:Patagonia; AT:Cordillera Patagonia Sur),802030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Las Grutas y alrededores (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte),803010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Península de Valdes (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte),803020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Resto de Costa Atlántica Patagonia Norte (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte),803030
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Costa Atlántica Patagonia Sur (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur),804010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Alto Valle del Río Negro y Neuquén (Rg:Patagonia; AT:Centro Patagónico),805010
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Centro Patagónico (Rg:Patagonia; AT:Centro Patagónico),805020
+135,pfets_anual,Eje PFETS - Apertura ANUAL,dbl+lbl,,,Prov. de La Rioja (Rg:Norte; AT:Prov. de La Rioja),901010
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Buenos Aires,1
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,PBA-Partidos del GBA,2
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Paraná Inferior (Ruta 9) (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Norte; Pv:6),3010100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Noroeste (Ruta 8) (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Norte; Pv:6),3010100206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Delta del Paraná  (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Norte; Pv:6),3010100306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Luján (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Espadas Oeste ; Pv:6),3010200106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Otras localidades del Oeste (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Espadas Oeste ; Pv:6),3010200206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Sudoeste  (Ruta 3) (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Sur; Pv:6),3010300106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Sur (Ruta 2)   (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Sur; Pv:6),3010300206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Gran La Plata (Rg:Interior PBA; AT:Cercanías del AMBA; AA:Escapadas Sur; Pv:6),3010300306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Mar del Plata (Rg:Interior PBA; AT:Zona Mar del Plata; AA:Mar del Plata; Pv:6),3020100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto Litoral Gral Pueyrredón (Rg:Interior PBA; AT:Zona Mar del Plata; AA:Alrededores de MDP; Pv:6),3020200106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierra de los Padres (Rg:Interior PBA; AT:Zona Mar del Plata; AA:Alrededores de MDP; Pv:6),3020200206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Miramar (Rg:Interior PBA; AT:Zona Mar del Plata; AA:Alrededores de MDP; Pv:6),3020200306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Mar Chiquita (Rg:Interior PBA; AT:Zona Mar del Plata; AA:Alrededores de MDP; Pv:6),3020200406
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de San Bernando (Rg:Interior PBA; AT:Partido de la Costa; AA:San Bernando; Pv:6),3030100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Santa Teresita (Rg:Interior PBA; AT:Partido de la Costa; AA:Santa Teresita; Pv:6),3030200106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Mar de Ajó (Rg:Interior PBA; AT:Partido de la Costa; AA:Mar de Ajó; Pv:6),3030300106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de San Clemente del Tuyú (Rg:Interior PBA; AT:Partido de la Costa; AA:Otras localidades ; Pv:6),3030400106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Las Toninas (Rg:Interior PBA; AT:Partido de la Costa; AA:Otras localidades ; Pv:6),3030500206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Mar del Tuyú (Rg:Interior PBA; AT:Partido de la Costa; AA:Otras localidades ; Pv:6),3030600306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Partido de la Costa (Rg:Interior PBA; AT:Partido de la Costa; AA:Otras localidades ; Pv:6),3030600406
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Pinamar (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Pinamar; Pv:6),3040100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Cariló (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Pinamar; Pv:6),3040100206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Pinamar (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Pinamar; Pv:6),3040100306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Villa Gesell (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Villa Gesell; Pv:6),3040200106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Mar de las Pampas (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Villa Gesell; Pv:6),3040200206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Villa Gesell (Rg:Interior PBA; AT:Pinamar y Gesell; AA:Villa Gesell; Pv:6),3040200306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Necochea (Rg:Interior PBA; AT:Costa Atlántica Bonaerense Sur ; AA:Costa Atlántica Bonaerense Sur; Pv:6),3050100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Monte Hermoso (Rg:Interior PBA; AT:Costa Atlántica Bonaerense Sur ; AA:Costa Atlántica Bonaerense Sur; Pv:6),3050100206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Otras localidades de Costa Sur (Rg:Interior PBA; AT:Costa Atlántica Bonaerense Sur ; AA:Costa Atlántica Bonaerense Sur,3050100306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierra de la Ventana (Rg:Interior PBA; AT:Sierras; AA:Sierras; Pv:6),3060200106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras de Tandil (Rg:Interior PBA; AT:Sierras; AA:Sierras; Pv:6),3060200206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Ruta 3 Central (Rg:Interior PBA; AT:Sierras; AA:Sierras; Pv:6),3060200306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Otras localidadesserranas (Rg:Interior PBA; AT:Sierras; AA:Sierras; Pv:6),3060200406
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Bahía Blanca y Alrededores (Rg:Interior PBA; AT:Resto de la Región; AA:Resto de la Región; Pv:6),3070100106
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor  del Sudoeste (Rg:Interior PBA; AT:Resto de la Región; AA:Resto de la Región; Pv:6),3070100206
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Otras localidades (Rg:Interior PBA; AT:Resto de la Región; AA:Resto de la Región; Pv:6),3070100306
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Villa Carlos Paz (Rg:Córdoba; AT:Valle de Punilla; AA:Villa Carlos Paz y alrededores; Pv:14),4010100114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededdores del Lago San Roque (Rg:Córdoba; AT:Valle de Punilla; AA:Villa Carlos Paz y alrededores; Pv:14),4010100214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Cosquín (Rg:Córdoba; AT:Valle de Punilla; AA:Resto del Valle de Punilla; Pv:14),4010200114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,La Falda (Rg:Córdoba; AT:Valle de Punilla; AA:Resto del Valle de Punilla; Pv:14),4010200214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Otras localidades de Punilla (Rg:Córdoba; AT:Valle de Punilla; AA:Resto del Valle de Punilla; Pv:14),4010200314
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Mina Clavero & Cura Brochero (Rg:Córdoba; AT:Otros valles cordobeses; AA:Valle de Traslasierra; Pv:14),4020100114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del Valle Traslasierra (Rg:Córdoba; AT:Otros valles cordobeses; AA:Valle de Traslasierra; Pv:14),4020100214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,General Belgrano & Santa Rosa de Calamuchita (Rg:Córdoba; AT:Otros valles cordobeses; AA:Valle de Calamuchita; Pv:14),4020200114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Calamuchita (Rg:Córdoba; AT:Otros valles cordobeses; AA:Valle de Calamuchita; Pv:14),4020200214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valle de Paravachasca  (Rg:Córdoba; AT:Otros valles cordobeses; AA:Otras zonas serranas de Córdoba; Pv:14),4020300114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras Chicas (Rg:Córdoba; AT:Otros valles cordobeses; AA:Otras zonas serranas de Córdoba; Pv:14),4020300214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras del Sur  (Rg:Córdoba; AT:Otros valles cordobeses; AA:Otras zonas serranas de Córdoba; Pv:14),4020300314
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras del Noroeste (Rg:Córdoba; AT:Otros valles cordobeses; AA:Otras zonas serranas de Córdoba; Pv:14),4020300414
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Capital (Rg:Córdoba; AT:Ciudad de Córdoba; AA:Ciudad de Córdoba; Pv:14),4030100114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Norte de Córdoba (Rg:Córdoba; AT:Resto de Córdoba; AA:Resto de Córdoba; Pv:14),4040100114
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Mar Chiquita (Rg:Córdoba; AT:Resto de Córdoba; AA:Resto de Córdoba; Pv:14),4040100214
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Este de Córdoba (Rg:Córdoba; AT:Resto de Córdoba; AA:Resto de Córdoba; Pv:14),4040100314
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Federación (Rg:Litoral; AT:Corredor Río Uruguay entrerriano; AA:Uruguay Norte; Pv:30),5010100130
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Concordia (Rg:Litoral; AT:Corredor Río Uruguay entrerriano; AA:Uruguay Norte; Pv:30),5010100230
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona Colón (Rg:Litoral; AT:Corredor Río Uruguay entrerriano; AA:Uruguay Sur; Pv:30),5010200130
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Concepción del Uruguay (Rg:Litoral; AT:Corredor Río Uruguay entrerriano; AA:Uruguay Sur; Pv:30),5010200230
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Gualeguaychú (Rg:Litoral; AT:Corredor Río Uruguay entrerriano; AA:Uruguay Sur; Pv:30),5010200330
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Rosario (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Gran Rosario; Pv:82),5020100182
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de Rosario (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Gran Rosario; Pv:82),5020100282
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Paraná (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:30),5020200130
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área Gran Santa Fe (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:82),5020200282
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corrientes (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:18),5020200318
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resistencia (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:22),5020200422
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Posadas (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:54),5020200554
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Formosa (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Capitales del Paraná; Pv:34),5020200634
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Delta y Predelta entrerriano (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:30),5020300130
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Costa Norte entrerriana (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:30),5020300230
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona Reconquista (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:82),5020300382
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de costa santafesina (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:82),5020300482
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Esquina & Goya (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:18),5020300518
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Empedrado & Bella Vista (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Parana  Medio y Delta; Pv:18),5020300618
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona Paso de la Patria & Itatí (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:18),5020400118
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ituzaingó - Apipé (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:18),5020400218
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Isla del Cerrito (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:22),5020400322
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de la costa chaqueña del río Paraná (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv,5020400422
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Costa chaqueña  del río Paraguay (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:22),5020400522
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Costa formoseña del río Paraguay (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:34),5020400634
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área Mnes Jesuíticas (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:54),5020400754
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de la costa misionera (Rg:Litoral; AT:Corredor Paraná / Paraguay; AA:Alto Paraná y Paraguay; Pv:54),5020400854
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Cataratas del  Iguazú (Rg:Litoral; AT:Área Iguazú; AA:Área Iguazú; Pv:54),5030100154
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor del Gualeguay / Centro entrerriano (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:30),5040100130
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Area noreste entrerriano (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:30),5040100230
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área sureste correntino (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:18),5040100318
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Esteros del Iberá (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:18),5040100418
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Alto Uruguay / Mnes correntinas (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:18),5040100518
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Solar de las Huellas (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:18),5040100618
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del interior correntino (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:18),5040100718
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Suroeste misionero (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:54),5040100854
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona Saltos del Moconá (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:54),5040100954
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Noroeste misionero (Rg:Litoral; AT:Resto del Litoral; AA:Resto de la Mesopotamia; Pv:54),5040101054
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área pueblos históricos forestales (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:82),5040200182
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Area circuitos productivos santafesinos (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:82),5040200282
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área complejo Jaaukanigas (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:82),5040200382
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Santa Fe (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:82),5040200482
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área impenetrable (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:22),5040200522
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor  Ruta  Nacional 16 (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:22),5040200622
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor comarca bermejo chaqueña (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:22),5040200722
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de  Chaco (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:22),5040200822
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor Comarca Bermejo formoseño (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:34),5040200934
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Oeste formoseño / Área Bañado La Estrella (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:34),5040201034
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona  centronorte de Formosa (Rg:Litoral; AT:Resto del Litoral; AA:Resto del Litoral Occidental ; Pv:34),5040201134
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Iruya (Rg:Norte; AT:Q. Hum y Puna; AA:Quebrada de Humahuaca; Pv:66),6020100166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Humahuaca (Rg:Norte; AT:Q. Hum y Puna; AA:Quebrada de Humahuaca; Pv:38),6020100238
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de Humahuaca (Rg:Norte; AT:Q. Hum y Puna; AA:Quebrada de Humahuaca; Pv:38),6020100338
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Tilcara (Rg:Norte; AT:Q. Hum y Puna; AA:Quebrada de Humahuaca; Pv:38),6020100438
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de Tilcara (Rg:Norte; AT:Q. Hum y Punaa; AA:Quebrada de Humahuaca; Pv:38),6020100538
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,S. Salvador de Jujuy  (Rg:Norte; AT:Q. Hum y Puna; AA:S. Salvador de Jujuy y alrededores; Pv:38),6020200138
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de S. S. de Jujuy (Rg:Norte; AT:Q. Hum y Puna; AA:S. Salvador de Jujuy y alrededores; Pv:38),6020200238
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Salares y Volcanes de la Puna salteña (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:66),6020300166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Salares y Volcanes de la Puna catamarqueña (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:10),6020300210
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Pueblos Andino de Salta (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:66),6020300366
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Pueblos Andino de Jujuy (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:38),6020300438
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto Jujuy (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:38),6020300538
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Catamarca (Rg:Norte; AT:Q. Hum y Puna; AA:Puna; Pv:10),6020300610
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Salta (Rg:Norte; AT:Valle de lerma; AA:Valle de lerma; Pv:66),6030100166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del Valle de Lerma (Rg:Norte; AT:Valle de lerma; AA:Valle de lerma; Pv:66),6030100266
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valles Calchaquíes Norte (Rg:Norte; AT:Valles y sierras centrales; AA:Valles calchaquíes; Pv:66),6040100166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Amaicha del Valle (Rg:Norte; AT:Valles y sierras centrales; AA:Valles calchaquíes; Pv:90),6040100290
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Santa María (Rg:Norte; AT:Valles y sierras centrales; AA:Valles calchaquíes; Pv:10),6040100310
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valles Calchaquíes Sur catamarqueños (Rg:Norte; AT:Valles y sierras centrales; AA:Valles calchaquíes; Pv:10),6040100410
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valles Calchaquíes Sur tucumanos (Rg:Norte; AT:Valles y sierras centrales; AA:Valles calchaquíes; Pv:90),6040100590
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,S.M. de Tucumán (Rg:Norte; AT:Valles y sierras centrales; AA:Yungas tucumanas; Pv:90),6040200190
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de S. M. de Tucumán (Rg:Norte; AT:Valles y sierras centrales; AA:Yungas tucumanas; Pv:90),6040200290
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Yungas tucumanas (Rg:Norte; AT:Valles y sierras centrales; AA:Yungas tucumanas; Pv:90),6040200390
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Quebrada del Toro (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:66),6040300166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Yungas de Salta (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:66),6040300266
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Yungas de Jujuy (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:38),6040300338
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Yungas del sur de Tucumán (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:90),6040300490
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Yungas del sur de Catamarca (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:10),6040300510
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Tucumán (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:90),6040300690
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valle central de Catamarca (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:10),6040300710
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Catamarca (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:10),6040300810
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras de Guayasan catamarqueñas (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:10),6040300910
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sierras de Guayasan santiagueñas (Rg:Norte; AT:Valles y sierras centrales; AA:Resto; Pv:86),6040301086
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Termas de Río Hondo (Rg:Norte; AT:Norte oriental; AA:Termas de Río Hondo; Pv:86),6050100186
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Salta (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:66),6050200166
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Catamarca (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:10),6050200210
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Santiago del Estero y alrededores (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:86),6050200386
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Salinas de Ambargasta (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:86),6050200486
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Parque Nac. Copo (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:86),6050200586
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Sgo. Del Estero (Rg:Norte; AT:Norte oriental; AA:Resto del norte oriental; Pv:86),6050200686
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Merlo (Rg:Cuyo; AT:Sierras del Noroeste de San Luis; AA:Valle de Conlara; Pv:74),7010100174
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del Valle de Conlara (Rg:Cuyo; AT:Sierras del Noroeste de San Luis; AA:Valle de Conlara; Pv:74),7010100274
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de San Luis (Rg:Cuyo; AT:Sierras del Noroeste de San Luis; AA:San Luis Ciudad y alrededores; Pv:74),7010200174
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de San Luis (Rg:Cuyo; AT:Sierras del Noroeste de San Luis; AA:San Luis Ciudad y alrededores; Pv:74),7010200274
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Andes Sanjuaninos (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Andes cuyanos; Pv:70),7020100170
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona Aconcagua (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Andes cuyanos; Pv:50),7020100250
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valle de Uco (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Andes cuyanos; Pv:50),7020100350
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Malargue (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Andes cuyanos; Pv:50),7020100450
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de San Juan (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Gran San Juan y alrededores; Pv:70),7020200170
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de San Juan (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Gran San Juan y alrededores; Pv:70),7020200270
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Mendoza (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Gran Mendoza y alrededores; Pv:50),7020300150
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alrededores de  la Ciudad de Mendoza (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Gran Mendoza y alrededores; Pv:50),7020300250
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Tierras del este mendocinas (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Gran Mendoza y alrededores; Pv:50),7020300350
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Area San Rafael-Gral. Alvear (Rg:Cuyo; AT:Oeste cuyano/Ruta 40; AA:Area San Rafael-Gral. Alvear; Pv:50),7020400150
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valle Fértil (Rg:Cuyo; AT:Resto de Cuyo; AA:Resto de Cuyo; Pv:70),7030100170
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de San Juan (Rg:Cuyo; AT:Resto de Cuyo; AA:Resto de Cuyo; Pv:70),7030100270
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Mendoza (Rg:Cuyo; AT:Resto de Cuyo; AA:Resto de Cuyo; Pv:50),7030100350
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Área Sur de San Luis (Rg:Cuyo; AT:Resto de Cuyo; AA:Resto de Cuyo; Pv:74),7030100474
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Noroeste de San Luis (Rg:Cuyo; AT:Resto de Cuyo; AA:Resto de Cuyo; Pv:74),7030100574
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Copahue - Caviahue (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Cordillera neuquina norte; Pv:58),8010100158
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del Norte de Neuquén (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Cordillera neuquina norte; Pv:58),8010100258
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona San Martín de los Andes (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Lagos Neuquinos; Pv:58),8010200158
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona  Villa La Angostura (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Lagos Neuquinos; Pv:58),8010200258
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Lagos Neuquinos (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Lagos Neuquinos; Pv:58),8010200358
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ciudad de Bariloche (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Bariloche y alrededores; Pv:62),8010300162
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Cordillera rionegrina (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Bariloche y alrededores; Pv:62),8010300262
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Esquel (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Lagos del norte chubutense; Pv:26),8010400126
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona PN los alerces y lago puelo (Rg:Patagonia; AT:Cordillera Patagonia Norte; AA:Lagos del norte chubutense; Pv:26),8010400226
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,El Calafate (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Área Glaciares; Pv:78),8020100178
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto del Área Glaceares (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Área Glaciares; Pv:78),8020100278
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Ushuahia (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Isla Grande Tierra del Fuego; Pv:94),8020200194
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Isla Grande Tierra del Fuego (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Isla Grande Tierra del Fuego; Pv:94,8020200294
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor central patagonico oeste chubut (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Resto de Cordillera Patagonia Su,8020300126
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor central patagonico oeste sta cruz (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Resto de Cordillera Patagonia,8020300278
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Sudoeste de Chubut (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Resto de Cordillera Patagonia Sur; Pv:26),8020300326
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Norte de Santa Cruz (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Resto de Cordillera Patagonia Sur; Pv:78),8020300478
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Sur de Santa Cruz (Rg:Patagonia; AT:Cordillera Patagonia Sur; AA:Resto de Cordillera Patagonia Sur; Pv:78),8020300578
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Las Grutas - San Antonio Oeste (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Las Grutas y alrededores; Pv:62),8030100162
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Península de Valdes (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Península de Valdes; Pv:26),8030200126
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Viedma (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Resto de Costa Atlántica Patagonia Norte; Pv:62),8030300162
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de costa rionegrina (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Resto de Costa Atlántica Patagonia Nor,8030300262
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Rawson-Trelew-Gaiman (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Resto de Costa Atlántica Patagonia Norte; P,8030300326
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de costa chubutense Norte (Rg:Patagonia; AT:Costa Atlántica Patagonia Norte; AA:Resto de Costa Atlántica Patagon,8030300426
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Comodoro Rivadavia (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur; AA:Costa Atlántica Patagonia Sur; Pv:26),8040100126
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Río Gallegos (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur; AA:Costa Atlántica Patagonia Sur; Pv:78),8040100278
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de costa santacruceña (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur; AA:Costa Atlántica Patagonia Sur; Pv:78),8040100378
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Antártida e Islas del Atlántico Sur (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur; AA:Costa Atlántica Patagonia Su,8040100494
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Islas de los Estados (Rg:Patagonia; AT:Costa Atlántica Patagonia Sur; AA:Costa Atlántica Patagonia Sur; Pv:94),8040100694
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Alto Valle del Río Negro  (Rg:Patagonia; AT:Centro Patagónico; AA:Alto Valle del Río Negro y Neuquén; Pv:62),8050100162
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Neuquén (Rg:Patagonia; AT:Centro Patagónico; AA:Alto Valle del Río Negro y Neuquén; Pv:58),8050100258
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Tierra de Cawell (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:42),8050200142
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Latidos del Caldenal (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:42),8050200242
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Caminos del sudeste pampeano (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:42),8050200342
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de La Pampa (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:42),8050200442
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Valle del Río Negro (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:62),8050200562
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Meseta del Somuncurá rionegrina (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:62),8050200662
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Meseta del Somuncurá chubutense (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:26),8050200726
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Río Negro (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:62),8050200862
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Neuquén (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:58),8050200958
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Resto de Chubut (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:26),8050201026
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor central de la patagonia chubutense (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:26),8050201126
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor central de la patagonia santa cruceño (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:78),8050201278
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Bosques petrificados (Rg:Patagonia; AT:Centro Patagónico; AA:Centro Patagónico; Pv:78),8050201378
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Oeste Riojano (Rg:Norte; AT:Prov. La Rioja; AA:Prov. La Rioja; Pv:46),9010100146
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor de la producción (Rg:Norte; AT:Prov. La Rioja; AA:Prov. La Rioja; Pv:46),9010100246
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Corredor de la costa (Rg:Norte; AT:Prov. La Rioja; AA:Prov. La Rioja; Pv:46),9010100346
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,La Rioja y alrededores (Rg:Norte; AT:Prov. La Rioja; AA:Prov. La Rioja; Pv:46),9010100446
+136,pfets_cmc,Eje PFETS - Apertura CMC,dbl+lbl,,,Zona de los llanos (Rg:Norte; AT:Prov. La Rioja; AA:Prov. La Rioja; Pv:46),9010100546
+137,atractivo_natural,Tipo de atractivo natural,dbl+lbl,,,Costa Atlántica,1
+137,atractivo_natural,Tipo de atractivo natural,dbl+lbl,,,Sierras y Montañas,2
+137,atractivo_natural,Tipo de atractivo natural,dbl+lbl,,,Grandes Ríos,3
+137,atractivo_natural,Tipo de atractivo natural,dbl+lbl,,,Resto,4
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Costa Atlantica Bonaerense,11
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Costa Atlántica Patagónica,12
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras Bonaerenses,21
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras Cordobesas,22
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras y Montañas del Norte,23
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras y Montañas de Cuyo,24
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras y Montañas de la Patagonia Norte,25
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Sierras y Montañas de la Patagonia Sur,26
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Río Iguazú,31
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Río Paraná,32
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Río Uruguay,33
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Resto-Grandes Aglomerados,41
+138,atractivo_natural_2,Tipo de atractivo natural,dbl+lbl,,,Resto,42
+139,area_turistica,Área Turística,dbl+lbl,,, AMBA,150
+139,area_turistica,Área Turística,dbl+lbl,,, Int.PBA/ Alrededores AMBA,310
+139,area_turistica,Área Turística,dbl+lbl,,, Int.PBA/ Zona MDP,321
+139,area_turistica,Área Turística,dbl+lbl,,, Int.PBA/ Otros Costa Atlántica,322
+139,area_turistica,Área Turística,dbl+lbl,,, Int. PBA/ Otros destinos,330
+139,area_turistica,Área Turística,dbl+lbl,,, Córdoba/ Sierras,410
+139,area_turistica,Área Turística,dbl+lbl,,, Córdoba/ Otros destinos,420
+139,area_turistica,Área Turística,dbl+lbl,,, Litoral/ Eje Río Uruguay ER,510
+139,area_turistica,Área Turística,dbl+lbl,,, Litoral/ Eje Ríos Paraná-Paraguay-Iguazú,520
+139,area_turistica,Área Turística,dbl+lbl,,, Litoral/ Otros destinos,530
+139,area_turistica,Área Turística,dbl+lbl,,, Norte/ Valle de Lerma & Quebrada de H.,610
+139,area_turistica,Área Turística,dbl+lbl,,, Norte/ Valles y Sierras Centrales,620
+139,area_turistica,Área Turística,dbl+lbl,,, Norte/ Otros destinos,630
+139,area_turistica,Área Turística,dbl+lbl,,, Cuyo/ Zona Oeste (Ruta 40),710
+139,area_turistica,Área Turística,dbl+lbl,,, Cuyo/ Otros destinos,720
+139,area_turistica,Área Turística,dbl+lbl,,, Patagonia/ Zona Cordillerana,810
+139,area_turistica,Área Turística,dbl+lbl,,, Patagonia/ Otros destinos,820
+140,fecha_incorporacion_codigo,NA,dbl,,,NA,NA
+141,trimestre,Trimestre,dbl,,,NA,NA
+142,anio,Año,dbl,,,NA,NA
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Enero,1
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Febrero,2
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Marzo,3
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Abril,4
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Mayo,5
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Junio,6
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Julio,7
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Agosto,8
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Septiembre,9
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Octubre,10
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Noviembre,11
+143,mes_viaje,Mes del viaje en números,dbl+lbl,,,Diciembre,12
+144,CtrlRegionDestino,Control a Región Destino,dbl,,,NA,NA
+145,CoefGasto_2022.AGO,NA,dbl,,,NA,NA
+146,GastoViajeTotal_perCapita_Pesos2022.AGO,gastoviajetotal_pc_ipc_ago22,dbl,,,NA,NA
