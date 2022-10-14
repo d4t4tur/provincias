@@ -1,7 +1,7 @@
 ---
 title: "Turismo Receptivo"
 description: |
-  Estimaciones de turismo receptivo a nivel provincial. 
+  Estimaciones de turismo receptivo a nivel provincial en base a datos de la Dirección Nacional de Migraciones. 
 site: distill::distill_website
 ---
 

@@ -19,7 +19,9 @@ serie_puna <- arrow::read_parquet("/srv/DataDNMYE/puna/serie_puna.parquet") %>%
          Localidad = localidad,
          Tipo = tipo,
          Clasificación = clasificacion_mintur) %>% 
-  arrange(desc(Año))
+  arrange(desc(Año)) %>% 
+  mutate(Provincia = str_replace(Provincia, "Tierra del Fuego, Antartida E Islas Del Atlantico Sur",
+                                 "Tierra del Fuego"))
 
 tabla_tipo <- serie_puna %>% 
   group_by(Año, Provincia) %>%
@@ -84,7 +86,7 @@ puna <- withr::with_options(
          htmltools::br(),
          ggplotly(gg_loc, dynamicTicks = TRUE) %>% 
            layout(xaxis = list(categoryorder = "trace")) %>% 
-           layout(title = 'Top 15 localidades de la provincia según cantidad de plazas'))
+           layout(title = 'Top 15 localidades según cantidad de plazas. Año 2020'))
 )
 
 write_rds(puna, "outputs/graph_puna.rds")

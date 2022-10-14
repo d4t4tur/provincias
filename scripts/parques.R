@@ -42,8 +42,8 @@ dt_parques <- datatable(plot_parques,extensions = 'Buttons',
                                        buttons = list('copy', 
                                                       list(
                                                         extend = 'collection',
-                                                        buttons = list(list(extend = 'csv', filename = "puna"),
-                                                                       list(extend = 'excel', filename = "puna")),
+                                                        buttons = list(list(extend = 'csv', filename = "parques"),
+                                                                       list(extend = 'excel', filename = "parques")),
                                                         text = 'Download'
                                                       ))),
                         rownames= FALSE
