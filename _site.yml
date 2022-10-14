@@ -36,8 +36,8 @@ navbar:
         href: parques.html
       - text: "Conectividad Aérea"
         href: aereo.html
-      - text: "Prestadores Turísticos"
-        href: prestadores.html
+      - text: "Empresas Turísticas"
+        href: empresas.html
 output:
   distill::distill_article:
     css: styles.css
