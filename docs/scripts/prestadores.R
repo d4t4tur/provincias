@@ -10,6 +10,8 @@ library(dnmye)
 library(plotly)
 library(glue)
 library(gt)
+library(leaflet)
+library(herramientas)
 source(file = "scripts/aux_function.R")
 
 ramas_turismo <- readxl::read_excel("/srv/DataDNMYE/padron_afip/ramas turismo 6 D.xlsx")
@@ -17,25 +19,17 @@ diccionario_claes <- read.csv("/srv/DataDNMYE/padron_afip/clae_diccionario.csv")
   select(clae6,clae6_desc)
 
 #..............Armo base final con join de lat/long..............
-ubicacion_claes_turismo_empleo19 <- read_delim("/srv/DataDNMYE/padron_afip/ubicacion_claes_turismo_empleo_dic19.csv",
-                                               delim = ";", escape_double = FALSE, trim_ws = TRUE) %>% 
-  filter(empleadora_dic19 == 1) %>% 
-  mutate(nombre_ubicacion = paste(localidad_arcgis, departamento_arcgis, provincia, sep = ", ")) %>% 
-  select(-empleadora_dic19) %>% 
-  mutate(empleadora = 2019)
 
-# ubicacion_claes_turismo_empleo21 <- read_delim("/srv/DataDNMYE/padron_afip/ubicacion_claes_turismo_empleo.csv",
-#                                                delim = ",", escape_double = FALSE, trim_ws = TRUE) %>% 
-#   filter(empleadora_jun21_actualizado == 1) %>% 
-#   mutate(nombre_ubicacion = paste(localidad_arcgis, departamento_arcgis, provincia, sep = ", ")) %>% 
-#   select(-empleadora_jun21_actualizado) %>% 
-#   mutate(empleadora = 2021)
+ubicacion_claes_turismo <- read_delim("/srv/DataDNMYE/padron_afip/ubicacion_claes_turismo_empleo.csv",
+                                               delim = ",", escape_double = FALSE, trim_ws = TRUE) %>%
+  filter(empleadora_jun21_actualizado == 1) %>%
+  select(-empleadora_jun21_actualizado)
 
 #
 # coordenadas_afip <- read_rds("/srv/DataDNMYE/rutas_nautrales/geometrias/prestadores_afip_geo.RDS") %>% 
 #   select(address, lat, long)
 #
-ubicacion_claes_turismo <- bind_rows(ubicacion_claes_turismo_empleo19)
+# ubicacion_claes_turismo <- bind_rows(ubicacion_claes_turismo_empleo19)
 
 ubicacion_claes_turismo <- ubicacion_claes_turismo %>% 
   filter(!clae6 %in% c(c(473000,681098,681099,780000,562091))) %>% 
@@ -47,79 +41,170 @@ ubicacion_claes_turismo <- ubicacion_claes_turismo %>%
                              substr(clae6,1,3) == 791 & rct == "RCT"~ "Agencias de Viaje",
                              substr(clae6,1,3) %in% c(591,592,681,780,854,900,910,920,931,939) & rct == "RCT"~ "Otros Servicios Turísticos")) 
 
-prestadores_afip_loc <- ubicacion_claes_turismo %>% 
-  group_by(provincia, departamento_arcgis, localidad_arcgis, cat_rct,cat_empresa, nombre_ubicacion) %>% 
-  summarise(prestadores_cat = n()) %>% 
+empresas_afip_loc <- ubicacion_claes_turismo %>% 
+  group_by(provincia, departamento_arcgis, cat_rct,cat_empresa) %>% 
+  summarise(cantidad = n()) %>% 
   filter(!is.na(provincia))
 
 
-# prestadores_afip_loc_geo <- left_join(prestadores_afip_loc, coordenadas_afip, by = c("nombre_ubicacion" = "address") )
+env_empresas_categoria_tamaño <- SharedData$new(empresas_afip_loc %>% 
+                                                  group_by(provincia, cat_rct,cat_empresa) %>% 
+                                                  summarise(cantidad = sum(cantidad)) %>% 
+                                                  pivot_wider(names_from = cat_empresa, values_from = cantidad) %>% 
+                                                  select(provincia, cat_rct, micro, pequeña, mediana, grande),
+                                   key = ~ provincia,
+                                   group = "provincia")
 
-prestadores_afip_loc %>% 
-  # filter(is.na(lat)) %>% 
-  group_by(provincia, departamento_arcgis, localidad_arcgis) %>% 
-  summarise(sum(prestadores_cat))
+env_empresas_dpto_cat <- SharedData$new(empresas_afip_loc %>% 
+                                                  group_by(provincia, departamento_arcgis, cat_rct) %>% 
+                                                  summarise(cantidad = sum(cantidad)) %>%
+                                                   pivot_wider(names_from = cat_rct, values_from = cantidad, values_fill = 0) %>% 
+                                                    relocate(.after = everything(), `Otros Servicios Turísticos`) %>% 
+                                                    mutate(mutate(across(where(is.numeric), ~ifelse(.x < 3, NA, .x)))) %>% 
+                                             filter(!(if_all(where(is.numeric), ~ is.na(.x)))),
+                                                key = ~ provincia,
+                                                group = "provincia")
 
-# prestadores_afip_loc_geo <- prestadores_afip_loc_geo %>% 
-#   filter(!is.na(lat)) 
-# st_as_sf(coords = c("long", "lat"), crs =4326)
+select_prov <- filter_select(id = "provs", sharedData = env_empresas_categoria_tamaño, group = ~ provincia,
+                      label = "Provincia")
 
-prestadores_nest_data <- prestadores_afip_loc %>% 
-  mutate(nombre_prov = provincia) %>% 
+dt_empresas_categoria_tamaño <- env_empresas_categoria_tamaño %>% 
+  DT::datatable( extensions = 'Buttons',
+                 options = list(lengthMenu = c(10, 25), 
+                                pageLength = 10, 
+                                dom = 'lrtipB',buttons = list(list(
+                                  extend = "copy",
+                                  text = "Copiar"
+                                ),
+                                list(extend = 'collection',
+                                     buttons = list(list(extend = 'csv', filename = "alojamientos"),
+                                                    list(extend = 'excel', filename = "alojamientos")),
+                                     text = 'Descargar'
+                                ))),
+                 rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                 colnames = c('Provincia', 'Actividad', 'Micro', 'Pequeña', 'Mediana', 'Grande')
+  )
+
+dt_empresas_dpto_cat <- env_empresas_dpto_cat %>% 
+  DT::datatable( extensions = 'Buttons',
+                 options = list(lengthMenu = c(10, 25), 
+                                pageLength = 10, 
+                                dom = 'lrtipB',buttons = list(list(
+                                  extend = "copy",
+                                  text = "Copiar"
+                                ),
+                                list(extend = 'collection',
+                                     buttons = list(list(extend = 'csv', filename = "alojamientos"),
+                                                    list(extend = 'excel', filename = "alojamientos")),
+                                     text = 'Descargar'
+                                ))),
+                 rownames= FALSE,  filter = list(position = 'top', clear = FALSE)
+  )
+
+
+mapa_base <- geoAr::get_geo("ARGENTINA") %>% 
+  geoAr::add_geo_codes()
+
+mapa_base <- mapa_base %>% 
+  mutate(name_prov = limpiar_texto(name_prov, enie = F),
+         nomdepto_censo = limpiar_texto(nomdepto_censo, enie = F)) %>% 
+  mutate(nomdepto_censo = case_when(
+    nomdepto_censo == "comuna 01" ~ "comuna 1",
+    nomdepto_censo == "comuna 02" ~ "comuna 2",
+    nomdepto_censo == "comuna 03" ~ "comuna 3",
+    nomdepto_censo == "comuna 04" ~ "comuna 4",
+    nomdepto_censo == "comuna 05" ~ "comuna 5",
+    nomdepto_censo == "comuna 06" ~ "comuna 6",
+    nomdepto_censo == "comuna 07" ~ "comuna 7",
+    nomdepto_censo == "comuna 08" ~ "comuna 8",
+    nomdepto_censo == "comuna 09" ~ "comuna 9", 
+    T ~ nomdepto_censo),
+    key = paste(name_prov, nomdepto_censo))
+
+
+empresas_afip_loc_mapa <- empresas_afip_loc %>% 
+  group_by(provincia, departamento_arcgis, cat_rct) %>% 
+  summarise(cantidad = sum(cantidad)) %>%
+  filter(cantidad >= 3) %>% 
+  mutate(key = paste( limpiar_texto(provincia, enie = F),limpiar_texto(departamento_arcgis,enie =F))) %>% 
+  filter(!is.na(provincia) & !is.na(departamento_arcgis))
+
+sum(empresas_afip_loc_mapa$cantidad[(empresas_afip_loc_mapa$key) %in% mapa_base$key])/sum(empresas_afip_loc_mapa$cantidad)
+
+
+empresas_afip_dpto_geo <- left_join(mapa_base, empresas_afip_loc_mapa, by = "key")
+
+empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>% 
+  group_by(provincia, departamento_arcgis, cat_rct) %>% 
+  summarise(empresas = sum(cantidad, na.rm = T))
+
+empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
+  st_cast("MULTIPOLYGON")
+
+paleta1 <- MetBrewer::MetPalettes$Hokusai3[[1]]
+
+empresas_map_data <- empresas_afip_dpto_geo %>% 
+  filter(!is.na(provincia)) %>% 
   ungroup() %>% 
-  nest(nested_column_provs = -provincia)
+  mutate(
+         Dpto = paste0(departamento_arcgis, "<br>", cat_rct,"<br>Empresas Registradas:", empresas))
 
-
-tabla_prestadores <-  function(data) {
   
-  data %>% 
-    group_by(cat_rct) %>% 
-    summarise(micro = sum(prestadores_cat[cat_empresa == "micro"], na.rm = T),
-              pequeña = sum(prestadores_cat[cat_empresa == "pequeña"], na.rm = T),
-              mediana = sum(prestadores_cat[cat_empresa == "mediana"], na.rm = T),
-              grande = sum(prestadores_cat[cat_empresa == "grande"], na.rm = T),
-              total = sum(prestadores_cat, na.rm = T)
-              
-    ) %>% 
-    arrange(cat_rct) %>% 
-    janitor::adorn_totals() %>%  
-    mutate(across(, ~ ifelse(.x == 0, "-", as.character(.x)))) %>% 
-    gt() %>% 
-    cols_label(
-      cat_rct  = md("Categoría"),
-      micro = md("**Micro**"),
-      pequeña = md("**Pequeña**"),
-      mediana = md("**Mediana**"),
-      grande = md("**Grande**"),
-      total = md("**Total**")
-    )  %>%
-    cols_align(align = "center",
-               columns = c(micro, pequeña, mediana, grande))  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center", 
-                row_group.font.weight = "bold",
-                #table.font.size = 11,
-                #table.width = 580,
-                #data_row.padding = px(7)
-    ) %>% 
-    tab_style(
-      style = list(
-        cell_text(weight = "bold")
-      ),
-      locations = cells_body(
-        rows =  cat_rct == "Total"
-      )) %>% 
-    tab_header(title = md(glue("**Empresas Registradas - {unique(data$nombre_prov)}**")),
-               subtitle = "Cantidad de Empresas Registradas por Categoría. Año 2021") %>%
-    tab_source_note(source_note = md("**Fuente:** Dirección Nacional de Mercados y Estadísticas a partir de datos de AFIP"
-                                     #"**Fuente**: DNMyE ({unique(indicadores_tot$fuente)[1]}, {unique(indicadores_tot$fuente)[2]}, {unique(indicadores_tot$fuente)[3]})"
-    )
-    )
-}  
+env_alojamientos_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                      cat_rct == "Alojamiento") %>% 
+                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
+                                        key = ~ provincia, "provincia")
+env_gastro_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                          cat_rct == "Gastronomía") %>% 
+                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
+                                            key = ~ provincia, "provincia")
+env_transporte_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                          cat_rct == "Transporte") %>% 
+                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
+                                            key = ~ provincia, "provincia")
+env_agencias_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                          cat_rct == "Agencias de Viaje") %>% 
+                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
+                                            key = ~ provincia, "provincia")
+env_otros_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                          cat_rct == "Otros Servicios Turísticos") %>% 
+                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
+                                            key = ~ provincia, "provincia")
 
 
-prestadores_nest_data <- prestadores_nest_data %>% 
-  mutate(.tablas_prov = map(nested_column_provs,  tabla_prestadores)) %>% 
-  select(-nested_column_provs)
 
-write_rds(prestadores_nest_data, "outputs/empresas_nest_data.RDS")
+
+
+empresas <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 12, 12), 
+         filter_select("empresas", "Elegir una provincia", env_empresas_categoria_tamaño, ~ provincia,
+                       multiple = F),
+         dt_empresas_categoria_tamaño,
+         dt_empresas_dpto_cat,
+         leaflet(env_alojamientos_map_data) %>% 
+           addArgTiles() %>% 
+           addPolygons(data = env_alojamientos_map_data,
+                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+                       group = "Alojamiento",
+                       label = ~ lapply(Dpto, htmltools::HTML)) %>% 
+  addPolygons(data = env_transporte_map_data,
+              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+              group = "Transporte", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+  addPolygons(data = env_gastro_map_data,
+              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+              group = "Gastronomía", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+  addPolygons(data = env_agencias_map_data,
+              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+              group = "Agencias de Viaje", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+  addPolygons(data = env_otros_map_data,
+              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+              group = "Otros rubros", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+           addLayersControl(
+             overlayGroups = c("Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
+             options = layersControlOptions(collapsed = FALSE)
+           )
+   )
+  )
+
+write_rds(empresas, "outputs/empresas.rds")

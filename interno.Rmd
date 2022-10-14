@@ -26,7 +26,6 @@ motivo <- readRDS("outputs/motivo.rds")
 
 ## Indicadores Principales
 
-<<<<<<< HEAD
 
 ```{r}
 interno_indicadores_ppales
