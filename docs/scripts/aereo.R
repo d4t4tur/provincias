@@ -21,7 +21,9 @@ cabotaje <- read_rds("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada.rds")
          prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
                              TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
          loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta))
+                             TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
+         prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+                                 "Tierra del Fuego"))
 
 
 internacional <- read_rds("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada.rds") %>% 
@@ -36,7 +38,9 @@ internacional <- read_rds("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada.
          prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
                              TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
          loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
-                            TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta))
+                            TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
+         prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+                               "Tierra del Fuego"))
 
 # DT idioma
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
@@ -80,8 +84,8 @@ dt_cabotaje <- datatable(plot_cabotaje, extensions = 'Buttons',
                                         buttons = list('copy', 
                                                        list(
                                                          extend = 'collection',
-                                                         buttons = list(list(extend = 'csv', filename = "puna"),
-                                                                        list(extend = 'excel', filename = "puna")),
+                                                         buttons = list(list(extend = 'csv', filename = "conectividad"),
+                                                                        list(extend = 'excel', filename = "conectividad")),
                                                          text = 'Download'
                                                        ))),
                               rownames= FALSE)
@@ -117,8 +121,8 @@ dt_internacional <- datatable(plot_internacional, extensions = 'Buttons',
                                              buttons = list('copy', 
                                                             list(
                                                               extend = 'collection',
-                                                              buttons = list(list(extend = 'csv', filename = "puna"),
-                                                                             list(extend = 'excel', filename = "puna")),
+                                                              buttons = list(list(extend = 'csv', filename = "conectividad"),
+                                                                             list(extend = 'excel', filename = "conectividad")),
                                                               text = 'Download'
                                                             ))),
                               rownames= FALSE)

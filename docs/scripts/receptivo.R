@@ -11,13 +11,13 @@ visitantes_dnm <-  read_csv2("/srv/DataDNMYE/turismo_internacional/turismo_inter
 receptivo <-  visitantes_dnm %>%
   filter(turismo_internac == "Receptivo", anio >= 2017) %>%
   group_by(anio, prov, paso_publ) %>%
-  summarise(visitantes = round(sum(casos_ponderados))) %>%
+  summarise(visitantes = round(sum(casos_ponderados, na.rm = T))) %>%
   ungroup() %>%
   mutate(
     prov = case_when(
       prov == "CABA-GBA" ~ "Buenos Aires",
       prov == "Resto prov. Bs. As." ~ "Buenos Aires",
-      prov == "Tierra del Fuego" ~ "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+      #prov == "Tierra del Fuego" ~ "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
       TRUE ~ prov),
     paso_publ = str_replace_all(paso_publ, "Aero ", "Aeropuerto "),
     concatenado = paste(paso_publ, prov)) %>%
@@ -48,8 +48,8 @@ dt_rec <- datatable(data_rec, extensions = 'Buttons',
                                     buttons = list('copy', 
                                                    list(
                                                      extend = 'collection',
-                                                     buttons = list(list(extend = 'csv', filename = "puna"),
-                                                                    list(extend = 'excel', filename = "puna")),
+                                                     buttons = list(list(extend = 'csv', filename = "receptivo"),
+                                                                    list(extend = 'excel', filename = "receptivo")),
                                                      text = 'Download'
                                                    ))),
                      rownames= FALSE
@@ -64,7 +64,8 @@ gg_rec <- ggplot(data_rec) +
   scale_color_dnmye() +
   theme_minimal() +
   theme(legend.position = "none",
-        axis.text.x = element_text(angle = 45))
+        axis.text.x = element_text(angle = 45),
+        axis.title = element_blank())
 
 
 graph_receptivo <- withr::with_options(
