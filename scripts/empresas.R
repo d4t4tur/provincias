@@ -1,17 +1,12 @@
 library(geoAr)
-#library(ARTofR)
 library(tidyverse)
-#install.packages("opencage")
-library(georefar)
-#vignette("opencage")
 library(sf)
-library(s2)
-library(dnmye)
 library(plotly)
-library(glue)
-library(gt)
 library(leaflet)
 library(herramientas)
+library(comunicacion)
+library(leaflet.minicharts)
+library(crosstalk)
 source(file = "scripts/aux_function.R")
 
 ramas_turismo <- readxl::read_excel("/srv/DataDNMYE/padron_afip/ramas turismo 6 D.xlsx")
@@ -85,6 +80,7 @@ dt_empresas_categoria_tamaño <- env_empresas_categoria_tamaño %>%
                  colnames = c('Provincia', 'Actividad', 'Micro', 'Pequeña', 'Mediana', 'Grande')
   )
 
+
 dt_empresas_dpto_cat <- env_empresas_dpto_cat %>% 
   DT::datatable( extensions = 'Buttons',
                  options = list(lengthMenu = c(10, 25), 
@@ -100,6 +96,8 @@ dt_empresas_dpto_cat <- env_empresas_dpto_cat %>%
                                 ))),
                  rownames= FALSE,  filter = list(position = 'top', clear = FALSE)
   )
+
+
 
 
 mapa_base <- geoAr::get_geo("ARGENTINA") %>% 
@@ -141,6 +139,29 @@ empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
 empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
   st_cast("MULTIPOLYGON")
 
+# empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>% 
+#   st_centroid()
+# 
+# empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%  
+#   mutate(long = unlist(map(geometry,1)),
+#          lat = unlist(map(geometry,2)))
+
+# empresas_afip_dpto_geo_wider <- empresas_afip_dpto_geo %>% 
+#   pivot_wider(names_from = cat_rct, values_from = empresas) %>% 
+#   select(-c("NA"))
+# 
+# datachart <- empresas_afip_dpto_geo_wider %>% ungroup() %>% select(Gastronomía, Transporte, Alojamiento, `Agencias de Viaje`, `Otros Servicios Turísticos`) %>% 
+#   ungroup()
+# 
+# leaflet() %>% 
+#   addArgTiles() %>% 
+#   addMinicharts(
+#     empresas_afip_dpto_geo_wider$long, empresas_afip_dpto_geo_wider$lat,
+#     chartdata = datachart,
+#     # colorPalette =,
+#     width = 45, height = 45
+#   )
+
 paleta1 <- MetBrewer::MetPalettes$Hokusai3[[1]]
 
 empresas_map_data <- empresas_afip_dpto_geo %>% 
@@ -177,29 +198,32 @@ env_otros_map_data <- SharedData$new(data = filter(empresas_map_data,
 
 empresas <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12, 12), 
+  bscols(widths = 12, 
          filter_select("empresas", "Elegir una provincia", env_empresas_categoria_tamaño, ~ provincia,
                        multiple = F),
          dt_empresas_categoria_tamaño,
+         htmltools::br(),
          dt_empresas_dpto_cat,
-         leaflet(env_alojamientos_map_data) %>% 
+         htmltools::br(),
+         htmltools::br(),
+         leaflet() %>% 
            addArgTiles() %>% 
            addPolygons(data = env_alojamientos_map_data,
                        fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
                        group = "Alojamiento",
                        label = ~ lapply(Dpto, htmltools::HTML)) %>% 
-  addPolygons(data = env_transporte_map_data,
-              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-              group = "Transporte", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-  addPolygons(data = env_gastro_map_data,
-              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-              group = "Gastronomía", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-  addPolygons(data = env_agencias_map_data,
-              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-              group = "Agencias de Viaje", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-  addPolygons(data = env_otros_map_data,
-              fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-              group = "Otros rubros", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+          addPolygons(data = env_transporte_map_data,
+                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+                      group = "Transporte", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+          addPolygons(data = env_gastro_map_data,
+                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+                      group = "Gastronomía", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+          addPolygons(data = env_agencias_map_data,
+                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+                      group = "Agencias de Viaje", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+          addPolygons(data = env_otros_map_data,
+                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
+                      group = "Otros rubros", label = ~ lapply(Dpto, htmltools::HTML)) %>%
            addLayersControl(
              overlayGroups = c("Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
              options = layersControlOptions(collapsed = FALSE)

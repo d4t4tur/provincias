@@ -20,3 +20,7 @@ library(plotly)
 empresas <- read_rds("outputs/empresas.rds")
 ```
 
+```{r}
+empresas
+```
+
