@@ -24,19 +24,38 @@ options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1
 parques_data <- base_pn %>% 
   filter(anio >= 2017 & anio < 2022) %>% 
   mutate(visitantes = as.integer(visitantes),
-         residencia = str_to_sentence(residencia)) %>% 
-  group_by(anio, provincia, residencia) %>% 
-  summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
+         residencia = str_to_sentence(residencia),
+         parque_nacional = str_to_title(parque_nacional)) %>% 
+  group_by(anio, provincia, parque_nacional, residencia) %>% 
+  summarise(visitantes = sum(visitantes, na.rm = TRUE),
+            visitantes = case_when(visitantes == 0 ~ NA_integer_,
+                                   TRUE ~ visitantes)) %>% 
+  ungroup() %>% 
   # pivot_wider(id_cols = c(anio, provincia, etiq_parque), names_from = residencia, values_from = visitantes) %>% 
   # janitor::clean_names() %>% 
   arrange(desc(anio), provincia) %>% 
-  rename(Provincia = provincia, Origen = residencia, Visitas = visitantes, Año = anio) 
+  rename(Provincia = provincia, Origen = residencia, Visitas = visitantes, Año = anio,
+         Parque = parque_nacional) %>% 
+  drop_na(Visitas)
+
+graph_pn <- parques_data %>% 
+  group_by(Año, Provincia, Parque) %>% 
+  summarise(Visitas = sum(Visitas, na.rm = T)) %>% 
+  ungroup()
+
+graph_orig <- parques_data %>% 
+  group_by(Año, Provincia, Origen) %>% 
+  summarise(Visitas = sum(Visitas, na.rm = T)) %>% 
+  ungroup()
+
+tabla_pn <- SharedData$new(parques_data, ~ Provincia, group = "Provincia")
+
+plot_parques <- SharedData$new(graph_pn, ~ Provincia, group = "Provincia")
+
+plot_origen <- SharedData$new(graph_orig, ~ Provincia, group = "Provincia")
 
 
-
-plot_parques <- highlight_key(parques_data, ~ Provincia)
-
-dt_parques <- datatable(plot_parques,extensions = 'Buttons',
+dt_parques <- datatable(tabla_pn,extensions = 'Buttons',
                         options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
                                        dom = 'lfrtipB',
                                        buttons = list('copy', 
@@ -50,7 +69,16 @@ dt_parques <- datatable(plot_parques,extensions = 'Buttons',
 )
 
 
-gg <- ggplot(plot_parques) + 
+gg_pn <- ggplot(plot_parques) + 
+  geom_line(aes(Año, Visitas, color = Parque)) +
+  geom_point(aes(Año, Visitas, color = Parque,
+                 text = paste0(Parque,": ",
+                               format(Visitas, big.mark = ".")))) +
+  scale_color_dnmye() +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+gg_orig <- ggplot(plot_origen) + 
   geom_line(aes(Año, Visitas, color = Origen)) +
   geom_point(aes(Año, Visitas, color = Origen,
                  text = paste0(Provincia,": ",
@@ -64,12 +92,17 @@ gg <- ggplot(plot_parques) +
 parques <- withr::with_options(
   list(persistent = TRUE), 
   bscols(widths = c(12, 12), 
-         filter_select("id", "Elegir una provincia", plot_parques, ~ Provincia,
+         filter_select("id", "Elegir una provincia", tabla_pn, ~ Provincia,
                        multiple = FALSE),
          dt_parques,
-         ggplotly(gg, dynamicTicks = TRUE, tooltip = "text") %>% 
+         htmltools::br(),
+         ggplotly(gg_orig, dynamicTicks = TRUE, tooltip = "text") %>% 
            layout(xaxis=list(tickformat='.d')) %>% 
-           layout(title = 'Evolución de visitas a Parques Nacionales según origen'))
+           layout(title = 'Evolución de visitas a Parques Nacionales según origen'),
+         htmltools::br(),
+         ggplotly(gg_pn, dynamicTicks = TRUE, tooltip = "text") %>% 
+           layout(xaxis=list(tickformat='.d')) %>% 
+           layout(title = 'Evolución de visitas por Parque Nacional'))
 )
 
 write_rds(parques, "outputs/graph_parques.rds")
