@@ -433,7 +433,7 @@ salidas <- salidas %>%
   ))
 
 
-## PLOTS + DT interactivos
+## PLOTS + DT interactivos ----
 
 env_indicadores_ppales <- SharedData$new(data =   salidas %>% select(anio, tabla_conjunta) %>% unnest(),
                                          key = ~ provincia_destino,
@@ -474,6 +474,8 @@ indicadores_ppales <- withr::with_options(
   bscols(widths = c(12, 12, 12), 
          filter_select("interno-ppales", "Elegir una provincia", env_indicadores_ppales, ~ provincia_destino,
                        multiple = F),
+         htmltools::br(),
+         htmltools::p("Evolución de los principales indicadores"),
          dt_indicadores_ppales,
          ggplotly(gg_indicadores_ppales, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))#, height = 800, width = 1000
@@ -521,6 +523,8 @@ alojamientos <- withr::with_options(
          # filter_select("alojamiento", "Elegir una provincia", env_alojamiento, ~ provincia_destino,
          #               multiple = F),
          dt_alojamiento,
+         htmltools::br(),
+         htmltools::p("Tipo de alojamiento como porcentaje del total de turistas en el destino"),
          ggplotly(gg_alojamientos, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))
   
@@ -568,6 +572,8 @@ edad <- withr::with_options(
          # filter_select("edad", "Elegir una provincia", env_edad, ~ provincia_destino,
          #               multiple = F),
          dt_edad,
+         htmltools::br(),
+         htmltools::p("Grupo de edad como porcentaje del total de turistas en el destino"),
          ggplotly(gg_edad, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))
   
@@ -616,6 +622,8 @@ transporte <- withr::with_options(
   list(persistent = TRUE), 
   bscols(widths = c(12, 12, 12), 
          dt_transporte,
+         htmltools::br(),
+         htmltools::p("Tipo de transporte utilizado como porcentaje del total de turistas en el destino"),
          ggplotly(gg_transporte, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))
   
@@ -626,7 +634,7 @@ write_rds(transporte, "outputs/transporte.rds")
 ## motivo
 
 env_motivo <- SharedData$new(data  = salidas %>% 
-                               select(anio, tabla_conjunta_transporte) %>% unnest(),
+                               select(anio, tabla_conjunta_motivo) %>% unnest(),
                              key = ~ provincia_destino,
                              group = "provincia_destino")
 
@@ -662,6 +670,8 @@ motivo <- withr::with_options(
   list(persistent = TRUE), 
   bscols(widths = c(12, 12, 12), 
          dt_motivo,
+         htmltools::br(),
+         htmltools::p("Principal motivo del viaje como porcentaje del total de turistas en el destino"),
          ggplotly(gg_motivo, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))
   
@@ -718,6 +728,8 @@ tipo_turismo <- withr::with_options(
          # filter_select("tipo_turismo", "Elegir una provincia", env_tipo_turismo, ~ provincia_destino,
          #               multiple = F),
          dt_tipo_turismo,
+         htmltools::br(),
+         htmltools::p("Participación en actividades de turismo de naturaleza y de turismo cultural"),
          ggplotly(gg_tipo_turismo, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))
   

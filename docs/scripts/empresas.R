@@ -51,7 +51,7 @@ env_empresas_categoria_tamaño <- SharedData$new(empresas_afip_loc %>%
                                    group = "provincia")
 
 env_empresas_dpto_cat <- SharedData$new(empresas_afip_loc %>% 
-                                                  group_by(provincia, departamento_arcgis, cat_rct) %>% 
+                                                  group_by(provincia,  departamento_arcgis, cat_rct) %>% 
                                                   summarise(cantidad = sum(cantidad)) %>%
                                                    pivot_wider(names_from = cat_rct, values_from = cantidad, values_fill = 0) %>% 
                                                     relocate(.after = everything(), `Otros Servicios Turísticos`) %>% 
@@ -72,8 +72,8 @@ dt_empresas_categoria_tamaño <- env_empresas_categoria_tamaño %>%
                                   text = "Copiar"
                                 ),
                                 list(extend = 'collection',
-                                     buttons = list(list(extend = 'csv', filename = "alojamientos"),
-                                                    list(extend = 'excel', filename = "alojamientos")),
+                                     buttons = list(list(extend = 'csv', filename = "empresas"),
+                                                    list(extend = 'excel', filename = "empresas")),
                                      text = 'Descargar'
                                 ))),
                  rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
@@ -90,11 +90,12 @@ dt_empresas_dpto_cat <- env_empresas_dpto_cat %>%
                                   text = "Copiar"
                                 ),
                                 list(extend = 'collection',
-                                     buttons = list(list(extend = 'csv', filename = "alojamientos"),
-                                                    list(extend = 'excel', filename = "alojamientos")),
+                                     buttons = list(list(extend = 'csv', filename = "empresas"),
+                                                    list(extend = 'excel', filename = "empresas")),
                                      text = 'Descargar'
                                 ))),
-                 rownames= FALSE,  filter = list(position = 'top', clear = FALSE)
+                 rownames= FALSE,  filter = list(position = 'top', clear = FALSE),
+                 colnames = c('Provincia', 'Departamento', 'Alojamiento', 'Gastronomía', 'Transporte', 'Agencias de Viaje', 'Otros Servicios Turísticos')
   )
 
 
@@ -137,7 +138,12 @@ empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
   summarise(empresas = sum(cantidad, na.rm = T))
 
 empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
-  st_cast("MULTIPOLYGON")
+  st_cast("MULTIPOLYGON") %>% 
+  st_centroid() 
+
+empresas_afip_dpto_geo <- bind_cols(empresas_afip_dpto_geo, st_coordinates(empresas_afip_dpto_geo)) %>% 
+  st_drop_geometry() %>% 
+  rename(long  = X, lat = Y)
 
 # empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>% 
 #   st_centroid()
@@ -162,38 +168,57 @@ empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>%
 #     width = 45, height = 45
 #   )
 
-paleta1 <- MetBrewer::MetPalettes$Hokusai3[[1]]
+paleta1 <- RColorBrewer::brewer.pal(n = 5, "Reds")
+
+empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>% 
+  group_by(provincia, departamento_arcgis, cat_rct = "Total",long, lat) %>% 
+  summarise(empresas = sum(empresas)) %>% 
+  bind_rows(empresas_afip_dpto_geo)
 
 empresas_map_data <- empresas_afip_dpto_geo %>% 
   filter(!is.na(provincia)) %>% 
   ungroup() %>% 
   mutate(
-         Dpto = paste0(departamento_arcgis, "<br>", cat_rct,"<br>Empresas Registradas:", empresas))
+         etiqueta = paste0(departamento_arcgis, "<br>", cat_rct,"<br>Empresas Registradas:", empresas))
 
+empresas_map_data <- empresas_map_data %>% 
+  mutate(key = paste(provincia, departamento_arcgis, cat_rct, sep = "-"))
+
+master_mapa <- SharedData$new(empresas_map_data,
+                              key = ~ key, group = "mapa")
+
+
+env_total_map_data <- SharedData$new(data = filter(empresas_map_data,
+                                                          cat_rct == "Total") %>% 
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                                                              palette =paleta1 )(log(empresas))),
+                                     key = ~ key, group = "mapa")
   
 env_alojamientos_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                       cat_rct == "Alojamiento") %>% 
-                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
-                                        key = ~ provincia, "provincia")
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                                                              palette =paleta1 )(log(empresas))),
+                                            key = ~ key, group = "mapa")
+
 env_gastro_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                           cat_rct == "Gastronomía") %>% 
-                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
-                                            key = ~ provincia, "provincia")
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas), palette =paleta1 )(log(empresas))),
+                                      key = ~ key, group = "mapa")
+
 env_transporte_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                           cat_rct == "Transporte") %>% 
-                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
-                                            key = ~ provincia, "provincia")
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas), palette =paleta1 )(log(empresas))),
+                                          key = ~ key, group = "mapa")
+
 env_agencias_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                           cat_rct == "Agencias de Viaje") %>% 
-                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
-                                            key = ~ provincia, "provincia")
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas), palette =paleta1 )(log(empresas))),
+                                        key = ~ key, group = "mapa")
+
 env_otros_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                           cat_rct == "Otros Servicios Turísticos") %>% 
-                                              mutate(hexcolor = colorQuantile(domain = empresas, n = 4, palette =paleta1 )(empresas)),
-                                            key = ~ provincia, "provincia")
-
-
-
+                                              mutate(hexcolor = colorNumeric(domain = log(empresas), palette =paleta1 )(log(empresas))),
+                                     key = ~ key, group = "mapa")
 
 
 empresas <- withr::with_options(
@@ -201,33 +226,43 @@ empresas <- withr::with_options(
   bscols(widths = 12, 
          filter_select("empresas", "Elegir una provincia", env_empresas_categoria_tamaño, ~ provincia,
                        multiple = F),
+         htmltools::h2('Cantidad de empresas registradas por provincia y por actividad según tamaño de la empresa'),
          dt_empresas_categoria_tamaño,
          htmltools::br(),
+         htmltools::h2('Cantidad de empresas registradas por provincia, departamento y actividad'),
          dt_empresas_dpto_cat,
          htmltools::br(),
+         htmltools::h2('Mapa de la distribución de empresas registradas por departamento y actividad'),
+         filter_select("mapa", "Elegir una provincia", master_mapa, ~ provincia,
+                       multiple = F),
          htmltools::br(),
-         leaflet() %>% 
-           addArgTiles() %>% 
-           addPolygons(data = env_alojamientos_map_data,
+         leaflet() %>%
+           addArgTiles() %>%
+           addCircleMarkers(data = env_total_map_data, radius = 10,
+                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8, color = "white",
+                      group = "Total",  
+                      label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+           addCircleMarkers(data = env_alojamientos_map_data, radius = 10,
                        fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
                        group = "Alojamiento",
-                       label = ~ lapply(Dpto, htmltools::HTML)) %>% 
-          addPolygons(data = env_transporte_map_data,
+                       label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+           addCircleMarkers(data = env_transporte_map_data, radius = 10,
                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Transporte", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-          addPolygons(data = env_gastro_map_data,
+                      group = "Transporte", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+           addCircleMarkers(data = env_gastro_map_data, radius = 10,
                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Gastronomía", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-          addPolygons(data = env_agencias_map_data,
+                      group = "Gastronomía", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+           addCircleMarkers(data = env_agencias_map_data, radius = 12,
                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Agencias de Viaje", label = ~ lapply(Dpto, htmltools::HTML)) %>%
-          addPolygons(data = env_otros_map_data,
+                      group = "Agencias de Viaje", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+           addCircleMarkers(data = env_otros_map_data, radius = 10,
                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Otros rubros", label = ~ lapply(Dpto, htmltools::HTML)) %>%
+                      group = "Otros rubros", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
            addLayersControl(
-             overlayGroups = c("Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
+             baseGroups = c("Total","Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
              options = layersControlOptions(collapsed = FALSE)
-           )
+           ),
+         htmltools::br()
    )
   )
 

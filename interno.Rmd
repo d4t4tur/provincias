@@ -24,8 +24,13 @@ alojamientos <- readRDS("outputs/alojamiento.rds")
 motivo <- readRDS("outputs/motivo.rds")
 ```
 
+Se presentan estadísticas resumen acompañados de los valores de sus coeficientes de variación[^1] (CV) según provincia de destino, junto con las estadísticas correspondientes de la región a la cual pertenece la provincia y las estadísticas a nivel nacional.
+
+[^1]: El coeficiente de variación es una medida de dispersión que se define como el cociente entre la dispersión estándar y el valor absoluto de la media. Para su estimación aquí se ha utilizado el paquete [survey](https://cran.r-project.org/web/packages/survey/index.html).
+
 ## Indicadores Principales
 
+Use el filtro para visualizar correctamente los gráficos.
 
 ```{r}
 interno_indicadores_ppales
@@ -33,22 +38,41 @@ interno_indicadores_ppales
 
 ## Estadísticas de perfilado de turistas
 
+### Turismo de naturaleza y de cultura
+
+Porcentaje de turistas que realizaron turismo de naturaleza o de cultura en el destino
 
 ```{r}
 tipo_turismo
 ```
 
+### Perfil etario del turista
+
+Porcentaje de turistas según grupo etario como porcentaje del total de turistas en el destino
+
 ```{r}
 edad
 ```
+
+### Medios de trasporte utilizados
+
+Participación de cada medio de transporte como porcentaje del total de turistas en el destino
 
 ```{r}
 transporte
 ```
 
+### Tipo de alojamiento utilizado
+
+Porcentaje del tipo de alojamiento utilizado como porcentaje del total de turistas en el destino
+
 ```{r}
 alojamientos
 ```
+
+### Motivo del viaje
+
+Distribución del principal motivo del viaje como porcentaje del total de turistas en el destino
 
 ```{r}
 motivo
