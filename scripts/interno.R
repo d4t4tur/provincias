@@ -475,8 +475,8 @@ indicadores_ppales <- withr::with_options(
          filter_select("interno-ppales", "Elegir una provincia", env_indicadores_ppales, ~ provincia_destino,
                        multiple = F),
          htmltools::br(),
-         htmltools::p("Evolución de los principales indicadores"),
          dt_indicadores_ppales,
+         htmltools::p("Evolución de los principales indicadores"),
          ggplotly(gg_indicadores_ppales, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(autosize = F))#, height = 800, width = 1000
   
