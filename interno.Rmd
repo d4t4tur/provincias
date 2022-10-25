@@ -24,7 +24,7 @@ alojamientos <- readRDS("outputs/alojamiento.rds")
 motivo <- readRDS("outputs/motivo.rds")
 ```
 
-Se presentan estadísticas resumen acompañados de los valores de sus coeficientes de variación[^1] (CV) según provincia de destino, junto con las estadísticas correspondientes de la región a la cual pertenece la provincia y las estadísticas a nivel nacional.
+Se presentan estadísticas resumen acompañadas de los valores de sus coeficientes de variación[^1] (CV) según provincia de destino, junto con las estadísticas correspondientes de la región a la cual pertenece la provincia y las estadísticas a nivel nacional.
 
 [^1]: El coeficiente de variación es una medida de dispersión que se define como el cociente entre la dispersión estándar y el valor absoluto de la media. Para su estimación aquí se ha utilizado el paquete [survey](https://cran.r-project.org/web/packages/survey/index.html).
 
