@@ -471,14 +471,14 @@ gg_indicadores_ppales <- ggplot(env_indicadores_ppales) +
 
 indicadores_ppales <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          filter_select("interno-ppales", "Elegir una provincia", env_indicadores_ppales, ~ provincia_destino,
                        multiple = F),
          htmltools::br(),
          dt_indicadores_ppales,
          htmltools::p("Evolución de los principales indicadores"),
          ggplotly(gg_indicadores_ppales, dynamicTicks = TRUE, tooltip = "text") %>%
-           layout(autosize = F))#, height = 800, width = 1000
+           layout(autosize = F))#, height = 800, widths = 1000
   
 )
 
@@ -519,7 +519,7 @@ gg_alojamientos <- ggplot(env_alojamiento) +
 
 alojamientos <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          # filter_select("alojamiento", "Elegir una provincia", env_alojamiento, ~ provincia_destino,
          #               multiple = F),
          dt_alojamiento,
@@ -568,7 +568,7 @@ gg_edad <- ggplot(env_edad) +
 
 edad <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          # filter_select("edad", "Elegir una provincia", env_edad, ~ provincia_destino,
          #               multiple = F),
          dt_edad,
@@ -620,7 +620,7 @@ gg_transporte <- ggplot(env_transporte) +
 
 transporte <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          dt_transporte,
          htmltools::br(),
          htmltools::p("Tipo de transporte utilizado como porcentaje del total de turistas en el destino"),
@@ -668,7 +668,7 @@ gg_motivo <- ggplot(env_motivo) +
 
 motivo <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          dt_motivo,
          htmltools::br(),
          htmltools::p("Principal motivo del viaje como porcentaje del total de turistas en el destino"),
@@ -724,7 +724,7 @@ gg_tipo_turismo <- ggplot(env_tipo_turismo_plot) +
 
 tipo_turismo <- withr::with_options(
   list(persistent = TRUE), 
-  bscols(widths = c(12, 12, 12), 
+  bscols(widths = 12,
          # filter_select("tipo_turismo", "Elegir una provincia", env_tipo_turismo, ~ provincia_destino,
          #               multiple = F),
          dt_tipo_turismo,
