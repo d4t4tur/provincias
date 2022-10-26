@@ -184,15 +184,25 @@ empresas_map_data <- empresas_afip_dpto_geo %>%
 empresas_map_data <- empresas_map_data %>% 
   mutate(key = paste(provincia, departamento_arcgis, cat_rct, sep = "-"))
 
-master_mapa <- SharedData$new(empresas_map_data,
-                              key = ~ key, group = "mapa")
+prov_lims <-  geoAr::get_geo("ARGENTINA", level = "provincia") %>% geoAr::add_geo_codes() %>% 
+  st_centroid() %>% 
+  st_coordinates() %>% 
+  bind_cols(geoAr::get_geo("ARGENTINA", level = "provincia") %>% geoAr::add_geo_codes()  %>% st_drop_geometry(),.) %>% 
+  rename(long  = X, lat = Y) %>% 
+  mutate(join_key = herramientas::limpiar_texto(ifelse(str_detect(name_iso, "Ciudad"), "CABA", name_iso))) 
 
+master_mapa <- SharedData$new(empresas_map_data %>% 
+                                mutate(join_key = herramientas::limpiar_texto(provincia)) %>% 
+                                left_join(prov_lims),
+                              key = ~ key, group = "mapa") 
+  
 
 env_total_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                           cat_rct == "Total") %>% 
                                               mutate(hexcolor = colorNumeric(domain = log(empresas),
                                                                               palette =paleta1 )(log(empresas))),
                                      key = ~ key, group = "mapa")
+
   
 env_alojamientos_map_data <- SharedData$new(data = filter(empresas_map_data,
                                                       cat_rct == "Alojamiento") %>% 
@@ -220,6 +230,151 @@ env_otros_map_data <- SharedData$new(data = filter(empresas_map_data,
                                               mutate(hexcolor = colorNumeric(domain = log(empresas), palette =paleta1 )(log(empresas))),
                                      key = ~ key, group = "mapa")
 
+legendTotal <- filter(empresas_map_data,
+                      cat_rct == "Total") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palTotal <- colorNumeric(domain = legendTotal$log_empresas,
+                     palette = paleta1)
+
+legendAlojamiento <- filter(empresas_map_data,
+                            cat_rct == "Alojamiento") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palAlojamiento <- colorNumeric(domain = legendAlojamiento$log_empresas,
+                     palette = paleta1)
+
+legendTransporte <- filter(empresas_map_data,
+                            cat_rct == "Transporte") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palTransporte <- colorNumeric(domain = legendTransporte$log_empresas,
+                               palette = paleta1)
+
+legendGastronomia <- filter(empresas_map_data,
+                            cat_rct == "Gastronomía") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palGastronomia <- colorNumeric(domain = legendGastronomia$log_empresas,
+                               palette = paleta1)
+
+legendAgencias <- filter(empresas_map_data,
+                            cat_rct == "Agencias de Viaje") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palAgencias <- colorNumeric(domain = legendAgencias$log_empresas,
+                               palette = paleta1)
+
+legendOtros <- filter(empresas_map_data,
+                         cat_rct == "Otros Servicios Turísticos") %>%
+  mutate(hexcolor = colorNumeric(domain = log(empresas),
+                                 palette =
+                                   paleta1)(log(empresas)),
+         log_empresas = log(empresas)) %>% 
+  select(hexcolor, empresas, log_empresas)
+
+palOtros <- colorNumeric(domain = legendOtros$log_empresas,
+                            palette = paleta1)
+
+mapa <- leaflet() %>%
+  addArgTiles() %>%
+  addCircleMarkers(data = env_total_map_data, radius = 10, weight = 2, color = "black", stroke = T, 
+                   fillColor = ~ hexcolor, fillOpacity =  .8, 
+                   group = "Total", popup = ~ lapply(etiqueta, htmltools::HTML),
+                   label = ~ lapply(etiqueta, htmltools::HTML)) %>% 
+  addCircleMarkers(data = env_alojamientos_map_data, radius = 10,  weight = 2, color = "black",
+                   fillColor = ~ hexcolor, stroke = T, fillOpacity =  .8,  popup = ~ lapply(etiqueta, htmltools::HTML),
+                   group = "Alojamiento", 
+                   label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+  addCircleMarkers(data = env_transporte_map_data, radius = 10,  weight = 2, color = "black",
+                   fillColor = ~ hexcolor, stroke = T, fillOpacity =  .8, popup = ~ lapply(etiqueta, htmltools::HTML),
+                   group = "Transporte", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+  addCircleMarkers(data = env_gastro_map_data, radius = 10,  weight = 2, color = "black",
+                   fillColor = ~ hexcolor, stroke = T, fillOpacity =  .8, popup = ~ lapply(etiqueta, htmltools::HTML),
+                   group = "Gastronomía", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+  addCircleMarkers(data = env_agencias_map_data, radius = 10,  weight = 2, color = "black",
+                   fillColor = ~ hexcolor, stroke = T, fillOpacity =  .8, popup = ~ lapply(etiqueta, htmltools::HTML),
+                   group = "Agencias de Viaje", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+  addCircleMarkers(data = env_otros_map_data, radius = 10,  weight = 2, color = "black",
+                   fillColor = ~ hexcolor, stroke = T, fillOpacity =  .8, popup = ~ lapply(etiqueta, htmltools::HTML),
+                   group = "Otros rubros", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
+  addLayersControl(
+    baseGroups = c("Total","Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>% 
+  addLegend(layerId = "Total", bins = seq(from = min(legendTotal$log_empresas),
+                                          to = max(legendTotal$log_empresas),
+                                          length.out = 5),
+            pal = palTotal, values = legendTotal$log_empresas ,  
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")
+  ) %>% 
+  
+  addLegend(layerId = "Alojamiento",  bins = seq(from = min(legendAlojamiento$log_empresas), to = max(legendAlojamiento$log_empresas), length.out = 5),
+            pal = palAlojamiento, values = legendAlojamiento$log_empresas, 
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")) %>% 
+  
+  addLegend(layerId = "Transporte", bins = seq(from = min(legendTransporte$log_empresas), to = max(legendTransporte$log_empresas), length.out = 5),
+            pal = palTransporte, values = legendTransporte$log_empresas, 
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")) %>% 
+  
+  addLegend(layerId = "Gastronomía", bins = seq(from = min(legendGastronomia$log_empresas), to = max(legendGastronomia$log_empresas), length.out = 5),
+            pal = palGastronomia, values = legendGastronomia$log_empresas, 
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")) %>% 
+  
+  addLegend(layerId = "Agencias de Viaje", bins = seq(from = min(legendAgencias$log_empresas), to = max(legendAgencias$log_empresas), length.out = 5),
+            pal = palAgencias, values = legendAgencias$log_empresas, 
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")) %>%
+  addLegend(layerId = "Otros rubros", bins = seq(from = min(legendOtros$log_empresas), to = max(legendOtros$log_empresas), length.out = 5),
+            pal = palOtros, values = legendOtros$log_empresas, 
+            labFormat = labelFormat(transform = function(x) exp(x), digits = 0, big.mark = ".")) %>% 
+  addEasyButton(easyButton(
+    icon="fa-globe", title="Zoom to Level 1",
+    onClick=JS("function(btn, map){ map.setZoom(3); }"))) %>% 
+  # https://gist.github.com/noamross/98c2053d81085517e686407096ec0a69
+  htmlwidgets::onRender("
+    function(el, x) {
+      var initialLegend = 'Total' // Set the initial legend to be displayed by layerId
+      var myMap = this;
+      for (var legend in myMap.controls._controlsById) {
+        var el = myMap.controls.get(legend.toString())._container;
+        if(legend.toString() === initialLegend) {
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        };
+      };
+    myMap.on('baselayerchange',
+      function (layer) {
+        for (var legend in myMap.controls._controlsById) {
+          var el = myMap.controls.get(legend.toString())._container;
+          if(legend.toString() === layer.name) {
+            el.style.display = 'block';
+          } else {
+            el.style.display = 'none';
+          };
+        };
+      });
+    }")
 
 empresas <- withr::with_options(
   list(persistent = TRUE), 
@@ -236,32 +391,7 @@ empresas <- withr::with_options(
          filter_select("mapa", "Elegir una provincia", master_mapa, ~ provincia,
                        multiple = F),
          htmltools::br(),
-         leaflet() %>%
-           addArgTiles() %>%
-           addCircleMarkers(data = env_total_map_data, radius = 10,
-                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8, color = "white",
-                      group = "Total",  
-                      label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addCircleMarkers(data = env_alojamientos_map_data, radius = 10,
-                       fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                       group = "Alojamiento",
-                       label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addCircleMarkers(data = env_transporte_map_data, radius = 10,
-                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Transporte", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addCircleMarkers(data = env_gastro_map_data, radius = 10,
-                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Gastronomía", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addCircleMarkers(data = env_agencias_map_data, radius = 12,
-                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Agencias de Viaje", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addCircleMarkers(data = env_otros_map_data, radius = 10,
-                      fillColor = ~ hexcolor, stroke = F, fillOpacity =  .8,
-                      group = "Otros rubros", label = ~ lapply(etiqueta, htmltools::HTML)) %>%
-           addLayersControl(
-             baseGroups = c("Total","Alojamiento", "Transporte", "Gastronomía", "Agencias de Viaje", "Otros rubros"),
-             options = layersControlOptions(collapsed = FALSE)
-           ),
+        mapa,
          htmltools::br()
    )
   )
