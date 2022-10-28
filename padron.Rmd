@@ -14,3 +14,9 @@ puna_data <- readRDS("outputs/graph_puna.rds")
 ```{r}
 puna_data
 ```
+
+## Recursos relacionados
+
+- Tablero: https://tableros.yvera.tur.ar/puna/
+
+- Datos Abiertos del PUNA: https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento
