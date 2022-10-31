@@ -16,6 +16,16 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+<style>
+p {
+font-size: 1rem;
+} 
+
+.d-title > p {
+font-size: 1rem;
+}
+</style>
+
 El _**Monitor de Turismo en las Provincias**_ que acá presentamos procura servir como herramienta de consulta de los últimos datos disponibles de una variedad de indicadores relativos al turismo en la Argentina, poniendo el foco en el nivel provincial. 
 
 #### INDICADORES
@@ -33,4 +43,3 @@ Los **Indicadores por provincia** incluyen la siguiente información:
 * **Conectividad Aérea**: Datos provenientes de los registros administrativos de la _Autoridad Nacional de Aviación Civil_ (ANAC).
 
 * **Empresas Turísticas**: Estadísticas de empresas de las _Ramas Características del Turismo_ (RCT) a partir de datos de la _Administración Federal de Ingresos Públicos_ (AFIP).
-
