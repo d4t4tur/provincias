@@ -17,6 +17,8 @@ puna_data
 
 ## Recursos relacionados
 
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-06-16-datos-puna/
+
 - Tablero: https://tableros.yvera.tur.ar/puna/
 
 - Datos Abiertos del PUNA: https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento

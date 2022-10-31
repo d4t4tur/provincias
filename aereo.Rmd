@@ -35,5 +35,7 @@ plot_internacional
 
 ## Recursos relacionados
 
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-10-28-datos-aerocomerciales/
+
 - Tablero: https://tableros.yvera.tur.ar/conectividad/
 
