@@ -77,3 +77,12 @@ Distribución del principal motivo del viaje como porcentaje del total de turist
 ```{r}
 motivo
 ```
+
+## Recursos relacionados
+
+- Resumen Trimestral EVyTH: https://tableros.yvera.tur.ar/interno.html 
+
+- Informes Técnicos EVyTH: https://www.yvera.tur.ar/estadistica/informe/info/encuesta-de-viajes-y-turismo-de-los-hogares-evyth
+- Datos Abiertos EVyTH: https://datos.yvera.gob.ar/dataset?tags=evyth
+
+- Metodología EVyTH: https://d4t4tur.github.io/evyth_metodologia/ 
