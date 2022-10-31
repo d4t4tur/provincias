@@ -1,10 +1,9 @@
 ---
 title: "Conectividad Aérea"
 description: |
-  Datos provenientes de los registros adminsitrativos de la Autoridad Nacional de Aviación Civil (ANAC)
+  Datos provenientes de los registros de la Administración Nacional de Aviación Civil (ANAC)
 site: distill::distill_website
 ---
-
 
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
@@ -32,4 +31,9 @@ plot_cabotaje
 ```{r}
 plot_internacional
 ```
+
+
+## Recursos relacionados
+
+- Tablero: https://tableros.yvera.tur.ar/conectividad/
 

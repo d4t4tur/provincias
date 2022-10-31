@@ -19,3 +19,10 @@ parques_data <- readRDS("outputs/graph_parques.rds")
 parques_data
 ```
 
+## Recursos relacionados
+
+- Resumen mensual: https://tableros.yvera.tur.ar/parques_nacionales.html
+
+- Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/parques-nacionales
+
+- Datos Abiertos: https://datos.yvera.gob.ar/dataset/parques-nacionales

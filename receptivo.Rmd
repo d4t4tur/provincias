@@ -11,6 +11,18 @@ knitr::opts_chunk$set(echo = FALSE, message = F)
 receptivo_data <- readRDS("outputs/graph_receptivo.rds")
 ```
 
+
 ```{r}
 receptivo_data
 ```
+
+
+## Recursos relacionados
+
+- Tablero: https://tableros.yvera.tur.ar/turismo_internacional/
+
+- Resumen mensual: https://tableros.yvera.tur.ar/internacional.html
+
+- Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/turismo-internacional
+
+- Datos abiertos: https://datos.yvera.gob.ar/dataset?groups=turismo-internacional
