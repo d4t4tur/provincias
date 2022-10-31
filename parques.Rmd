@@ -21,6 +21,8 @@ parques_data
 
 ## Recursos relacionados
 
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-06-16-datos-puna/
+
 - Resumen mensual: https://tableros.yvera.tur.ar/parques_nacionales.html
 
 - Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/parques-nacionales
