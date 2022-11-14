@@ -29,6 +29,13 @@ b_evyth <- b_evyth %>%
            alojamiento = as_factor(px08_agrup),#Tipo de alojamiento (agrupado)
            motivo = as_factor(px10_1_t)) #Motivo ppal del viaje agrupado
 
+b_evyth <- b_evyth %>%
+  filter(anio >= 2017 & anio < year(today())) %>% 
+  filter(
+    arg_o_ext == 1
+  )
+
+
 b_evyth <- b_evyth %>% 
   mutate(turismo_cultura = case_when(px17_2_7 == 1|
                                        px17_2_8 == 1|
@@ -56,6 +63,9 @@ b_evyth$fecha <- lubridate::ym(b_evyth$Mes)
 
 b_evyth <- b_evyth %>% bind_ipc(var_join_x = "fecha")
 
+fecha_corte <- max(b_evyth$fecha)
+fecha_corte %>% write_rds("outputs/fecha_corte_evyth.rds")
+
 b_evyth <-  b_evyth %>% 
   mutate(
     #var  = ipc_ng_nacional/b_evyth$ipc_ng_nacional[which.max(b_evyth$fecha)] -1,
@@ -66,11 +76,6 @@ b_evyth <-  b_evyth %>%
 # filtro para excluir trims incompletos
 ultimo_trim <- b_evyth %>% filter(is.na(pondera)) %>% distinct(anio, trimestre)
 
-b_evyth <- b_evyth %>%
-  filter(anio >= 2017 & anio <year(today())) %>% 
-  filter(
-    arg_o_ext == 1
-  )
 
 # check que no haya na en pondera
 print(any(is.na(b_evyth$pondera)))

@@ -1,0 +1,119 @@
+---
+title: "Metodología"
+description: |
+  Resumen metodológico de los indicadores publicados en este sitio
+site: distill::distill_website
+---
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(comunicacion)
+```
+
+## Turismo Interno
+
+La sección de turismo interno utiliza la base de datos de la Encuesta de Viajes y Turismo de los Hogares (EVyTH) con los registros a nivel mensual a fin de poder deflactar mensualmente el gasto con el índice de precios del consumidor de nivel general nacional. Todos los valores de gasto están expresados en pesos constantes al mes de diciembre del último año publicado.
+
+Se publican indicadores para los años 2017 hasta el último año completo disponible. No se publican aquí estimaciones para periodos menores a un año, esto es porque con el objetivo de mejorar la estimación a nivel provincial resulta necesario acumular casos muestrales de todo un año. Para todas las estimaciones se utilizó el paquete survey, generando un diseño de encuesta calculado para cada año que busca respetar el diseño de la metodología de la EVyTH.
+
+```{r, eval=FALSE, echo=TRUE}
+ svydesign(ids = ~id_hogar, 
+            strata = ~i16_region,
+            weights  = ~ pondera,
+            data = x, nest = T)
+```
+
+En base al diseño creado luego se calcularon los valores totales, medias y proporciones según el caso junto a sus coeficientes de variación utilizando las funciones del paquete survey. A modo de ejemplo:
+
+```{r,  eval=FALSE, echo=TRUE}
+estimar_totales <- function(disenio, formulas) {
+  svytotal(x = formulas, design = disenio) %>% 
+    cbind(., cv(.)) %>%
+    as_tibble(rownames = "indicadores") %>%
+    rename(valor = 2, cv = V2) 
+}
+
+
+estimar_promedios <- function(disenio, formulas) {
+  svymean(x = formulas, design = subset(disenio, tipo_visitante==1)) %>% 
+    cbind(., cv(.)) %>%
+    as_tibble(rownames = "indicadores") %>%
+    rename(valor = 2, cv = V2) 
+}
+
+estimar_totales_prov <- function(disenio, formulas) {
+  svyby(formula = formulas, by = ~provincia_destino,
+        design = disenio, FUN = svytotal,
+        vartype = c("cv")) %>%
+    as_tibble()
+}
+
+
+estimar_promedios_prov <- function(disenio, formulas) {
+  svyby(formula = formulas, by = ~provincia_destino,
+        design = subset(disenio,  tipo_visitante==1), FUN = svymean,
+        vartype = c("cv")) %>%
+    as_tibble()
+}
+
+
+calcular_prop <- function(variable, disenio, f = NULL) {
+  var_name <- variable
+  
+  if (is.null(f)) {
+    formula_perfil <- formula(paste("~", var_name))
+  } else {
+    formula_perfil <- formula(paste("~", f))
+  }
+  
+  
+  svymean(x = formula_perfil,
+          design = subset(disenio,
+                          tipo_visitante==1 & !is.na(get(variable)))) %>% 
+    cbind(., cv(.)) %>% 
+    as_tibble(rownames = "indicadores") %>% 
+    rename(valor = ".", cv = V2) %>% 
+    mutate(indicadores = str_remove_all(pattern = var_name,
+                                             indicadores))
+}
+
+
+calcular_prop_by <- function(variable, disenio, agrupamiento, f = NULL) {
+  
+  var_name <- variable
+  
+  if (is.null(f)) {
+    formula_perfil <- formula(paste("~", var_name))
+  } else {
+    formula_perfil <- formula(paste("~", f))
+  }
+  
+  formula_by <- formula(paste("~", agrupamiento))
+  
+  svyby(formula = formula_perfil, by = formula_by,
+        design = subset(disenio,
+                        tipo_visitante==1 & !is.na(get(variable))),
+        FUN = svymean,
+        vartype = c("cv")) %>%
+    as_tibble() %>% 
+    rename_with(.cols = -1, .fn = ~ str_remove_all(.x, pattern = var_name))
+}
+
+```
+
+Esta estrategia permite reducir los coeficientes de variación para la estimaciones pero se debe tener en cuenta que incluso así las estimaciones para algunas provincias presentan coeficientes de variación grandes (mayores al 25%). El coeficiente de variación brinda una idea de la precisión relativa de la estimación, o sea la relación entre el error muestral y el valor a estimar. Cuanto más pequeño es el coeficiente de variación, más precisa es la estimación. Si bien corresponde al usuario determinar si una estimación con cierto coeficiente de variación le es útil o no para su objetivo, de acuerdo con el grado de precisión requerido, se advierte que estimaciones con coeficiente de variación superiores al 20% deben ser tratadas con precaución.
+
+Estos mismos cálculos se pueden replicar para la [base de microdatos de evyth publicada en datos abiertos](https://datos.yvera.gob.ar/dataset/encuesta-de-viajes-y-turismo-de-los-hogares-evyth-microdatos) con la atención a que para periodos de inflación elevada el ajuste de pesos corrientes a pesos constantes puede dar un resultado levemente diferente entre la estimación mensual y la trimestral.
+
+## Turismo Receptivo
+
+
+## Padrón de Alojamientos
+
+## Áreas Naturales
+
+## Conectividad Aérea
+
+## Empresas Turísticas
+
