@@ -106,8 +106,18 @@ Esta estrategia permite reducir los coeficientes de variación para la estimacio
 
 Estos mismos cálculos se pueden replicar para la [base de microdatos de evyth publicada en datos abiertos](https://datos.yvera.gob.ar/dataset/encuesta-de-viajes-y-turismo-de-los-hogares-evyth-microdatos) con la atención a que para periodos de inflación elevada el ajuste de pesos corrientes a pesos constantes puede dar un resultado levemente diferente entre la estimación mensual y la trimestral.
 
+
+Conceptos clave:
+- Viaje Turístico: todo desplazamiento desde que sale hasta que vuelve a su lugar de residencia con una duración inferior a un año que tiene como destino un lugar ubicado fuera del entorno habitua del hogar. Se excluyen los viajes que tienen como principal motivo el ser empleado por una unidad residente del destino visitado o cuando el traslado forma parte del trabajo. Para los viajes a segundas viviendas del hogar no rige el criterio de entorno habitual y se los considera que siempre son un viaje turístico (por definición). La EVyTH considera como destinos por fuera del entorno habitual aquellos distante a más de 40 Km (para CABA y Partidos del GBA) / 20km (para resto de los aglomerados) del lugar de residencia permanente del hogar, siempre y cuando ese lugar no sea visitado con una frecuencia semanal.
+- Visitante: Toda persona que realiza un viaje turístico, pase o no una noche en el lugar visitado. Los visitantes se contabilizan en el mes en que finaliza el viaje.
+- Turista: todo visitante que pernocta al menos una noche durante su viaje turístico. Excursionista (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. 
+- Excursionista (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. 
+- Pernoctaciones: es el número de noches que cada turista permanece fuera de su lugar de residencia habitual.
+- Gasto Total: en este portal el gasto total se ha estimado sólo para los turistas, ya que en base a los informes de EVyTH son el tipo de visitante que explica más del 80% del gasto turístico agregado. Comprende todo gasto de consumo de bienes y servicios efectuado por turista o excursionista) o por cuenta de un visitante (ya que incluye una estimación del gasto financiado por Cuartos) durante su viaje turístico. Este indicador se haya expresado en pesos constantes a diciembre de 2021.
+
 ## Turismo Receptivo
 
+La sección de turismo receptivo muestra las estadísticas derivadas de los registros de la Dirección Nacional de Migraciones del Ministerio de Interior de la Nación. A partir de dichos registros se con
 
 ## Padrón de Alojamientos
 
