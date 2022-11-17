@@ -40,6 +40,8 @@ navbar:
         href: aereo.html
       - text: "Empresas Turísticas"
         href: empresas.html
+      - text: "Metodología"
+        href: metodologia.html
 output:
   distill::distill_article:
     css: styles.css
