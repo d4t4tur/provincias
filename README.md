@@ -16,11 +16,9 @@
 
 * La web está dividida por grandes ejes temáticos: turismo interno, turismo receptivo, padrón de alojamientos, áreas naturales, conectividad aérea, y prestadores turísticos. Para cada uno de los ejes se presentan los datos correspondientes a cada provincia.
 
-* Para la creación de los paneles que permiten seleccionar las provincias nos basamos en el código orignal de **📦[{sknifedatar}](https://rafzamb.github.io/sknifedatar/reference/automagic_tabs.html)**. 
- 
-[Ejemplo de uso para el indicador de prestadores turísticos:](https://github.com/dnme-minturdep/provincias/blob/main/prestadores.Rmd) 
+* Descripción de fuentes de datos y Metodología
 
-`r rmdautotabs(input_data = prestadores_nest_data, panel_name = "provincia", .tablas_prov)`
+
 
 ## Cómo contribuir con el proyecto :twisted_rightwards_arrows:
 
