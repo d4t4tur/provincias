@@ -39,5 +39,5 @@ plot_internacional
 
 - Tablero: https://tableros.yvera.tur.ar/conectividad/
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#conectividad-aérea)
 

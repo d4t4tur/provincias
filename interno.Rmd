@@ -90,4 +90,4 @@ motivo
 
 - Datos Abiertos EVyTH: https://datos.yvera.gob.ar/dataset?tags=evyth
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#turismo-interno)

@@ -25,5 +25,5 @@ puna_data
 
 - Datos Abiertos del PUNA: https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#padrón-de-alojamientos)
 
