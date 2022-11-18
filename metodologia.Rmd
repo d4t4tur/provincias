@@ -11,6 +11,12 @@ library(tidyverse)
 library(comunicacion)
 ```
 
+<style>
+  p {
+  font-size: 1rem !important;
+  }
+</style>
+
 ## Turismo Interno
 
 La sección de turismo interno utiliza la base de datos de la Encuesta de Viajes y Turismo de los Hogares (EVyTH) con los registros a nivel mensual a fin de poder deflactar mensualmente el gasto con el índice de precios del consumidor de nivel general nacional. Todos los valores de gasto están expresados en pesos constantes al mes de diciembre del último año publicado.
