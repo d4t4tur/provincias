@@ -25,6 +25,8 @@ navbar:
         href: https://www.yvera.tur.ar/estadistica/informe
       - text: "Tableros y Reportes"
         href: https://tableros.yvera.tur.ar
+    - icon: fab fa-github
+      href: https://github.com/dnme-minturdep
   left: 
     - text: "Indicadores por provincia"
       menu:
@@ -42,6 +44,7 @@ navbar:
         href: empresas.html
     - text: "Metodología"
       href: metodologia.html
+    
 output:
   distill::distill_article:
     css: styles.css
