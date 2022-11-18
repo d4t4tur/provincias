@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = FALSE, message = F)
 puna_data <- readRDS("outputs/graph_puna.rds")
 ```
 
+## Datos PUNA
+
 ```{r}
 puna_data
 ```
@@ -22,3 +24,6 @@ puna_data
 - Tablero: https://tableros.yvera.tur.ar/puna/
 
 - Datos Abiertos del PUNA: https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento
+
+- [Metodología](metodologia.html)
+

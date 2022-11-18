@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = FALSE, message = F)
 receptivo_data <- readRDS("outputs/graph_receptivo.rds")
 ```
 
+## Visitantes No Residentes por Paso
 
 ```{r}
 receptivo_data
@@ -28,3 +29,5 @@ receptivo_data
 - Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/turismo-internacional
 
 - Datos abiertos: https://datos.yvera.gob.ar/dataset?groups=turismo-internacional
+
+- [Metodología](metodologia.html)

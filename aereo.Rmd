@@ -15,7 +15,7 @@ plot_internacional <- readRDS("outputs/graph_internacional.rds")
 
 ```
 
-# Cabotaje
+## Cabotaje
 
 <br>
 ```{r}
@@ -25,7 +25,7 @@ plot_cabotaje
 <br>
 <br>
 
-# Internacional
+## Internacional
 
 <br>
 ```{r}
@@ -38,4 +38,6 @@ plot_internacional
 - Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-10-28-datos-aerocomerciales/
 
 - Tablero: https://tableros.yvera.tur.ar/conectividad/
+
+- [Metodología](metodologia.html)
 
