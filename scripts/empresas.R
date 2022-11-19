@@ -5,8 +5,8 @@ library(plotly)
 library(leaflet)
 library(herramientas)
 library(comunicacion)
-library(leaflet.minicharts)
 library(crosstalk)
+library(htmltools)
 source(file = "scripts/aux_function.R")
 
 ramas_turismo <- readxl::read_excel("/srv/DataDNMYE/padron_afip/ramas turismo 6 D.xlsx")
@@ -296,7 +296,7 @@ legendOtros <- filter(empresas_map_data,
 palOtros <- colorNumeric(domain = legendOtros$log_empresas,
                             palette = paleta1)
 
-mapa <- leaflet() %>%
+mapa <- leaflet(height = 600) %>%
   addArgTiles() %>%
   addCircleMarkers(data = env_total_map_data, radius = 10, weight = 2, color = "black", stroke = T, 
                    fillColor = ~ hexcolor, fillOpacity =  .8, 
@@ -391,7 +391,7 @@ empresas <- withr::with_options(
          filter_select("mapa", "Elegir una provincia", master_mapa, ~ provincia,
                        multiple = F),
          htmltools::br(),
-        mapa,
+         mapa,
          htmltools::br()
    )
   )
