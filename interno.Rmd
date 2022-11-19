@@ -30,7 +30,7 @@ Se presentan estadísticas resumen acompañadas de los valores de sus coeficient
 
 ## Indicadores Principales
 
-Use el filtro para visualizar correctamente los gráficos. El valor del gasto total está expresado en pesos constantes a diciembre 2021 (ver [Metodología](metodologia.html)).
+Use el filtro para visualizar correctamente los gráficos. El valor del gasto total está expresado en pesos constantes a diciembre 2021 (ver [Metodología](metodologia.html#turismo-interno)).
 
 ```{r}
 interno_indicadores_ppales
@@ -90,4 +90,4 @@ motivo
 
 - Datos Abiertos EVyTH: https://datos.yvera.gob.ar/dataset?tags=evyth
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#turismo-interno)

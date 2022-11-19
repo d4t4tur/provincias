@@ -2264,6 +2264,9 @@ SINTA
 <a href="https://tableros.yvera.tur.ar">Tableros y Reportes</a>
 </div>
 </div>
+<a href="https://github.com/dnme-minturdep">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2300,8 +2303,8 @@ SINTA
   }
 </style>
 <h2 id="turismo-interno">Turismo Interno</h2>
-<p>La sección de turismo interno utiliza la base de datos de la Encuesta de Viajes y Turismo de los Hogares (EVyTH) con los registros a nivel mensual a fin de poder deflactar mensualmente el gasto con el índice de precios del consumidor de nivel general nacional. Todos los valores de gasto están expresados en pesos constantes al mes de diciembre del último año publicado.</p>
-<p>Se publican indicadores para los años 2017 hasta el último año completo disponible. No se publican aquí estimaciones para periodos menores a un año, esto es porque con el objetivo de mejorar la estimación a nivel provincial resulta necesario acumular casos muestrales de todo un año. Para todas las estimaciones se utilizó el paquete survey, generando un diseño de encuesta calculado para cada año que busca respetar el diseño de la metodología de la EVyTH.</p>
+<p>La sección de turismo interno utiliza la base de datos de la <a href="https://datos.yvera.gob.ar/dataset/encuesta-de-viajes-y-turismo-de-los-hogares-evyth-microdatos">Encuesta de Viajes y Turismo de los Hogares (EVyTH)</a> con los registros a nivel mensual a fin de poder deflactar mensualmente el gasto con el índice de precios del consumidor de nivel general nacional. Todos los valores de gasto están expresados en pesos constantes al mes de diciembre del último año publicado.</p>
+<p>Se publican indicadores para los años 2017 hasta el último año completo disponible. No se publican aquí estimaciones para periodos menores a un año, esto es porque con el objetivo de mejorar la estimación a nivel provincial resulta necesario acumular casos muestrales de todo un año. Para todas las estimaciones se utilizó el <a href="http://r-survey.r-forge.r-project.org/survey/">paquete <code>survey</code></a>, generando un diseño de encuesta calculado para cada año que busca respetar el diseño de la metodología de la EVyTH.</p>
 <div class="layout-chunk" data-layout="l-body">
 <details>
 <summary>
@@ -2401,33 +2404,49 @@ hide
 </div>
 <p>Esta estrategia permite reducir los coeficientes de variación para la estimaciones pero se debe tener en cuenta que incluso así las estimaciones para algunas provincias presentan coeficientes de variación grandes (mayores al 25%). El coeficiente de variación brinda una idea de la precisión relativa de la estimación, o sea la relación entre el error muestral y el valor a estimar. Cuanto más pequeño es el coeficiente de variación, más precisa es la estimación. Si bien corresponde al usuario determinar si una estimación con cierto coeficiente de variación le es útil o no para su objetivo, de acuerdo con el grado de precisión requerido, se advierte que estimaciones con coeficiente de variación superiores al 20% deben ser tratadas con precaución.</p>
 <p>Estos mismos cálculos se pueden replicar para la <a href="https://datos.yvera.gob.ar/dataset/encuesta-de-viajes-y-turismo-de-los-hogares-evyth-microdatos">base de microdatos de evyth publicada en datos abiertos</a> con la atención a que para periodos de inflación elevada el ajuste de pesos corrientes a pesos constantes puede dar un resultado levemente diferente entre la estimación mensual y la trimestral.</p>
-<p>Conceptos clave: - Viaje Turístico: todo desplazamiento desde que sale hasta que vuelve a su lugar de residencia con una duración inferior a un año que tiene como destino un lugar ubicado fuera del entorno habitua del hogar. Se excluyen los viajes que tienen como principal motivo el ser empleado por una unidad residente del destino visitado o cuando el traslado forma parte del trabajo. Para los viajes a segundas viviendas del hogar no rige el criterio de entorno habitual y se los considera que siempre son un viaje turístico (por definición). La EVyTH considera como destinos por fuera del entorno habitual aquellos distante a más de 40 Km (para CABA y Partidos del GBA) / 20km (para resto de los aglomerados) del lugar de residencia permanente del hogar, siempre y cuando ese lugar no sea visitado con una frecuencia semanal. - Visitante: Toda persona que realiza un viaje turístico, pase o no una noche en el lugar visitado. Los visitantes se contabilizan en el mes en que finaliza el viaje. - Turista: todo visitante que pernocta al menos una noche durante su viaje turístico. Excursionista (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. - Excursionista (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. - Pernoctaciones: es el número de noches que cada turista permanece fuera de su lugar de residencia habitual. - Gasto Total: en este portal el gasto total se ha estimado sólo para los turistas, ya que en base a los informes de EVyTH son el tipo de visitante que explica más del 80% del gasto turístico agregado. Comprende todo gasto de consumo de bienes y servicios efectuado por turista o excursionista) o por cuenta de un visitante (ya que incluye una estimación del gasto financiado por Cuartos) durante su viaje turístico. Este indicador se haya expresado en pesos constantes a diciembre de 2021.</p>
+<p><strong>Conceptos clave:</strong></p>
+<ul>
+<li><p><strong><code>Viaje Turístico:</code></strong> todo desplazamiento desde que sale hasta que vuelve a su lugar de residencia con una duración inferior a un año que tiene como destino un lugar ubicado fuera del entorno habitua del hogar. Se excluyen los viajes que tienen como principal motivo el ser empleado por una unidad residente del destino visitado o cuando el traslado forma parte del trabajo. Para los viajes a segundas viviendas del hogar no rige el criterio de entorno habitual y se los considera que siempre son un viaje turístico (por definición). La EVyTH considera como destinos por fuera del entorno habitual aquellos distante a más de 40 Km (para CABA y Partidos del GBA) / 20km (para resto de los aglomerados) del lugar de residencia permanente del hogar, siempre y cuando ese lugar no sea visitado con una frecuencia semanal.</p></li>
+<li><p><strong><code>Visitante:</code></strong> Toda persona que realiza un viaje turístico, pase o no una noche en el lugar visitado. Los visitantes se contabilizan en el mes en que finaliza el viaje.</p></li>
+<li><p><strong><code>Turista:</code></strong> todo visitante que pernocta al menos una noche durante su viaje turístico. Excursionista (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico.</p></li>
+<li><p><strong><code>Excursionista</code></strong> (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. - Pernoctaciones: es el número de noches que cada turista permanece fuera de su lugar de residencia habitual.</p></li>
+<li><p><strong><code>Gasto Total:</code></strong> en este portal el gasto total se ha estimado sólo para los turistas, ya que en base a los informes de EVyTH son el tipo de visitante que explica más del 80% del gasto turístico agregado. Comprende todo gasto de consumo de bienes y servicios efectuado por turista o excursionista) o por cuenta de un visitante (ya que incluye una estimación del gasto financiado por Cuartos) durante su viaje turístico. Este indicador se haya expresado en pesos constantes a diciembre de 2021.</p></li>
+</ul>
 <h2 id="turismo-receptivo">Turismo Receptivo</h2>
-<p>La sección de turismo receptivo muestra las estadísticas derivadas de los registros de la Dirección Nacional de Migraciones del Ministerio de Interior de la Nación. A partir de dichos registros se contabilizan la cantidad de tránsitos de visitantes no residentes que ingresaron al país por cada paso internacional con registros de la DNM.</p>
-<p>Pueden consultar los datos a mayor nivel de desagregación en el <a href="https://tableros.yvera.tur.ar/turismo_internacional/">tablero de Turismo Internacional</a></p>
+<p>La sección de turismo receptivo muestra las estadísticas derivadas de los <strong>registros de la Dirección Nacional de Migraciones (DNM) del Ministerio de Interior de la Nación</strong>. A partir de dichos registros se contabilizan la cantidad de tránsitos de visitantes no residentes que visitaron el país. Los conteos se realizan en el momento de la salida definitiva del país por cada paso internacional.</p>
+<p>Pueden consultar los datos a mayor nivel de desagregación y más referencias metodológicas en el <a href="https://tableros.yvera.tur.ar/turismo_internacional/">tablero de Turismo Internacional</a>.</p>
 <h2 id="padrón-de-alojamientos">Padrón de Alojamientos</h2>
-<p>El Padrón Único Nacional de Alojamiento (PUNA) reúne todos los establecimientos de alojamiento turístico de la Argentina, en el que se detallan las principales variables de cada uno, nutrido a partir de diferentes fuentes de información. Estas fuentes de información son: los organismos provinciales y municipales de turismo que a través de su área de fiscalización de servicios turísticos elabora el padrón de alojamiento de su provincia o localidad; el INDEC a través de la Encuesta de Ocupación Hotelera y fuentes secundarias especializadas en turismo relevadas desde la DNMYE - MINTURDEP.</p>
-<p>Del total de variables que contiene el PUNA en este tablero se utilizaron las siguientes: - Provincia : provincia donde se encuentra el establecimiento. - Localidad: ubicación geográfica del establecimiento dentro de la provincia, según la localidad en la que está ubicado. - Tipo: se refiere al tipo al que pertenece la categoría del establecimiento. El MINTURDEP tiene cuatro tipos: hoteleros, parahoteleros, otros colectivos y privados. - Establecimientos: se refiere a la cantidad de establecimientos que conforman los distintos alojamientos turísticos. - Plazas: se refiere a la cantidad de plazas que tienen los establecimientos. Una plaza equivale al espacio que ocupa una persona: por ejemplo, una cama matrimonial cuenta como dos plazas.</p>
+<p>El <a href="https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento"><strong>Padrón Único Nacional de Alojamiento (PUNA)</strong></a> reúne todos los establecimientos de alojamiento turístico de la Argentina, en el que se detallan las principales variables de cada uno, nutrido a partir de diferentes fuentes de información. Estas fuentes de información son: los organismos provinciales y municipales de turismo que a través de su área de fiscalización de servicios turísticos elabora el padrón de alojamiento de su provincia o localidad; el INDEC a través de la Encuesta de Ocupación Hotelera y fuentes secundarias especializadas en turismo relevadas desde la DNMYE - MINTURDEP.</p>
+<p>Del total de variables que contiene el PUNA en este tablero se utilizaron las siguientes:</p>
+<ul>
+<li><p><strong><code>Provincia:</code></strong> provincia donde se encuentra el establecimiento.</p></li>
+<li><p><strong><code>Localidad:</code></strong> ubicación geográfica del establecimiento dentro de la provincia, según la localidad en la que está ubicado.</p></li>
+<li><p><strong><code>Tipo:</code></strong> se refiere al tipo al que pertenece la categoría del establecimiento.</p></li>
+</ul>
+<p>El MINTURDEP tiene cuatro tipos: hoteleros, parahoteleros, otros colectivos y privados.</p>
+<ul>
+<li><p><strong><code>Establecimientos:</code></strong> se refiere a la cantidad de establecimientos que conforman los distintos alojamientos turísticos.</p></li>
+<li><p><strong><code>Plazas:</code></strong> se refiere a la cantidad de plazas que tienen los establecimientos. Una plaza equivale al espacio que ocupa una persona: por ejemplo, una cama matrimonial cuenta como dos plazas.</p></li>
+</ul>
 <p>Pueden consultar los datos a mayor nivel de desagregación en el <a href="https://tableros.yvera.tur.ar/puna/">tablero del PUNA</a>.</p>
 <h2 id="áreas-naturales">Áreas Naturales</h2>
 <p>Los datos de áreas naturales provienen de los registros de visitas a los Parques Nacionales a través del Registro Nacional de Autorizaciones, Recaudaciones e Infracciones (RENARI) de la Administración de Parques Nacionales, quien recopila y procesa los datos de visitantes La información suministrada permite la clasificación de las visitas en residentes argentinos y no residentes en 36 Parques Nacionales de la Argentina.</p>
 <p>Por las características del registro se considera como una visita la entrada a un parque nacional con cualquier finalidad principal (ocio, negocios u otro motivo personal) que no sea ser empleado por el parque nacional (cada vez que se cruza la frontera del área protegida, se genera una visita).</p>
-<p>Pueden consultar los datos a mayor nivel de desagregación en el <a href="https://tableros.yvera.tur.ar/turismo_internacional/">tablero de Turismo Internacional</a>.</p>
 <h2 id="conectividad-aérea">Conectividad Aérea</h2>
-<p>El tablero presenta datos provistos por la ANAC a la DNMyE. La fuente de información consultada por la ANAC es el Sistema Integrado de Aviación Civil (SIAC). El SIAC registra movimientos aéreos en el país y los datos recabados permiten conocer cantidad de pasajeros a bordo de cada vuelo, origen y destino, empresa operadora del vuelo, cantidad de asientos y fecha del vuelo. A partir de los datos provistos por la ANAC la DNMyE selecciona aquellos vuelos que corresponden a las empresas de operaciones regulares en el país, tanto para vuelos de cabotaje como en el caso de vuelos internacionales. La estadística de cantidad de pasajeros por localidad representa tránsitos de pasajeros en aterrizajes o despegues realizados en aeropuertos de dicha localidad.</p>
-<p>Pueden consultar los datos a mayor nivel de desagregación en el <a href="https://tableros.yvera.tur.ar/conectividad/">tablero de Conectividad</a>.</p>
+<p>El tablero presenta datos del <strong>Sistema Integrado de Aviación Civil (SIAC)</strong> provistos por la ANAC. El SIAC registra movimientos aéreos en el país y los datos recabados permiten conocer <code>cantidad de pasajeros</code> a bordo de cada vuelo, <code>origen</code> y <code>destino</code>, <code>empresa operadora del vuelo</code>, <code>cantidad de asientos</code> y <code>fecha del vuelo</code>. A partir de estos datos la DNMyE selecciona aquellos vuelos que corresponden a las empresas de operaciones regulares en el país, tanto para vuelos de cabotaje como en el caso de vuelos internacionales. La estadística de cantidad de pasajeros por localidad representa tránsitos de pasajeros en aterrizajes o despegues realizados en aeropuertos de dicha localidad.</p>
+<p>Pueden consultar los datos a mayor nivel de desagregación y más detalles metodológicos en el <a href="https://tableros.yvera.tur.ar/conectividad/">tablero de Conectividad</a>.</p>
 <h2 id="empresas-turísticas">Empresas Turísticas</h2>
-<p>Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de datos de la Administración Federal de Ingresos Públicos (AFIP) al mes de junio de 2021. Las ramas características del turismo se eligieron siguiendo el <a href="https://tableros.yvera.tur.ar/recursos/biblioteca/cadena_de_valor.pdf">Informe de cadena de valor del turismo</a>:</p>
+<p>Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de <strong>datos de la Administración Federal de Ingresos Públicos (AFIP)</strong> al mes de junio de 2021. Las ramas características del turismo se eligieron siguiendo el <a href="https://tableros.yvera.tur.ar/recursos/biblioteca/cadena_de_valor.pdf">Informe de cadena de valor del turismo</a>:</p>
 <p><img src="entradas/tabla.jpg" /></p>
 <p>Las otras variables expresadas en esta sección son:</p>
 <ul>
-<li><p>Cantidad de empresas: se corresponde al conteo de CUIT no repetidos.</p></li>
-<li><p>Tamaño de la empresa: está definido según la cantidad de empleados declarados:</p>
+<li><p><strong><code>Cantidad de empresas:</code></strong> se corresponde al conteo de CUIT no repetidos.</p></li>
+<li><p><strong><code>Tamaño de la empresa:</code></strong> está definido según la cantidad de empleados declarados:</p>
 <ul>
-<li><p>Micro: de 1 a 9 empleados.</p></li>
-<li><p>Pequeña: de 10 a 49 empleados.</p></li>
-<li><p>Mediana: de 50 a 199.</p></li>
-<li><p>Grande: 200 empleados y más.</p></li>
+<li><p><strong><code>Micro</code></strong>: de 1 a 9 empleados.</p></li>
+<li><p><strong><code>Pequeña</code></strong>: de 10 a 49 empleados.</p></li>
+<li><p><strong><code>Mediana</code></strong>: de 50 a 199.</p></li>
+<li><p><strong><code>Grande</code></strong>: 200 empleados y más.</p></li>
 </ul></li>
 </ul>
 <p>Se han omitido los datos correspondientes a departamentos donde se registraran menos de 3 empresas.</p>

@@ -27,4 +27,4 @@ parques_data
 
 - Datos Abiertos: https://datos.yvera.gob.ar/dataset/parques-nacionales
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#áreas-naturales)

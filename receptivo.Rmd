@@ -30,4 +30,4 @@ receptivo_data
 
 - Datos abiertos: https://datos.yvera.gob.ar/dataset?groups=turismo-internacional
 
-- [Metodología](metodologia.html)
+- [Metodología](metodologia.html#turismo-receptivo)
