@@ -1,31 +1,33 @@
 ---
 title: "Turismo Receptivo"
 description: |
-  Estimaciones de turismo receptivo a nivel provincial. 
+  Estimaciones de turismo receptivo a nivel provincial en base a datos de la Dirección Nacional de Migraciones. 
 site: distill::distill_website
 ---
 
 ```{r libraries-source, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
-library(tidyverse)
-library(xaringanExtra)
-library(dnmye)
-library(highcharter)
-library(gt)
+
+receptivo_data <- readRDS("outputs/graph_receptivo.rds")
 ```
 
-```{r, include=FALSE}
+## Visitantes No Residentes por Paso
 
-receptivo_nest_data <- read_rds("outputs/receptivo_nest_data.RDS")
+```{r}
+receptivo_data
 ```
 
 
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
-```
+## Recursos relacionados
 
-## Principales Pasos Internacionales
-`r rmdautotabs(input_data = receptivo_nest_data, panel_name = "prov", .tablas_prov)`
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-05-31-intro-eti/
 
-## Evolución del Volumen de Visitantes por Paso Internacional
-`r rmdautotabs(input_data = receptivo_nest_data, panel_name = "prov", .plot_timeseries)`
+- Tablero: https://tableros.yvera.tur.ar/turismo_internacional/
+
+- Resumen mensual: https://tableros.yvera.tur.ar/internacional.html
+
+- Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/turismo-internacional
+
+- Datos abiertos: https://datos.yvera.gob.ar/dataset?groups=turismo-internacional
+
+- [Metodología](metodologia.html#turismo-receptivo)

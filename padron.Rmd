@@ -7,27 +7,23 @@ site: distill::distill_website
 
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
-library(tidyverse)
-library(xaringanExtra)
-library(dnmye)
-library(highcharter)
-library(gt)
-library(plotly)
+
+puna_data <- readRDS("outputs/graph_puna.rds")
 ```
 
-```{r, include=FALSE}
-serie_puna_nest_data <- read_rds("outputs/serie_puna_nest_data.RDS")
+## Datos PUNA
 
+```{r}
+puna_data
 ```
 
+## Recursos relacionados
 
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
-```
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-06-16-datos-puna/
 
+- Tablero: https://tableros.yvera.tur.ar/puna/
 
-## Estadísticas de Establecimientos de Alojamientos Turísticos
-`r rmdautotabs(input_data = serie_puna_nest_data, panel_name = "nombre_prov", .tablas_prov, .plot_ppales_loc, .plot_ppales_cat)`
+- Datos Abiertos del PUNA: https://datos.yvera.gob.ar/dataset/padron-unico-nacional-alojamiento
 
-
+- [Metodología](metodologia.html#padrón-de-alojamientos)
 

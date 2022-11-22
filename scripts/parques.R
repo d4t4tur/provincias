@@ -1,17 +1,16 @@
 #parques
-library(dnmye)
+library(d4t4tur)
 library(readxl)
 library(tidyverse)
 library(glue)
-library(gt)
-library(highcharter)
+library(plotly)
+library(DT)
+library(crosstalk)
 
-source("scripts/aux_function.R")
-
-base_pn <- read_excel("/srv/DataDNMYE/parques_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
+base_pn <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
   mutate(parque_nacional = limpiar_texto(parque_nacional))
 
-provincias <- read_excel("/srv/DataDNMYE/parques_nacionales/provincias.xlsx") %>% 
+provincias <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/provincias.xlsx") %>% 
   add_row(parque_nacional = "Pizarro", provincia = "Salta") %>% 
   mutate(parque_nacional = ifelse(parque_nacional == "Nogalar de los Toldos", "El Nogalar de Los Toldos", parque_nacional),
          etiq_parque = parque_nacional,
@@ -20,76 +19,90 @@ provincias <- read_excel("/srv/DataDNMYE/parques_nacionales/provincias.xlsx") %>
 base_pn <- left_join(base_pn, provincias) %>% 
   filter(anio >= 2012)
 
-parques_nest_data <- base_pn %>% 
-  mutate(nombre_prov = as_factor(provincia)) %>% 
-  nest(nested_column_indicadores = -nombre_prov)
+options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
 
-tabla_provincial <- function(x) {
-  x %>% 
-    filter(anio == 2019) %>% 
-    group_by(etiq_parque,residencia) %>% 
-    summarise(visitantes = sum(visitantes, na.rm = TRUE)) %>% 
-    pivot_wider(id_cols = etiq_parque, names_from = residencia, values_from = visitantes) %>% 
-    janitor::clean_names() %>% 
-    mutate( total = no_residentes + residentes) %>% 
-    arrange(-total) %>% 
-    janitor::adorn_totals() %>% 
-    gt() %>% 
-    cols_label(
-      etiq_parque = md(""),
-      no_residentes = md("**No Residentes**"),
-      residentes = md("**Residentes**"),
-      total = md("**Total**")
-    )  %>% 
-    fmt_number(
-      columns = 2:4,
-      decimals = 0,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>% 
-    cols_align(align = "center",
-               columns = c(residentes, no_residentes, total))  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center", 
-                row_group.font.weight = "bold",
-                #table.font.size = 11,
-                #table.width = 580,
-                #data_row.padding = px(7)
-    ) %>% 
-    tab_style(
-      style = list(
-        cell_text(weight = "bold")
-      ),
-      locations = cells_body(
-        rows =  etiq_parque == "Total"
-      )) %>% 
-    tab_header(title = md(glue("**Visitantes a Áreas Protegidas Naturales Nacionales<br>según residencia**")),
-               subtitle =  md(glue("{unique(x$provincia)}. Año 2019"))) %>%
-    tab_source_note(source_note = md("**Fuente:** Dirección Nacional de Mercados y Estadísticas a partir de datos de la APN"   )
-    )
-}
+parques_data <- base_pn %>% 
+  filter(anio >= 2017 & anio < 2022) %>% 
+  mutate(visitantes = as.integer(visitantes),
+         residencia = str_to_sentence(residencia),
+         parque_nacional = str_to_title(parque_nacional)) %>% 
+  group_by(anio, provincia, parque_nacional, residencia) %>% 
+  summarise(visitantes = sum(visitantes, na.rm = TRUE),
+            visitantes = case_when(visitantes == 0 ~ NA_integer_,
+                                   TRUE ~ visitantes)) %>% 
+  ungroup() %>% 
+  # pivot_wider(id_cols = c(anio, provincia, etiq_parque), names_from = residencia, values_from = visitantes) %>% 
+  # janitor::clean_names() %>% 
+  arrange(desc(anio), provincia) %>% 
+  rename(Provincia = provincia, Origen = residencia, Visitas = visitantes, Año = anio,
+         Parque = parque_nacional) %>% 
+  drop_na(Visitas)
+
+graph_pn <- parques_data %>% 
+  group_by(Año, Provincia, Parque) %>% 
+  summarise(Visitas = sum(Visitas, na.rm = T)) %>% 
+  ungroup()
+
+graph_orig <- parques_data %>% 
+  group_by(Año, Provincia, Origen) %>% 
+  summarise(Visitas = sum(Visitas, na.rm = T)) %>% 
+  ungroup()
+
+tabla_pn <- SharedData$new(parques_data, ~ Provincia, group = "Provincia")
+
+plot_parques <- SharedData$new(graph_pn, ~ Provincia, group = "Provincia")
+
+plot_origen <- SharedData$new(graph_orig, ~ Provincia, group = "Provincia")
 
 
-grafico_serietiempo <- function(x) {
-  
-   x %>%
-    mutate(fecha = lubridate::ym(paste0(anio, mes), locale = "es_AR.utf8"), grupo = paste(etiq_parque, str_to_title(residencia), sep =": ")) %>% 
-    group_by(grupo, fecha) %>%
-    summarise(visitantes = round(sum(visitantes, na.rm = T), 0)) %>% 
-    # se puede definir un filtro para no graficar los pasos con menos
-    # de un % del total de visitantes para la provincia
-    hchart("line", hcaes(x = fecha, y = visitantes, group = grupo)) %>%  
-    hc_title(
-      text = glue("Visitantes a Áreas Protegidas Naturales Nacionales - {unique(x$provincia)}"))
-}
+dt_parques <- datatable(tabla_pn,extensions = 'Buttons',
+                        options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
+                                       dom = 'lfrtipB',
+                                       buttons = list('copy', 
+                                                      list(
+                                                        extend = 'collection',
+                                                        buttons = list(list(extend = 'csv', filename = "parques"),
+                                                                       list(extend = 'excel', filename = "parques")),
+                                                        text = 'Download'
+                                                      ))),
+                        rownames= FALSE
+)
 
 
-parques_nest_data <- parques_nest_data %>% 
-  mutate(.tablas_prov = map(nested_column_indicadores, tabla_provincial),
-         .plot_timeseries = map(nested_column_indicadores, grafico_serietiempo))
+gg_pn <- ggplot(plot_parques) + 
+  geom_line(aes(Año, Visitas, color = Parque)) +
+  geom_point(aes(Año, Visitas, color = Parque,
+                 text = paste0(Parque,": ",
+                               format(Visitas, big.mark = ".")))) +
+  scale_color_dnmye() +
+  theme_minimal() +
+  theme(legend.position = "none")
 
-parques_nest_data <- parques_nest_data %>% 
-  arrange(nombre_prov) %>% 
-  select(-nested_column_indicadores)
+gg_orig <- ggplot(plot_origen) + 
+  geom_line(aes(Año, Visitas, color = Origen)) +
+  geom_point(aes(Año, Visitas, color = Origen,
+                 text = paste0(Provincia,": ",
+                               format(Visitas, big.mark = "."), " ",Origen))) +
+  scale_color_manual(values = c(dnmye_colores("purpura"),
+                                dnmye_colores("cian"))) +
+  theme_minimal() +
+  theme(legend.position = "none")
 
-write_rds(parques_nest_data, "outputs/parques_nest_data.RDS")
+
+parques <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12), 
+         filter_select("id", "Elegir una provincia", tabla_pn, ~ Provincia,
+                       multiple = FALSE),
+         dt_parques,
+         htmltools::br(),
+         ggplotly(gg_orig, dynamicTicks = TRUE, tooltip = "text") %>% 
+           layout(xaxis=list(tickformat='.d')) %>% 
+           layout(title = 'Evolución de visitas a Parques Nacionales según origen'),
+         htmltools::br(),
+         ggplotly(gg_pn, dynamicTicks = TRUE, tooltip = "text") %>% 
+           layout(xaxis=list(tickformat='.d')) %>% 
+           layout(title = 'Evolución de visitas por Parque Nacional'))
+)
+
+write_rds(parques, "outputs/graph_parques.rds")

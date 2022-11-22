@@ -16,21 +16,30 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+<style>
+p {
+font-size: 1rem;
+} 
+
+.d-title > p {
+font-size: 1rem;
+}
+</style>
+
 El _**Monitor de Turismo en las Provincias**_ que acá presentamos procura servir como herramienta de consulta de los últimos datos disponibles de una variedad de indicadores relativos al turismo en la Argentina, poniendo el foco en el nivel provincial. 
 
 #### INDICADORES
 
 Los **Indicadores por provincia** incluyen la siguiente información: 
 
-* **Turismo Interno**: Una caraceterización del Turismo Interno a partir de la _Encuesta de Viajes y Turismo de los Hogares_ (EVyTH). 
+* [**Turismo Interno**](interno.html): Una caracterización del Turismo Interno a partir de la _Encuesta de Viajes y Turismo de los Hogares_ (EVyTH). 
 
-* **Turismo Receptivo**: Estimaciones del turismo receptivo a nivel provincial, detallando el flujo de turistas no residentes que salieron por cada paso fronterizo. 
+* [**Turismo Receptivo**](receptivo.html): Estimaciones del turismo receptivo a nivel provincial, detallando el flujo de turistas no residentes que salieron por cada paso fronterizo. 
 
-* **Padrón de Alojamientos**: Indicadores relevantes de la oferta hotelera y parahotelera proveniente del _Padrón Único Nacional de Alojamientos_ (PUNA).
+* [**Padrón de Alojamientos**](padron.html): Indicadores relevantes de la oferta hotelera y parahotelera proveniente del _Padrón Único Nacional de Alojamientos_ (PUNA).
 
-* **Áreas Naturales**: Registro de visitaciones a áreas naturales protegidas de carácter nacional a partir de información de la _Administración de Parques Nacionales_ (APN).
+* [**Áreas Naturales**](parques.html): Registro de visitaciones a áreas naturales protegidas de carácter nacional a partir de información de la _Administración de Parques Nacionales_ (APN).
 
-* **Conectividad Aérea**: Datos provenientes de los registros administrativos de la _Autoridad Nacional de Aviación Civil_ (ANAC).
+* [**Conectividad Aérea**](aereo.html): Datos provenientes de los registros administrativos de la _Autoridad Nacional de Aviación Civil_ (ANAC).
 
-* **Emrpesas Turísticas**: Estadísticas de empresas de las _Ramas Características del Turismo_ (RCT) a partir de datos de la _Administración Federal de Ingresos Públicos_ (AFIP).
-
+* [**Empresas Turísticas**](empresas.html): Estadísticas de empresas de las _Ramas Características del Turismo_ (RCT) a partir de datos de la _Administración Federal de Ingresos Públicos_ (AFIP).

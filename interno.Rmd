@@ -8,35 +8,86 @@ site: distill::distill_website
 ```{r libraries, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = F)
 library(tidyverse)
-library(xaringanExtra)
-library(dnmye)
-library(highcharter)
-library(gt)
+library(comunicacion)
+library(herramientas)
+library(plotly)
+library(crosstalk)
 ```
+
 
 ```{r, include=FALSE}
-evyth_nest_data <- read_rds("outputs/evyth_nest_data.RDS")
-
+interno_indicadores_ppales <- readRDS("outputs/interno_ppales.rds")
+tipo_turismo <- readRDS("outputs/tipo_turismo.rds")
+edad <- readRDS("outputs/edad.rds")
+transporte <- readRDS("outputs/transporte.rds")
+alojamientos <- readRDS("outputs/alojamiento.rds")
+motivo <- readRDS("outputs/motivo.rds")
 ```
 
+Se presentan estadísticas resumen acompañadas de los valores de sus coeficientes de variación[^1] (CV) según provincia de destino, junto con las estadísticas correspondientes de la región a la cual pertenece la provincia y las estadísticas a nivel nacional.
 
-```{r, include=FALSE, echo= FALSE, message=FALSE}
-xaringanExtra::use_panelset()
+[^1]: El coeficiente de variación es una medida de dispersión que se define como el cociente entre la dispersión estándar y el valor absoluto de la media. Para su estimación aquí se ha utilizado el paquete [survey](https://cran.r-project.org/web/packages/survey/index.html).
+
+## Indicadores Principales
+
+Use el filtro para visualizar correctamente los gráficos. El valor del gasto total está expresado en pesos constantes a diciembre 2021 (ver [Metodología](metodologia.html#turismo-interno)).
+
+```{r}
+interno_indicadores_ppales
 ```
 
+## Estadísticas de perfilado de turistas
 
-## Datos principales
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .tablas_prov)`
+### Turismo de naturaleza y de cultura
 
-## Series de Tiempo
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .plot_timeseries)`
+Porcentaje de turistas que realizaron turismo de naturaleza o de cultura en el destino
 
-## Perfil del turista
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .motivo, .alojamiento, .transporte, .edad)`
+```{r}
+tipo_turismo
+```
 
-## Principales actividades
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .actividades)`
+### Perfil etario del turista
 
-## Principales localidades
-`r rmdautotabs(input_data = evyth_nest_data, panel_name = "Provincia", .localidades)`
+Porcentaje de turistas según grupo etario como porcentaje del total de turistas en el destino
 
+```{r}
+edad
+```
+
+### Medios de trasporte utilizados
+
+Participación de cada medio de transporte como porcentaje del total de turistas en el destino
+
+```{r}
+transporte
+```
+
+### Tipo de alojamiento utilizado
+
+Porcentaje del tipo de alojamiento utilizado como porcentaje del total de turistas en el destino
+
+```{r}
+alojamientos
+```
+
+### Motivo del viaje
+
+Distribución del principal motivo del viaje como porcentaje del total de turistas en el destino
+
+```{r}
+motivo
+```
+
+## Recursos relacionados
+
+- Post bitácora: https://bitacora.yvera.tur.ar/posts/2022-06-06-intro-evyth/
+
+- Resumen Trimestral EVyTH: https://tableros.yvera.tur.ar/interno.html
+
+- Informes Técnicos EVyTH: https://www.yvera.tur.ar/estadistica/informe/info/encuesta-de-viajes-y-turismo-de-los-hogares-evyth
+
+- Metodología EVyTH: https://d4t4tur.github.io/evyth_metodologia/
+
+- Datos Abiertos EVyTH: https://datos.yvera.gob.ar/dataset?tags=evyth
+
+- [Metodología](metodologia.html#turismo-interno)

@@ -1,0 +1,38 @@
+---
+title: "Empresas Registradas"
+description: |
+  Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de datos de la Administración Federal de Ingresos Públicos (AFIP).
+site: distill::distill_website
+---
+
+
+```{r libraries, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(tidyverse)
+library(xaringanExtra)
+library(d4t4tur)
+library(gt)
+library(plotly)
+
+```
+
+```{r, include=FALSE}
+empresas <- read_rds("outputs/empresas.rds")
+```
+
+## Datos por provincia, departamento, rama y tamaño
+
+Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de datos de la Administración Federal de Ingresos Públicos (AFIP) al mes de junio de 2021. Se han omitido los datos correspondientes a departamentos donde se registraran menos de 3 empresas.
+
+
+```{r}
+empresas
+```
+
+## Recursos relacionados
+
+- Tablero: https://tableros.yvera.tur.ar/empleo.html
+
+- Datos CEPXXI: [Mapa Productivo Laboral Argentino](https://app.powerbi.com/view?r=eyJrIjoiM2Q4MjQ5ODctYzE5MS00MTAyLWI3YWEtMTUwYWMzNWVjZmQyIiwidCI6ImNiODg0ZGI1LTI0ODUtNGY5Yi05MzhlLTNlNjIxZjIyMjU3YiIsImMiOjR9)
+
+- [Metodología](metodologia.html#empresas-turísticas)

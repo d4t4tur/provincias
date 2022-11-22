@@ -13,6 +13,8 @@ navbar:
       menu:
       - text: "Armonización"
         href: https://armonizacion.yvera.tur.ar/
+      - text: "Biblioteca"
+        href: https://biblioteca.yvera.tur.ar/
       - text: "Bitácora"
         href: https://bitacora.yvera.tur.ar
       - text: "Calendario"
@@ -21,8 +23,10 @@ navbar:
         href: https://datos.yvera.gob.ar/
       - text: "Informes"
         href: https://www.yvera.tur.ar/estadistica/informe
-      - text: "Tableros"
+      - text: "Tableros y Reportes"
         href: https://tableros.yvera.tur.ar
+    - icon: fab fa-github
+      href: https://github.com/dnme-minturdep
   left: 
     - text: "Indicadores por provincia"
       menu:
@@ -36,9 +40,14 @@ navbar:
         href: parques.html
       - text: "Conectividad Aérea"
         href: aereo.html
-      - text: "Prestadores Turísticos"
-        href: prestadores.html
+      - text: "Empresas Turísticas"
+        href: empresas.html
+    - text: "Metodología"
+      href: metodologia.html
+    
 output:
   distill::distill_article:
     css: styles.css
+    toc: true
+    code_folding: hide
 

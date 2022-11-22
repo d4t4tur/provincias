@@ -1,30 +1,23 @@
-library(highcharter)
 library(tidyverse)
-library(haven)
-library(lubridate)
-library(gt)
-library(glue)
-source(file = "scripts/aux_function.R")
+library(plotly)
+library(crosstalk)
+library(DT)
+library(d4t4tur)
 
 visitantes_dnm <-  read_csv2("/srv/DataDNMYE/turismo_internacional/turismo_internacional_visitantes.zip",
                              locale = locale(encoding = "ISO-8859-1"))
 
-# visitantes_dnm %>% 
-#   filter(prov == "CABA-GBA") %>% 
-#   select(paso_publ) %>% 
-#   unique()
-
 # turismo receptivo (visitantes: turistas y excursionistas)
 receptivo <-  visitantes_dnm %>%
-  filter(turismo_internac == "Receptivo") %>%
+  filter(turismo_internac == "Receptivo", anio >= 2017) %>%
   group_by(anio, prov, paso_publ) %>%
-  summarise(visitantes = round(sum(casos_ponderados))) %>%
+  summarise(visitantes = round(sum(casos_ponderados, na.rm = T))) %>%
   ungroup() %>%
   mutate(
     prov = case_when(
       prov == "CABA-GBA" ~ "Buenos Aires",
       prov == "Resto prov. Bs. As." ~ "Buenos Aires",
-      prov == "Tierra del Fuego" ~ "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+      #prov == "Tierra del Fuego" ~ "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
       TRUE ~ prov),
     paso_publ = str_replace_all(paso_publ, "Aero ", "Aeropuerto "),
     concatenado = paste(paso_publ, prov)) %>%
@@ -32,98 +25,60 @@ receptivo <-  visitantes_dnm %>%
   mutate(participacion_pais = visitantes/sum(visitantes)) %>% 
   ungroup()
 
-
-#### salidas
-
-# TURTISAS POR PASOS
-receptivo_nest_data <- receptivo %>% 
-  mutate(nombre_prov = prov) %>% 
-  nest(nested_column_provs = -prov)
-
-tabla_pasos <-  function(x) {
-  x %>% 
-    filter(anio <= 2019) %>% 
-    filter(anio == last(anio)) %>% 
-    arrange(-visitantes) %>% 
-    mutate(rank = 1:n(),
-           paso_publ = ifelse(rank <= 5,paso_publ,"Otros" )) %>% 
-    group_by(paso_publ) %>% 
-    summarise(visitantes = sum(visitantes),
-              participacion_pais = sum(participacion_pais)) %>% 
-    mutate(orden= ifelse(paso_publ == "Otros",2,1)) %>% 
-    arrange(orden,-visitantes) %>% 
-    select(-orden) %>% 
-    janitor::adorn_totals() %>% 
-    gt()  %>%
-    cols_label(
-      paso_publ  = md(""),
-      visitantes = md("**Visitantes**"),
-      participacion_pais = md("**% del país**"),
-    )  %>%
-    fmt_number(
-      columns = 2,
-      decimals = 0,
-      sep_mark = ".",
-      dec_mark = ","
-    ) %>%
-    fmt_percent(columns = 3, 
-                decimals = 1, 
-                sep_mark = ".", 
-                dec_mark = ",") %>%
-    cols_align(align = "center",
-               columns = c(visitantes, participacion_pais))  %>%
-    opt_table_font(font = list(google_font(name = "Encode Sans"))) %>%
-    tab_options(table.align = "center", 
-                row_group.font.weight = "bold",
-                #table.font.size = 11,
-                #table.width = 580,
-                #data_row.padding = px(7)
-    ) %>% 
-    tab_style(
-      style = list(
-        cell_text(weight = "bold")
-      ),
-      locations = cells_body(
-        rows =  paso_publ == "Total"
-      )) %>% 
-    tab_header(title = md(glue("**Pasos Internacionales {unique(x$nombre_prov)}**")),
-               subtitle = "Visitantes no residentes por paso internacional. Año 2019") %>%
-    tab_source_note(source_note = md("**Fuente:** Dirección Nacional de Mercados y Estadísticas a partir de datos de DNM"
-                                     #"**Fuente**: DNMyE ({unique(indicadores_tot$fuente)[1]}, {unique(indicadores_tot$fuente)[2]}, {unique(indicadores_tot$fuente)[3]})"
-    )
-    )
-}  
-
-
-receptivo_nest_data <- receptivo_nest_data %>% 
-  mutate(.tablas_prov = map(nested_column_provs,  tabla_pasos))
-
-
-
-#series temporales por provincia
-
-
-plot_timeseries_pasos <- function(x) {
-  
-  x  %>% 
-    # se puede definir un filtro para no graficar los pasos con menos
-    # de un % del total de visitantes para la provincia
-    hchart("line", hcaes(x = anio, y = visitantes, group = paso_publ)) %>% 
-    hc_xAxis(title = list(text = "")) %>% 
-    hc_title(
-      text = glue("{unique(x$nombre_prov)}")
-    )
-   
-}
-
-receptivo_nest_data <- receptivo_nest_data %>% 
-  mutate(.plot_timeseries = map(nested_column_provs, 
-                                plot_timeseries_pasos)
-  ) 
-
-
-receptivo_nest_data <- receptivo_nest_data %>% 
+tabla_rec <- receptivo %>% 
+  group_by(anio, prov) %>% 
+  arrange(desc(visitantes)) %>% 
+  mutate(rank = 1:n(),
+         paso_publ = ifelse(rank <= 5,paso_publ,"Otros" )) %>% 
   ungroup() %>% 
-  select(-nested_column_provs)
+  group_by(anio, prov, paso_publ) %>% 
+  summarise(visitantes = sum(visitantes),
+            participacion_pais = sum(participacion_pais)) %>% 
+  mutate(orden= ifelse(paso_publ == "Otros",2,1)) %>% 
+  ungroup() %>% 
+  arrange(desc(anio),prov,-visitantes) %>% 
+  select(-orden) 
 
-write_rds(receptivo_nest_data , file = "outputs/receptivo_nest_data.RDS")
+data_rec <- SharedData$new(tabla_rec, ~ prov)
+
+dt_rec <- datatable(data_rec, extensions = 'Buttons', 
+                     colnames=c("Año","Provincia","Paso","Visitantes","% sobre total país"),
+                     options = list(lengthMenu = c(10, 25, 50), pageLength = 10, 
+                                    dom = 'lfrtipB',
+                                    buttons = list('copy', 
+                                                   list(
+                                                     extend = 'collection',
+                                                     buttons = list(list(extend = 'csv', filename = "receptivo"),
+                                                                    list(extend = 'excel', filename = "receptivo")),
+                                                     text = 'Download'
+                                                   ))),
+                     rownames= FALSE
+) %>% 
+  formatPercentage(columns = "participacion_pais", digits = 1)
+
+
+gg_rec <- ggplot(data_rec) + 
+  geom_line(aes(anio, visitantes, color = paso_publ)) +
+  geom_point(aes(anio, visitantes, color = paso_publ,
+                text = paste0(paso_publ,": ", visitantes, " visitantes"))) +
+  scale_color_dnmye() +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45),
+        axis.title = element_blank())
+
+
+graph_receptivo <- withr::with_options(
+  list(persistent = TRUE), 
+  bscols(widths = c(12, 12, 10), 
+         filter_select("prov", "Elegir una provincia:", data_rec, ~ prov,
+                       multiple = FALSE),
+         dt_rec,
+         htmltools::br(),
+         htmltools::br(),
+         ggplotly(gg_rec, dynamicTicks = TRUE, tooltip = "text") %>%
+           layout(xaxis=list(type='category')) %>% 
+           layout(title = 'Evolución del volumen de visitantes por paso internacional'))
+)
+
+write_rds(graph_receptivo, "outputs/graph_receptivo.rds")
