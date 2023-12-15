@@ -3,6 +3,7 @@ library(janitor)
 library(DT)
 library(crosstalk)
 library(plotly)
+library(comunicacion)
 
 
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'), 
@@ -36,7 +37,7 @@ tabla_tipo <- serie_puna %>%
     ungroup()
 
 localidades_data <- serie_puna %>% 
-  filter(Año == 2020) %>% 
+  filter(Año == max(Año)) %>% 
   group_by(Provincia) %>% 
   mutate(plazas_prov = sum(plazas)) %>% 
   ungroup() %>% 
