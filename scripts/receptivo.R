@@ -4,12 +4,11 @@ library(crosstalk)
 library(DT)
 library(d4t4tur)
 
-visitantes_dnm <-  read_csv2("/srv/DataDNMYE/turismo_internacional/turismo_internacional_visitantes.zip",
-                             locale = locale(encoding = "ISO-8859-1"))
+visitantes_dnm <-  read_rds("/srv/DataDNMYE/turismo_internacional/turismo_internacional_visitantes.rds")
 
 # turismo receptivo (visitantes: turistas y excursionistas)
 receptivo <-  visitantes_dnm %>%
-  filter(turismo_internac == "Receptivo", anio >= 2017) %>%
+  filter(turismo_internac == "Receptivo", anio >= 2017 & anio < year(today())) %>%
   group_by(anio, prov, paso_publ) %>%
   summarise(visitantes = round(sum(casos_ponderados, na.rm = T))) %>%
   ungroup() %>%
