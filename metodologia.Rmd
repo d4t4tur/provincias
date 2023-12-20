@@ -123,7 +123,7 @@ Estos mismos cálculos se pueden replicar para la [base de microdatos de evyth p
 
 -   **`Excursionista`** (o visitante del día): es aquel visitante que no pernocta durante su viaje turístico. - Pernoctaciones: es el número de noches que cada turista permanece fuera de su lugar de residencia habitual.
 
--   **`Gasto Total:`** en este portal el gasto total se ha estimado sólo para los turistas, ya que en base a los informes de EVyTH son el tipo de visitante que explica más del 80% del gasto turístico agregado. Comprende todo gasto de consumo de bienes y servicios efectuado por turista o excursionista) o por cuenta de un visitante (ya que incluye una estimación del gasto financiado por Cuartos) durante su viaje turístico. Este indicador se haya expresado en pesos constantes a diciembre de 2021.
+-   **`Gasto Total:`** en este portal el gasto total se ha estimado sólo para los turistas, ya que en base a los informes de EVyTH son el tipo de visitante que explica más del 80% del gasto turístico agregado. Comprende todo gasto de consumo de bienes y servicios efectuado por turista o excursionista) o por cuenta de un visitante (ya que incluye una estimación del gasto financiado por Cuartos) durante su viaje turístico. Este indicador se haya expresado en pesos constantes a diciembre de 2022.
 
 ## Turismo Receptivo
 
@@ -165,7 +165,7 @@ Pueden consultar los datos a mayor nivel de desagregación y más detalles metod
 
 ## Empresas Turísticas
 
-Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de **datos de la Administración Federal de Ingresos Públicos (AFIP)** al mes de junio de 2021. Las ramas características del turismo se eligieron siguiendo el [Informe de cadena de valor del turismo](https://tableros.yvera.tur.ar/recursos/biblioteca/cadena_de_valor.pdf):
+Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de **datos de la Administración Federal de Ingresos Públicos (AFIP)** al mes de junio de 2022. Las ramas características del turismo se eligieron siguiendo el [Informe de cadena de valor del turismo](https://tableros.yvera.tur.ar/recursos/biblioteca/cadena_de_valor.pdf):
 
 ![](entradas/tabla.jpg)
 
