@@ -31,8 +31,6 @@ empresas
 
 ## Recursos relacionados
 
-- Tablero: https://tableros.yvera.tur.ar/empleo.html
-
-- Datos CEPXXI: [Mapa Productivo Laboral Argentino](https://app.powerbi.com/view?r=eyJrIjoiM2Q4MjQ5ODctYzE5MS00MTAyLWI3YWEtMTUwYWMzNWVjZmQyIiwidCI6ImNiODg0ZGI1LTI0ODUtNGY5Yi05MzhlLTNlNjIxZjIyMjU3YiIsImMiOjR9)
+- Reporte: https://tableros.yvera.tur.ar/empleo.html
 
 - [Metodología](metodologia.html#empresas-turísticas)

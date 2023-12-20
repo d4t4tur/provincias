@@ -47,7 +47,7 @@ localidades_data <- serie_puna %>%
   ungroup()
 
 
-tabla_tipo <- SharedData$new(tabla_tipo, ~ Provincia, group = "Provincia")
+tabla_tipo <- SharedData$new(tabla_tipo %>% arrange(desc(Año)) , ~ Provincia, group = "Provincia")
 localidades_data <- SharedData$new(localidades_data, ~ Provincia, group = "Provincia")
 
 dt_puna <- datatable(tabla_tipo, extensions = 'Buttons',
