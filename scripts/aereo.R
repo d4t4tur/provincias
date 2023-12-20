@@ -8,39 +8,88 @@ library(d4t4tur)
 library(DT)
 library(crosstalk)
 
+
 # Data por por clasificacion
-cabotaje <- read_rds("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada.rds") %>% 
-  filter(ClasificaciónVuelo == "Cabotaje",
+cabotaje <- arrow::read_parquet("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada_diaria.parquet") %>% 
+  filter(clasificacion_vuelo == "Cabotaje",
          reg_no_reg == "Empresa de vuelos regulares") %>% 
-  select(Año_Local, TipodeMovimiento,
+  select(anio_local, #TipodeMovimiento,
          origen_aeropuerto_etiqueta, origen_localidad_etiqueta, origen_provincia_etiqueta,
          destino_aeropuerto_etiqueta, destino_localidad_etiqueta, destino_provincia_etiqueta,
-         pasajeros, pax) %>% 
-  mutate(aero_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_aeropuerto_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_aeropuerto_etiqueta),
-         prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
-         loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
-         prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
-                                 "Tierra del Fuego"))
+         pasajeros = pax_ad) 
+
+cabotaje <- bind_rows(
+  cabotaje %>% 
+    group_by(anio_local,
+             prov_ad = destino_provincia_etiqueta, 
+             loc_ad = destino_localidad_etiqueta,
+             aero_ad = destino_aeropuerto_etiqueta) %>% 
+    summarise(pasajeros = sum(pasajeros)),
+  
+  cabotaje %>% 
+    group_by(anio_local,
+             prov_ad = origen_provincia_etiqueta, 
+             loc_ad = origen_localidad_etiqueta,
+             aero_ad = origen_aeropuerto_etiqueta) %>% 
+    summarise(pasajeros = sum(pasajeros))
+) %>%
+  group_by(anio_local, prov_ad, loc_ad, aero_ad) %>% 
+  summarise(pasajeros = round(sum(pasajeros))) %>% 
+  ungroup() %>% 
+  mutate(prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+                                                    "Tierra del Fuego"))
 
 
-internacional <- read_rds("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada.rds") %>% 
-  filter(ClasificaciónVuelo == "Internacional",
+  #mutate(
+    # aero_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_aeropuerto_etiqueta,
+    #                          TipodeMovimiento == "Despegue" ~ origen_aeropuerto_etiqueta),
+    #      prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
+    #                          TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
+    #      loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
+    #                          TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
+         # prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+         #                         "Tierra del Fuego"))
+
+
+internacional <- arrow::read_parquet("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada_diaria.parquet") %>% 
+  filter(clasificacion_vuelo == "Internacional",
          reg_no_reg == "Empresa de vuelos regulares") %>% 
-  select(Año_Local, TipodeMovimiento,
+  select(anio_local, #TipodeMovimiento,
          origen_aeropuerto_etiqueta, origen_localidad_etiqueta, origen_provincia_etiqueta,
          destino_aeropuerto_etiqueta, destino_localidad_etiqueta, destino_provincia_etiqueta,
-         pasajeros) %>% 
-  mutate(aero_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_aeropuerto_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_aeropuerto_etiqueta),
-         prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
-                             TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
-         loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
-                            TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
-         prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+         pasajeros = pax_ad) 
+
+
+internacional <- bind_rows(
+  internacional %>% 
+    group_by(anio_local, 
+             prov_ad = destino_provincia_etiqueta, 
+             loc_ad = destino_localidad_etiqueta,
+             aero_ad = destino_aeropuerto_etiqueta) %>% 
+    summarise(pasajeros = sum(pasajeros)),
+  
+  internacional %>% 
+    group_by(anio_local,
+             prov_ad = origen_provincia_etiqueta, 
+             loc_ad = origen_localidad_etiqueta,
+             aero_ad = origen_aeropuerto_etiqueta) %>% 
+    summarise(pasajeros = sum(pasajeros))
+) %>%
+  group_by(anio_local, prov_ad, loc_ad, aero_ad) %>% 
+  summarise(pasajeros = round(sum(pasajeros))) %>% 
+  ungroup() %>% 
+  mutate(prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
                                "Tierra del Fuego"))
+
+#%>% 
+  # mutate(aero_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_aeropuerto_etiqueta,
+  #                            TipodeMovimiento == "Despegue" ~ origen_aeropuerto_etiqueta),
+  #        prov_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_provincia_etiqueta,
+  #                            TipodeMovimiento == "Despegue" ~ origen_provincia_etiqueta),
+  #        loc_ad = case_when(TipodeMovimiento == "Aterrizaje" ~ destino_localidad_etiqueta,
+  #                           TipodeMovimiento == "Despegue" ~ origen_localidad_etiqueta),
+  #        prov_ad = str_replace(prov_ad, "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+  #                              "Tierra del Fuego"))
 
 # DT idioma
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
@@ -49,12 +98,12 @@ options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1
 ## TABLAS
 
 tabla_cabotaje <- cabotaje %>% 
-  filter(Año_Local >= 2017 & Año_Local < 2022) %>% 
-  group_by(Año_Local, prov_ad, loc_ad) %>%
+  filter(anio_local >= 2017 & anio_local <= 2022) %>% 
+  group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
-  arrange(desc(Año_Local), prov_ad) %>% 
-  rename(Año = Año_Local,
+  arrange(desc(anio_local), prov_ad) %>% 
+  rename(Año = anio_local,
          Provincia = prov_ad,
          Localidad = loc_ad,
          Pasajeros = pasajeros) %>% 
@@ -62,12 +111,12 @@ tabla_cabotaje <- cabotaje %>%
 
 
 tabla_internacional <- internacional %>% 
-  filter(Año_Local >= 2017 & Año_Local < 2022) %>% 
-  group_by(Año_Local, prov_ad, loc_ad) %>%
+  filter(anio_local >= 2017 & anio_local <= 2022) %>% 
+  group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
-  arrange(desc(Año_Local), prov_ad) %>% 
-  rename(Año = Año_Local,
+  arrange(desc(anio_local), prov_ad) %>% 
+  rename(Año = anio_local,
          Provincia = prov_ad,
          Localidad = loc_ad,
          Pasajeros = pasajeros) %>% 

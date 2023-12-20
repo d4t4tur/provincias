@@ -22,7 +22,7 @@ empresas <- read_rds("outputs/empresas.rds")
 
 ## Datos por provincia, departamento, rama y tamaño
 
-Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de datos de la Administración Federal de Ingresos Públicos (AFIP) al mes de junio de 2021. Se han omitido los datos correspondientes a departamentos donde se registraran menos de 3 empresas.
+Estadísticas de empresas de las Ramas Características del Turismo (RCT) a partir de datos de la Administración Federal de Ingresos Públicos (AFIP) al mes de junio de 2022. Se han omitido los datos correspondientes a departamentos donde se registraran menos de 3 empresas.
 
 
 ```{r}
