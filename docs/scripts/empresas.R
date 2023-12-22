@@ -433,7 +433,6 @@ data_emp_depto <- empresas_afip_loc %>%
   st_centroid()
 
 
-
 # empresas_afip_dpto_geo <- empresas_afip_dpto_geo %>% 
 #   st_centroid()
 # 
@@ -472,7 +471,18 @@ empresas_map_data <- empresas_afip_dpto_geo %>%
 
 empresas_map_data <- empresas_map_data %>% 
   mutate(key = paste(provincia, departamento_arcgis, cat_rct, sep = "-")) %>% 
-  st_cast("POINT")
+  st_cast("POINT") %>% 
+  st_as_sf()
+
+
+fix_chaco <- empresas_map_data %>%
+  filter(provincia == "Chaco" & departamento_arcgis == "Almirante Brown") %>% 
+  mutate(geometry = st_geometry(st_point(c(-61.592346, -25.589289)))) %>% 
+  st_set_crs(st_crs(empresas_map_data))
+
+empresas_map_data <- empresas_map_data %>% 
+  filter(!(provincia == "Chaco" & departamento_arcgis == "Almirante Brown")) %>% 
+  rbind(fix_chaco)
 
 prov_lims <-  geoAr::get_geo("ARGENTINA", level = "provincia") %>% geoAr::add_geo_codes() %>% 
   st_centroid() %>% 
