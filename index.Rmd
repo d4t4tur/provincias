@@ -40,6 +40,6 @@ Los **Indicadores por provincia** incluyen la siguiente información:
 
 * [**Áreas Naturales**](parques.html): Registro de visitaciones a áreas naturales protegidas de carácter nacional a partir de información de la _Administración de Parques Nacionales_ (APN).
 
-* [**Conectividad Aérea**](aereo.html): Datos provenientes de los registros administrativos de la _Autoridad Nacional de Aviación Civil_ (ANAC).
+* [**Conectividad Aérea**](aereo.html): Datos provenientes de los registros administrativos de la _Administración Nacional de Aviación Civil_ (ANAC).
 
 * [**Empresas Turísticas**](empresas.html): Estadísticas de empresas de las _Ramas Características del Turismo_ (RCT) a partir de datos de la _Administración Federal de Ingresos Públicos_ (AFIP).

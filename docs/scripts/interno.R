@@ -11,7 +11,8 @@ source(here::here("scripts","auxiliar_evyth.R"))
 #### cargo y preparo la base ####
 # b_evyth <- read_csv("http://datos.yvera.gob.ar/dataset/b5819e9b-5edf-4aad-bd39-a81158a2b3f3/resource/645e5505-68ee-4cfa-90f9-fcc9a4a34a85/download/evyth_microdatos.csv")
 b_evyth <- arrow::read_parquet("/srv/DataDNMYE/evyth/base_trabajo/evyth_base_de_trabajo.parquet",
-                               as_data_frame = TRUE) #%>%
+                               as_data_frame = TRUE) %>%
+  arrange(desc(anio))
 # rename_with(.cols = starts_with("gasto_pc_constantes"),
 #             .fn = ~ str_remove(.x, "[^gasto_pc_constantes$].*"))
 provincias_region <- b_evyth %>% distinct(provincia_destino, region_destino)

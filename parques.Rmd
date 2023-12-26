@@ -21,9 +21,9 @@ parques_data
 
 ## Recursos relacionados
 
-- Resumen mensual: https://tableros.yvera.tur.ar/parques_nacionales.html
+- Reporte: https://tableros.yvera.tur.ar/areas_protegidas.html
 
-- Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/parques-nacionales
+- Informes técnicos: https://www.yvera.tur.ar/sinta/informe/info/areas-protegidas
 
 - Datos Abiertos: https://datos.yvera.gob.ar/dataset/parques-nacionales
 

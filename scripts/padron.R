@@ -3,7 +3,7 @@ library(janitor)
 library(DT)
 library(crosstalk)
 library(plotly)
-
+library(comunicacion)
 
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'), 
                           initComplete = JS(
@@ -19,9 +19,7 @@ serie_puna <- arrow::read_parquet("/srv/DataDNMYE/puna/serie_puna.parquet") %>%
          Localidad = localidad,
          Tipo = tipo,
          Clasificación = clasificacion_mintur) %>% 
-  arrange(desc(Año)) %>% 
-  mutate(Provincia = str_replace(Provincia, "Tierra del Fuego, Antartida E Islas Del Atlantico Sur",
-                                 "Tierra del Fuego"))
+  arrange(desc(Año)) 
 
 tabla_tipo <- serie_puna %>% 
   group_by(Año, Provincia) %>%
@@ -36,7 +34,7 @@ tabla_tipo <- serie_puna %>%
     ungroup()
 
 localidades_data <- serie_puna %>% 
-  filter(Año == 2020) %>% 
+  filter(Año == 2022) %>% 
   group_by(Provincia) %>% 
   mutate(plazas_prov = sum(plazas)) %>% 
   ungroup() %>% 
@@ -49,7 +47,7 @@ localidades_data <- serie_puna %>%
   ungroup()
 
 
-tabla_tipo <- SharedData$new(tabla_tipo, ~ Provincia, group = "Provincia")
+tabla_tipo <- SharedData$new(tabla_tipo %>% arrange(desc(Año)) , ~ Provincia, group = "Provincia")
 localidades_data <- SharedData$new(localidades_data, ~ Provincia, group = "Provincia")
 
 dt_puna <- datatable(tabla_tipo, extensions = 'Buttons',

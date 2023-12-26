@@ -8,21 +8,25 @@ library(DT)
 library(crosstalk)
 
 base_pn <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
-  mutate(parque_nacional = limpiar_texto(parque_nacional))
+  mutate(parque_nacional = limpiar_texto(parque_nacional)) %>% 
+  filter(parque_nacional != "nahuel huapi") %>% 
+  mutate(parque_nacional = ifelse(parque_nacional == "nahuel huapi 3p", "nahuel huapi", parque_nacional)) %>% 
+  rename(area_protegida = parque_nacional)
 
-provincias <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/provincias.xlsx") %>% 
-  add_row(parque_nacional = "Pizarro", provincia = "Salta") %>% 
-  mutate(parque_nacional = ifelse(parque_nacional == "Nogalar de los Toldos", "El Nogalar de Los Toldos", parque_nacional),
-         etiq_parque = parque_nacional,
-         parque_nacional = limpiar_texto(parque_nacional))
+provincias <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/provincias_2.xlsx") %>% 
+  mutate(area_protegida = ifelse(area_protegida == "isla pingüino", "isla pinguino",area_protegida))
+  # add_row(parque_nacional = "Pizarro", provincia = "Salta") %>% 
+  # mutate(parque_nacional = ifelse(parque_nacional == "Nogalar de los Toldos", "El Nogalar de Los Toldos", parque_nacional),
+  #        etiq_parque = parque_nacional,
+  #        parque_nacional = limpiar_texto(parque_nacional))
 
-base_pn <- left_join(base_pn, provincias) %>% 
+base_pn <- left_join(base_pn, provincias, by = "area_protegida") %>% 
   filter(anio >= 2012)
 
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
 
 parques_data <- base_pn %>% 
-  filter(anio >= 2017 & anio < 2022) %>% 
+  filter(anio >= 2017 & anio <= 2022) %>% 
   mutate(visitantes = as.integer(visitantes),
          residencia = str_to_sentence(residencia),
          parque_nacional = str_to_title(parque_nacional)) %>% 
