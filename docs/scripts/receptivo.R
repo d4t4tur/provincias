@@ -3,6 +3,7 @@ library(plotly)
 library(crosstalk)
 library(DT)
 library(d4t4tur)
+library(lubridate)
 
 visitantes_dnm <-  read_rds("/srv/DataDNMYE/turismo_internacional/turismo_internacional_visitantes.rds")
 
@@ -59,7 +60,7 @@ dt_rec <- datatable(data_rec, extensions = 'Buttons',
 gg_rec <- ggplot(data_rec) + 
   geom_line(aes(anio, visitantes, color = paso_publ)) +
   geom_point(aes(anio, visitantes, color = paso_publ,
-                text = paste0(paso_publ,": ", visitantes, " visitantes"))) +
+                text = paste0(paso_publ,": ", visitantes, " viajes de visitantes"))) +
   scale_color_dnmye() +
   theme_minimal() +
   theme(legend.position = "none",
@@ -77,7 +78,7 @@ graph_receptivo <- withr::with_options(
          htmltools::br(),
          ggplotly(gg_rec, dynamicTicks = TRUE, tooltip = "text") %>%
            layout(xaxis=list(type='category')) %>% 
-           layout(title = 'Evolución del volumen de visitantes por paso internacional'))
+           layout(title = 'Evolución del volumen de viajes de visitantes por paso internacional'))
 )
 
 write_rds(graph_receptivo, "outputs/graph_receptivo.rds")
