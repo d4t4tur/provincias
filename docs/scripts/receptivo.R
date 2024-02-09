@@ -61,6 +61,7 @@ gg_rec <- ggplot(data_rec) +
   geom_line(aes(anio, visitantes, color = paso_publ)) +
   geom_point(aes(anio, visitantes, color = paso_publ,
                 text = paste0(paso_publ,": ", visitantes, " viajes de visitantes"))) +
+  scale_x_continuous(breaks = min(tabla_rec$anio):max(tabla_rec$anio)) +
   scale_color_dnmye() +
   theme_minimal() +
   theme(legend.position = "none",
