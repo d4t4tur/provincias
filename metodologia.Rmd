@@ -159,7 +159,7 @@ Por las características del registro se considera como una visita la entrada a 
 
 ## Conectividad Aérea
 
-El tablero presenta datos del **Sistema Integrado de Aviación Civil (SIAC)** provistos por la ANAC. El SIAC registra movimientos aéreos en el país y los datos recabados permiten conocer `cantidad de pasajeros` a bordo de cada vuelo, `origen` y `destino`, `empresa operadora del vuelo`, `cantidad de asientos` y `fecha del vuelo`. A partir de estos datos la DNMyE selecciona aquellos vuelos que corresponden a las empresas de operaciones regulares en el país, tanto para vuelos de cabotaje como en el caso de vuelos internacionales. La estadística de cantidad de pasajeros por localidad representa tránsitos de pasajeros en aterrizajes o despegues realizados en aeropuertos de dicha localidad.
+El tablero presenta datos del **Sistema Integrado de Aviación Civil (SIAC)** provistos por la ANAC. El SIAC registra movimientos aéreos en el país y los datos recabados permiten conocer `cantidad de pasajeros` a bordo de cada vuelo, `origen` y `destino`, `empresa operadora del vuelo`, `cantidad de asientos` y `fecha del vuelo`. A partir de estos datos la DNMyE selecciona aquellos vuelos que corresponden a las empresas de operaciones regulares en el país, tanto para vuelos de cabotaje como en el caso de vuelos internacionales. La estadística de cantidad de pasajeros por localidad representa tránsitos de pasajeros en aterrizajes o despegues realizados en aeropuertos de dicha localidad. Solo se muestran registros con al menos 3 pasajeros en el año.
 
 Pueden consultar los datos a mayor nivel de desagregación y más detalles metodológicos en el [tablero de Conectividad](https://tableros.yvera.tur.ar/conectividad/).
 

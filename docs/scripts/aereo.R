@@ -98,7 +98,7 @@ options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1
 ## TABLAS
 
 tabla_cabotaje <- cabotaje %>% 
-  filter(anio_local >= 2017 & anio_local <= 2022) %>% 
+  filter(anio_local >= 2017 & anio_local <= 2023) %>% 
   group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
@@ -107,11 +107,12 @@ tabla_cabotaje <- cabotaje %>%
          Provincia = prov_ad,
          Localidad = loc_ad,
          Pasajeros = pasajeros) %>% 
-  drop_na()
+  drop_na() %>% 
+  filter(Pasajeros >= 3)
 
 
 tabla_internacional <- internacional %>% 
-  filter(anio_local >= 2017 & anio_local <= 2022) %>% 
+  filter(anio_local >= 2017 & anio_local <= 2023) %>% 
   group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
@@ -120,7 +121,8 @@ tabla_internacional <- internacional %>%
          Provincia = prov_ad,
          Localidad = loc_ad,
          Pasajeros = pasajeros) %>% 
-  drop_na()
+  drop_na() %>% 
+  filter(Pasajeros >= 3)
 
 
 ## PLOTS + DT interactivos
