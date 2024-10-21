@@ -5,6 +5,8 @@ library(crosstalk)
 library(plotly)
 library(comunicacion)
 
+ANIO <- 2023
+
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'), 
                           initComplete = JS(
                             "function(settings, json) {",
@@ -34,7 +36,7 @@ tabla_tipo <- serie_puna %>%
     ungroup()
 
 localidades_data <- serie_puna %>% 
-  filter(Año == 2022) %>% 
+  filter(Año == ANIO) %>% 
   group_by(Provincia) %>% 
   mutate(plazas_prov = sum(plazas)) %>% 
   ungroup() %>% 
@@ -84,7 +86,7 @@ puna <- withr::with_options(
          htmltools::br(),
          ggplotly(gg_loc, dynamicTicks = TRUE) %>% 
            layout(xaxis = list(categoryorder = "trace")) %>% 
-           layout(title = 'Top 15 localidades según cantidad de plazas. Año 2020'))
+           layout(title = glue::glue('Top 15 localidades según cantidad de plazas - Año {ANIO}')))
 )
 
 write_rds(puna, "outputs/graph_puna.rds")

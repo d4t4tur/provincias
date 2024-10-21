@@ -6,6 +6,7 @@ library(plotly)
 library(DT)
 library(lubridate)
 library(comunicacion)
+
 source(here::here("scripts","auxiliar_evyth.R"))
 
 #### cargo y preparo la base ####
@@ -464,13 +465,16 @@ dt_indicadores_ppales <- datatable(env_indicadores_ppales, extensions = 'Buttons
   formatPercentage(columns = c(5,7,9), dec.mark = ",", digits = 1) %>% 
   formatRound(columns = c(4,6,8), digits = 0, dec.mark = ",", mark = ".")
 
+options(scipen = 99)
 
 gg_indicadores_ppales <- ggplot(env_indicadores_ppales) + 
   geom_line(aes(anio, valor_prov, group = indicadores, color = indicadores)) +
-  geom_point(aes(anio, valor_prov, group = indicadores, color = indicadores, text = paste0(indicadores, "<br>", format(valor_prov, big.mark = "."))),
+  geom_point(aes(anio, valor_prov, group = indicadores, color = indicadores, 
+                 text = paste0(indicadores, "<br>", format(round(valor_prov), big.mark = ".",  decimal.mark = ","))),
              size = 3) +
+  scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6)) +
   theme_minimal() +
-  facet_wrap(~ indicadores, ncol = 1, scales = "fixed") +
+  facet_wrap(~ indicadores, ncol = 1, scales = "free") +
   theme(legend.position = "none") +
   xlab("Año") +
   ylab("")
@@ -483,8 +487,9 @@ indicadores_ppales <- withr::with_options(
          htmltools::br(),
          dt_indicadores_ppales,
          htmltools::p("Evolución de los principales indicadores"),
-         ggplotly(gg_indicadores_ppales, dynamicTicks = TRUE, tooltip = "text") %>%
-           layout(autosize = F))#, height = 800, widths = 1000
+         ggplotly(gg_indicadores_ppales,  tooltip = "text", height = 500) %>%
+           layout(autosize = F,
+                  margin = list(l = 100)))#, height = 800, widths = 1000
   
 )
 

@@ -7,6 +7,8 @@ library(plotly)
 library(DT)
 library(crosstalk)
 
+ANIO <- 2023
+
 base_pn <- read_excel("/srv/DataDNMYE/areas_protegidas/areas_protegidas_nacionales/pivot_pn.xlsx", sheet = 2) %>% 
   mutate(parque_nacional = limpiar_texto(parque_nacional)) %>% 
   filter(parque_nacional != "nahuel huapi") %>% 
@@ -26,7 +28,7 @@ base_pn <- left_join(base_pn, provincias, by = "area_protegida") %>%
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')))
 
 parques_data <- base_pn %>% 
-  filter(anio >= 2017 & anio <= 2022) %>% 
+  filter(anio >= 2017 & anio <= ANIO) %>% 
   mutate(visitantes = as.integer(visitantes),
          residencia = str_to_sentence(residencia),
          parque_nacional = str_to_title(parque_nacional)) %>% 
@@ -99,7 +101,7 @@ parques <- withr::with_options(
          filter_select("id", "Elegir una provincia", tabla_pn, ~ Provincia,
                        multiple = FALSE),
          dt_parques,
-         htmltools::br(),
+         htmltools::br(),        htmltools::br(),
          ggplotly(gg_orig, dynamicTicks = TRUE, tooltip = "text") %>% 
            layout(xaxis=list(tickformat='.d')) %>% 
            layout(title = 'Evolución de visitas a Parques Nacionales según origen'),
