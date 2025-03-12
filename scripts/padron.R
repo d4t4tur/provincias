@@ -5,7 +5,7 @@ library(crosstalk)
 library(plotly)
 library(comunicacion)
 
-ANIO <- 2023
+ANIO <- 2024
 
 options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'), 
                           initComplete = JS(

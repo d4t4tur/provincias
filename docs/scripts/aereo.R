@@ -10,13 +10,13 @@ library(crosstalk)
 
 
 # Data por por clasificacion
-cabotaje <- arrow::read_parquet("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada_diaria.parquet") %>% 
+cabotaje <- arrow::open_dataset("/srv/DataDNMYE/aerocomercial/anac/base_anac_agrupada_diaria.parquet") %>% 
   filter(clasificacion_vuelo == "Cabotaje",
          reg_no_reg == "Empresa de vuelos regulares") %>% 
   select(anio_local, #TipodeMovimiento,
          origen_aeropuerto_etiqueta, origen_localidad_etiqueta, origen_provincia_etiqueta,
          destino_aeropuerto_etiqueta, destino_localidad_etiqueta, destino_provincia_etiqueta,
-         pasajeros = pax_ad) 
+         pasajeros = pax_ad) %>% collect()
 
 cabotaje <- bind_rows(
   cabotaje %>% 
@@ -98,7 +98,7 @@ options(DT.options = list(language = list(url = '//cdn.datatables.net/plug-ins/1
 ## TABLAS
 
 tabla_cabotaje <- cabotaje %>% 
-  filter(anio_local >= 2017 & anio_local <= 2023) %>% 
+  filter(anio_local >= 2017 & anio_local <= 2024) %>% 
   group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
@@ -112,7 +112,7 @@ tabla_cabotaje <- cabotaje %>%
 
 
 tabla_internacional <- internacional %>% 
-  filter(anio_local >= 2017 & anio_local <= 2023) %>% 
+  filter(anio_local >= 2017 & anio_local <= 2024) %>% 
   group_by(anio_local, prov_ad, loc_ad) %>%
   summarise(pasajeros = sum(pasajeros, na.rm = T)) %>% 
   ungroup() %>% 
