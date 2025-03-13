@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = FALSE, message = F)
 receptivo_data <- readRDS("outputs/graph_receptivo.rds")
 ```
 
-La datos por provincia no reflejan la estimación del turismo receptivo de cada provincia, sino sólo los viajes de turistas contabilizados en los pasos fronterizos de la misma.
+Los datos por provincia no reflejan la estimación del turismo receptivo de cada provincia, sino las estimaciones de los viajes de turistas y excursionistas contabilizados en los pasos fronterizos de la misma. 
 
 ## Viajes de Visitantes No Residentes por Paso
 
