@@ -26,7 +26,7 @@ motivo <- readRDS("outputs/motivo.rds")
 
 Se presentan estadísticas resumen acompañadas de los valores de sus coeficientes de variación[^1] (CV) según provincia de destino, junto con las estadísticas correspondientes de la región a la cual pertenece la provincia y las estadísticas a nivel nacional.
 
-[^1]: El coeficiente de variación es una medida de dispersión que se define como el cociente entre la dispersión estándar y el valor absoluto de la media. Para su estimación aquí se ha utilizado el paquete [survey](https://cran.r-project.org/web/packages/survey/index.html).
+[^1]: El coeficiente de variación (CV) es una medida de dispersión que se define como el cociente entre la dispersión estándar y el valor absoluto de la media. Indican la precisión de las estimaciones; cuanto más bajo dicho indicador más precisa es la estimación (las estimaciones con CV entre 16% y 25% deben ser consideradas con cuidado mientras que mayores a 25% deben ser consideradas como no confiables). Para su estimación aquí se ha utilizado el paquete [survey](https://cran.r-project.org/web/packages/survey/index.html).
 
 ## Indicadores Principales
 
